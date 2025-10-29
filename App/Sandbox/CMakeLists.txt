@@ -1,0 +1,31 @@
+#### SANDBOX APP ####
+# Build the Sandbox executable
+set(SOURCES
+    Source/main.cpp
+    Source/AppLayer.h
+    Source/AppLayer.cpp
+    Source/OverlayLayer.h
+    Source/OverlayLayer.cpp
+    Source/VoidLayer.h
+    Source/VoidLayer.cpp
+)
+
+add_executable(Sandbox)
+target_sources(Sandbox PRIVATE ${SOURCES})
+
+# Match filters to directory structure on disk
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
+
+add_compile_definitions(
+    GLFW_INCLUDE_NONE
+)
+
+# Link the engine library
+target_link_libraries(Sandbox Core)
+
+target_include_directories(Sandbox PRIVATE Source)
+
+# Set working directory for VS debugger
+set_target_properties(Sandbox PROPERTIES
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/App/Sandbox"
+)
