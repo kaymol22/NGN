@@ -5,7 +5,7 @@
 #include <iostream>
 #include <assert.h>
 
-namespace Core {
+namespace NGN {
 
 	Window::Window(const WindowSpecification& specification)
 		: m_Specification(specification)

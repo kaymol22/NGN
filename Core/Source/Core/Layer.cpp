@@ -2,7 +2,7 @@
 
 #include "Application.h"
 
-namespace Core {
+namespace NGN {
 
 	void Layer::QueueTransition(std::unique_ptr<Layer> toLayer)
 	{

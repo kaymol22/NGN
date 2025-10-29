@@ -4,7 +4,7 @@
 
 #include <memory>
 
-namespace Core {
+namespace NGN {
 
 	class Layer
 	{

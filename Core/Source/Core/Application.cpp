@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <iostream>
 
-namespace Core {
+namespace NGN {
 
 	static Application* s_Application = nullptr;
 

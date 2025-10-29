@@ -4,7 +4,7 @@
 
 #include "Core/Layer.h"
 
-class AppLayer : public Core::Layer
+class AppLayer : public NGN::Layer
 {
 public:
 	AppLayer();

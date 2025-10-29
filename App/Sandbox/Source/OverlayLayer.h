@@ -5,7 +5,7 @@
 #include "Core/Layer.h"
 #include "Renderer/Renderer.h"
 
-class OverlayLayer : public Core::Layer
+class OverlayLayer : public NGN::Layer
 {
 public:
 	OverlayLayer();

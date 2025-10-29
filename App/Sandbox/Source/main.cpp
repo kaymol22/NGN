@@ -4,12 +4,12 @@
 #include "OverlayLayer.h"
 
 int main() {
-	Core::ApplicationSpecification appSpec;
-	appSpec.Name = "Layer Test";
+	NGN::ApplicationSpecification appSpec;
+	appSpec.Name = "NGN Layer Test";
 	appSpec.WindowSpec.Width = 800;
 	appSpec.WindowSpec.Height = 600;
 
-	Core::Application application(appSpec);
+	NGN::Application application(appSpec);
 	application.PushLayer<AppLayer>();
 	/*application.PushLayer<OverlayLayer>();*/
 	application.Run();

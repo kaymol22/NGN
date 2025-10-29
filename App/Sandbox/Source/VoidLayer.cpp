@@ -7,7 +7,7 @@
 
 void VoidLayer::OnUpdate(float timeStep)
 {
-	if (glfwGetKey(Core::Application::Get().GetWindow().GetHandle(), GLFW_KEY_2) == GLFW_PRESS)
+	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_2) == GLFW_PRESS)
 	{
 		TransitionTo<AppLayer>();
 	}

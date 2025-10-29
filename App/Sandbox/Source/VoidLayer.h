@@ -4,7 +4,7 @@
 
 #include "Core/Layer.h"
 
-class VoidLayer : public Core::Layer
+class VoidLayer : public NGN::Layer
 {
 public:
 	VoidLayer() = default;

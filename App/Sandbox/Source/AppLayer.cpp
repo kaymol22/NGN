@@ -60,7 +60,7 @@ void AppLayer::OnUpdate(float timeStep)
 {
 	m_Time += timeStep;
 
-	if (glfwGetKey(Core::Application::Get().GetWindow().GetHandle(), GLFW_KEY_1) == GLFW_PRESS)
+	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_1) == GLFW_PRESS)
 	{
 		TransitionTo<VoidLayer>();
 	}
@@ -71,9 +71,9 @@ void AppLayer::OnRender()
 	glUseProgram(m_Shader);
 
 	// Uniforms
-	glUniform1f(0, Core::Application::GetTime());
+	glUniform1f(0, NGN::Application::GetTime());
 
-	glm::vec2 framebufferSize = Core::Application::Get().GetFramebufferSize();
+	glm::vec2 framebufferSize = NGN::Application::Get().GetFramebufferSize();
 	glUniform2f(1, framebufferSize.x, framebufferSize.y);
 
 	glViewport(0, 0, static_cast<GLsizei>(framebufferSize.x), static_cast<GLsizei>(framebufferSize.y));

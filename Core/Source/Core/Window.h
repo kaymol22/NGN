@@ -6,7 +6,7 @@
 
 #include <string>
 
-namespace Core {
+namespace NGN {
 
 	struct WindowSpecification
 	{

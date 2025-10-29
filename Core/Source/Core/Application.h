@@ -12,7 +12,7 @@
 #include <set>
 #include <functional>
 
-namespace Core {
+namespace NGN {
 
 	struct ApplicationSpecification
 	{
