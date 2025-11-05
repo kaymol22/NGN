@@ -11,9 +11,13 @@ Source/Core/Window.h
 Source/Core/Window.cpp
 Source/Core/Layer.h
 Source/Core/Layer.cpp
+Source/Core/KeyCodes.h
+Source/Core/MouseCodes.h
 
 Source/Events/Event.h
 Source/Events/ApplicationEvent.h
+Source/Events/KeyEvent.h
+Source/Events/MouseEvent.h
 
 Source/Renderer/GLUtils.h
 Source/Renderer/GLUtils.cpp
