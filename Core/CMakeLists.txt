@@ -13,6 +13,7 @@ Source/Core/Layer.h
 Source/Core/Layer.cpp
 Source/Core/KeyCodes.h
 Source/Core/MouseCodes.h
+Source/Core/Log.h
 
 Source/Events/Event.h
 Source/Events/ApplicationEvent.h
@@ -28,7 +29,7 @@ Source/Renderer/Shader.cpp
 )
 
 add_library(Core STATIC)
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "Source/Core/Log.cpp")
 
 # Match VS filters to directory structure on disk
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
@@ -37,6 +38,7 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
 target_include_directories(Core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Source 
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include
 )
 
 # Only add hardcoded External paths if they exist locally (for IntelliSense convenience)
@@ -64,3 +66,8 @@ target_link_libraries(Core PUBLIC
     glfw
     glm::glm
 )
+
+# UTF-8 source encoding  - required by spdlog/fmt
+if (MSVC)
+    target_compile_options(Core PRIVATE /utf-8)
+endif()

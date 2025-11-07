@@ -3,6 +3,7 @@
 #include "Core/Base.h"
 
 #include <functional>
+#include <string>
 
 namespace NGN {
 
