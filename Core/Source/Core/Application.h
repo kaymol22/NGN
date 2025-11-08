@@ -6,11 +6,7 @@
 
 #include <glm/glm.hpp>
 
-#include <string>
-#include <memory>
-#include <vector>
 #include <set>
-#include <functional>
 
 namespace NGN {
 

@@ -14,6 +14,10 @@ Source/Core/Layer.cpp
 Source/Core/KeyCodes.h
 Source/Core/MouseCodes.h
 Source/Core/Log.h
+Source/Core/Log.cpp
+Source/Core/ngnpch.h
+Source/Core/ngnpch.cpp
+Source/Core/PlatformDetection.h
 
 Source/Events/Event.h
 Source/Events/ApplicationEvent.h
@@ -29,7 +33,11 @@ Source/Renderer/Shader.cpp
 )
 
 add_library(Core STATIC)
-target_sources(Core PRIVATE ${SOURCES} "Source/Core/Log.cpp")
+
+target_sources(Core PRIVATE ${SOURCES})
+
+# enable precompile headers
+ngn_enable_pch(Core)
 
 # Match VS filters to directory structure on disk
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
@@ -66,8 +74,3 @@ target_link_libraries(Core PUBLIC
     glfw
     glm::glm
 )
-
-# UTF-8 source encoding  - required by spdlog/fmt
-if (MSVC)
-    target_compile_options(Core PRIVATE /utf-8)
-endif()

@@ -1,14 +1,14 @@
 /*
 	Owns main window, manages update loop, tracks layers
 */
+#include "Core/ngnpch.h"
+
 #include "Application.h"
 #include "Renderer/GLUtils.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include <assert.h>
-#include <iostream>
 
 namespace NGN {
 

@@ -1,7 +1,8 @@
+#include "Core/ngnpch.h"
+
 #include "GLUtils.h"
 
 #include <format>
-#include <iostream>
 
 namespace Renderer::Utils {
 

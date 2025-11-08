@@ -1,8 +1,9 @@
+#include "Core/ngnpch.h"
+
 #include <glad/gl.h>
 
 #include "Shader.h"
 
-#include <iostream>
 #include <fstream>
 
 

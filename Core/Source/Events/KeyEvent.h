@@ -3,7 +3,6 @@
 #include "Event.h"
 #include "Core/KeyCodes.h"
 
-#include <sstream>
 
 namespace NGN
 {

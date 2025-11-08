@@ -2,7 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
 #include <filesystem>
 
 namespace NGN

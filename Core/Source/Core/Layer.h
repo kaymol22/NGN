@@ -2,8 +2,6 @@
 
 #include "Events/Event.h"
 
-#include <memory>
-
 namespace NGN {
 
 	class Layer

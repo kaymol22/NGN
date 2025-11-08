@@ -1,9 +1,9 @@
+#include "Core/ngnpch.h"
+
 #include <glad/gl.h>
 
 #include "Window.h"
 
-#include <iostream>
-#include <assert.h>
 
 namespace NGN {
 

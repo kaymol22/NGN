@@ -1,9 +1,9 @@
 #pragma once
 
-#include <memory>
-#include <utility>
+#include "PlatformDetection.h"
 
-#if defined(_WIN32)
+
+#if defined(NGN_PLATFORM_WINDOWS)
 	#define NGN_DEBUGBREAK() __debugbreak()
 #elif defined(_linux__)
 	#define NGN_DEBUGBREAK() raise(SIGTRAP)

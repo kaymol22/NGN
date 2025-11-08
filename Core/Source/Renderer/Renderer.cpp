@@ -1,8 +1,9 @@
+#include "Core/ngnpch.h"
+
 #include "Renderer.h"
 
 #include "GLUtils.h"
 
-#include <iostream>
 #include <print>
 
 #include "stb_image.h"

@@ -1,3 +1,5 @@
+#include "Core/ngnpch.h"
+
 #include "Layer.h"
 
 #include "Application.h"

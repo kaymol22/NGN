@@ -11,7 +11,11 @@ set(SOURCES
 )
 
 add_executable(Sandbox)
+
 target_sources(Sandbox PRIVATE ${SOURCES})
+
+# enable precompile headers
+ngn_enable_pch(Sandbox)
 
 # Match filters to directory structure on disk
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
