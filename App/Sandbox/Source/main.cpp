@@ -18,6 +18,6 @@ int main() {
 
 	NGN::Application application(appSpec);
 	application.PushLayer<AppLayer>();
-	/*application.PushLayer<OverlayLayer>();*/
+	application.PushLayer<OverlayLayer>();
 	application.Run();
 }

@@ -9,6 +9,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include <assert.h>
+#include <ranges>
+
 
 namespace NGN {
 
@@ -28,6 +31,8 @@ namespace NGN {
 
 		if (m_Specification.WindowSpec.Title.empty())
 			m_Specification.WindowSpec.Title = m_Specification.Name;
+
+		m_Specification.WindowSpec.EventCallback = [this](Event& event) { RaiseEvent(event); };
 
 		m_Window = NGN::CreateScope<Window>(m_Specification.WindowSpec);
 		m_Window->Create();
@@ -85,6 +90,16 @@ namespace NGN {
 	void Application::Stop()
 	{
 		m_Running = false;
+	}
+
+	void Application::RaiseEvent(Event& event)
+	{
+		for (auto& layer : std::views::reverse(m_LayerStack))
+		{
+			layer->OnEvent(event);
+			if (event.Handled)
+				break;
+		}
 	}
 
 	glm::vec2 Application::GetFramebufferSize() const

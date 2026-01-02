@@ -65,7 +65,7 @@ namespace NGN
 	};
 
 	// TODO: Asset dragging into scene
-	class WindowDropEvent : public Event
+	/*class WindowDropEvent : public Event
 	{
 	public:
 		WindowDropEvent(const std::vector<std::filesystem::path>& paths)
@@ -82,5 +82,5 @@ namespace NGN
 
 	private:
 		std::vector<std::filesystem::path> m_Paths;
-	};
+	};*/
 }

@@ -48,7 +48,7 @@ namespace Renderer {
 			std::cerr << infoLog.data() << std::endl;
 
 			glDeleteShader(shaderHandle);
-			return -1;
+			return 0;
 		}
 
 		GLuint program = glCreateProgram();
@@ -70,7 +70,7 @@ namespace Renderer {
 			glDeleteProgram(program);
 			glDeleteShader(shaderHandle);
 
-			return -1;
+			return 0;
 		}
 
 		glDetachShader(program, shaderHandle);
@@ -82,7 +82,7 @@ namespace Renderer {
 		uint32_t newShaderHandle = CreateComputeShader(path);
 
 		// Return old shader if compilation failed
-		if (newShaderHandle == -1)
+		if (newShaderHandle == 0)
 			return shaderHandle;
 
 		glDeleteProgram(shaderHandle);
@@ -116,7 +116,7 @@ namespace Renderer {
 			std::cerr << infoLog.data() << std::endl;
 
 			glDeleteShader(vertexShaderHandle);
-			return -1;
+			return 0;
 		}
 
 		// Fragment Shader 
@@ -141,7 +141,7 @@ namespace Renderer {
 			std::cerr << infoLog.data() << std::endl;
 
 			glDeleteShader(fragmentShaderHandle);
-			return -1;
+			return 0;
 		}
 
 		// Program Linking
@@ -167,7 +167,7 @@ namespace Renderer {
 			glDeleteShader(vertexShaderHandle);
 			glDeleteShader(fragmentShaderHandle);
 
-			return -1;
+			return 0;
 		}
 
 		glDetachShader(program, vertexShaderHandle);
@@ -180,7 +180,7 @@ namespace Renderer {
 		uint32_t newShaderHandle = CreateGraphicsShader(vertexPath, fragmentPath);
 
 		// Return old shader if compilation failed
-		if (newShaderHandle == -1)
+		if (newShaderHandle == 0)
 			return shaderHandle;
 
 		glDeleteProgram(shaderHandle);

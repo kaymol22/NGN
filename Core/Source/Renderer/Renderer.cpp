@@ -33,6 +33,7 @@ namespace Renderer {
 	{
 		int width, height, channels;
 		std::string filePath = path.string();
+		stbi_set_flip_vertically_on_load(1);
 		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
 
 		if (!data)
@@ -53,6 +54,8 @@ namespace Renderer {
 
 		glTextureStorage2D(result.Handle, 1, (format == GL_RGBA ? GL_RGBA8 : GL_RGB8), width, height);
 
+		glTextureSubImage2D(result.Handle, 0, 0, 0, width, height, format, GL_UNSIGNED_BYTE, data);
+
 		glTextureParameteri(result.Handle, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(result.Handle, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -60,6 +63,7 @@ namespace Renderer {
 		glTextureParameteri(result.Handle, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glGenerateTextureMipmap(result.Handle);
+		stbi_image_free(data);
 
 		return result;
 	}

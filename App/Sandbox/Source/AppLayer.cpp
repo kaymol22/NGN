@@ -8,15 +8,15 @@
 
 #include <glm/glm.hpp>
 #include <filesystem>
-#include <iostream>
+
+#include <print>
 
 AppLayer::AppLayer()
 {
-	// Debug
-	std::cout << "Current working dir: " << std::filesystem::current_path() << std::endl;
+	std::println("Created new AppLayer!");
 	
 	// Create shaders
-	m_Shader = Renderer::CreateGraphicsShader("Shaders/Transform.vertex.glsl", "Shaders/fragment.glsl");
+	m_Shader = Renderer::CreateGraphicsShader("Shaders/Fullscreen.vert.glsl", "Shaders/Flame.glsl");
 
 	// Create geometry
 	glCreateVertexArrays(1, &m_VertexArray);
@@ -56,6 +56,14 @@ AppLayer::~AppLayer()
 	glDeleteProgram(m_Shader);
 }
 
+void AppLayer::OnEvent(NGN::Event& event)
+{
+	NGN::EventDispatcher dispatcher(event);
+	dispatcher.Dispatch<NGN::MouseButtonPressedEvent>([this](NGN::MouseButtonPressedEvent& e) { return OnMouseButtonPressed(e); });
+	dispatcher.Dispatch<NGN::MouseMovedEvent>([this](NGN::MouseMovedEvent& e) { return OnMouseMoved(e); });
+	dispatcher.Dispatch<NGN::WindowCloseEvent>([this](NGN::WindowCloseEvent& e) { return OnWindowClosed(e); });
+}
+
 void AppLayer::OnUpdate(float timeStep)
 {
 	m_Time += timeStep;
@@ -71,15 +79,48 @@ void AppLayer::OnRender()
 	glUseProgram(m_Shader);
 
 	// Uniforms
-	glUniform1f(0, NGN::Application::GetTime());
+	glUniform1f(0, m_Time);
 
 	glm::vec2 framebufferSize = NGN::Application::Get().GetFramebufferSize();
 	glUniform2f(1, framebufferSize.x, framebufferSize.y);
 
+	glUniform2f(2, m_FlamePosition.x, m_FlamePosition.y);
+
 	glViewport(0, 0, static_cast<GLsizei>(framebufferSize.x), static_cast<GLsizei>(framebufferSize.y));
 
 	// Render
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindVertexArray(m_VertexArray);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+bool AppLayer::OnMouseButtonPressed(NGN::MouseButtonPressedEvent& event)
+{
+	glm::vec2 framebufferSize = NGN::Application::Get().GetFramebufferSize();
+	float aspectRatio = framebufferSize.x / framebufferSize.y;
+	glm::vec2 normalizedMousePos = (m_MousePosition / framebufferSize) * 2.0f - 1.0f;
+	normalizedMousePos.x *= aspectRatio;
+	normalizedMousePos.y *= -1.0f;
+	normalizedMousePos.y += 0.7f;
+
+	m_FlamePosition = -normalizedMousePos;
+
+	return false;
+}
+
+bool AppLayer::OnMouseMoved(NGN::MouseMovedEvent& event)
+{
+	m_MousePosition = { static_cast<float>(event.GetX()), static_cast<float>(event.GetY()) };
+
+	return false;
+}
+
+bool AppLayer::OnWindowClosed(NGN::WindowCloseEvent& event)
+{
+	std::println("Window Closed!");
+
+	return false;
 }

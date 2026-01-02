@@ -1,7 +1,5 @@
 #pragma once
 
-#include <filesystem>
-
 namespace Renderer {
 
 	uint32_t CreateComputeShader(const std::filesystem::path& path);

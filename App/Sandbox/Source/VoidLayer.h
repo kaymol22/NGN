@@ -4,6 +4,8 @@
 
 #include "Core/Layer.h"
 
+#include "Events/KeyEvent.h"
+
 class VoidLayer : public NGN::Layer
 {
 public:

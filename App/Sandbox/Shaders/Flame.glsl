@@ -10,6 +10,7 @@ layout(location = 0) in vec2 v_TexCoord;
 
 layout(location = 0) uniform float iTime;
 layout(location = 1) uniform vec2 iResolution;
+layout(location = 2) uniform vec2 flameOrigin;
 
 float noise(vec3 p) //Thx to Las^Mercury
 {
@@ -64,6 +65,8 @@ void main()
 
 	vec2 v = -1.0 + 2.0 * fragCoord.xy / iResolution.xy;
 	v.x *= iResolution.x/iResolution.y;
+
+	v += flameOrigin;
 	
 	vec3 org = vec3(0., -2., 4.);
 	vec3 dir = normalize(vec3(v.x*1.6, -v.y, -1.5));

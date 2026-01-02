@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <functional>
 #include <cassert>
+#include <filesystem>
 
 #include <string>
 #include <sstream>

@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-#include <string>
+#include "Events/Event.h"
 
 namespace NGN {
 
@@ -15,6 +15,9 @@ namespace NGN {
 		uint32_t Height = 720;
 		bool IsResizeable = true;
 		bool VSync = true;
+
+		using EventCallbackFn = std::function<void(Event&)>;
+		EventCallbackFn EventCallback;
 	};
 
 	class Window
@@ -28,7 +31,10 @@ namespace NGN {
 
 		void Update();
 
-		glm::vec2 GetFramebufferSize();
+		void RaiseEvent(Event& event);
+
+		glm::vec2 GetFramebufferSize() const;
+		glm::vec2 GetMousePos() const;
 
 		bool ShouldClose() const;
 
