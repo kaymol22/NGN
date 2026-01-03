@@ -4,6 +4,9 @@ set(SOURCES
 vendor/stb/stb_image.h
 vendor/stb/stb_image.cpp
 
+Source/Components/TransformComponent.h
+Source/Components/TransformComponent.cpp
+
 Source/Core/Base.h
 Source/Core/Application.h
 Source/Core/Application.cpp
@@ -24,17 +27,24 @@ Source/Events/ApplicationEvent.h
 Source/Events/KeyEvent.h
 Source/Events/MouseEvent.h
 
+Source/Math/Math.h
+Source/Math/Math.cpp
+
 Source/Renderer/GLUtils.h
 Source/Renderer/GLUtils.cpp
 Source/Renderer/Renderer.h
 Source/Renderer/Renderer.cpp
 Source/Renderer/Shader.h
 Source/Renderer/Shader.cpp
+
+Source/Scene/Entity.h
+Source/Scene/Entity.cpp
+Source/Scene/Scene.h
 )
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "Source/Components/Component.h")
 
 # enable precompile headers
 ngn_enable_pch(Core)
