@@ -1,46 +1,74 @@
 #pragma once
 
 #include "Entity.h"
-#include <unordered_map>
-#include <memory>
-#include <cstdint>
+#include "ComponentPoolBase.h"
+#include "ComponentPool.h"
+
+#include "Core/ngnpch.h"
+#include <typeindex>
 
 namespace NGN
 {
 	class Scene
 	{
 	public:
-		Scene() : m_NextID(1) {}
 
-		Entity& CreateEntity()
+		Entity CreateEntity()
 		{
-			uint32_t id = m_NextID++;
-			auto entity = std::make_unique<Entity>(id);
-			Entity& ref = *entity;
-			m_Entities[id] = std::move(entity);
-			return ref;
+			return Entity{ m_NextEntityID++ };
 		}
 
-		Entity* GetEntity(uint32_t id)
+		void DestroyEntity(Entity entity)
 		{
-			auto ent = m_Entities.find(id);
-			if (ent != m_Entities.end())
-				return ent->second.get();
-			return nullptr;
+			for (auto& [_, pool] : m_ComponentPools)
+				pool->Remove(entity.ID);
 		}
 
 		template<typename T>
-		std::vector<Entity*> GetAllWithComponent()
+		T& AddComponent(Entity entity)
 		{
-			std::vector<Entity*> result;
-			for (auto& [id, entity] : m_Entities)
-				if (entity->HasComponent<T>())
-					result.push_back(entity.get());
-			return result;
+			return GetOrCreatePool<T>.Add(entity.ID);
+		}
+
+		template<typename T>
+		bool HasComponent(Entity entity)
+		{
+			auto comp = m_ComponentPools.find(typeid(T));
+			if (comp == m_ComponentPools.end())
+				return false;
+			return static_cast<ComponentPool<T>*>(comp->second.get())->Has(entity.ID);
+		}
+
+		template<typename T>
+		T& GetComponent(Entity entity)
+		{
+			return GetPool<T>().Get(entity.ID);
+		}
+
+		template<typename T>
+		std::vector<T>& GetAll()
+		{
+			return GetPool<T>().Data();
 		}
 
 	private:
-		uint32_t m_NextID;
-		std::unordered_map<uint32_t, std::unique_ptr<Entity>> m_Entities;
+		template<typename T>
+		ComponentPool<T>& GetPool()
+		{
+			return *static_cast<ComponentPool<T>*>(m_ComponentPools.at(typeid(T)).get());
+		}
+
+		template<typename T>
+		ComponentPool<T>& GetOrCreatePool()
+		{
+			auto type = typeid(T);
+			if (!m_ComponentPools.contains(type))
+				m_ComponentPools[type] = std::make_unique<ComponentPool<T>>();
+			return *static_cast<ComponentPool<T>*>(m_ComponentPools[type].get());
+		}
+
+	private:
+		EntityID m_NextEntityID;
+		std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> m_ComponentPools;
 	};
 }
