@@ -29,6 +29,8 @@ Source/Math/Math.cpp
 
 Source/Renderer/GLUtils.h
 Source/Renderer/GLUtils.cpp
+Source/Renderer/OrthographicCamera.cpp
+Source/Renderer/OrthographicCamera.h
 Source/Renderer/Renderer.h
 Source/Renderer/Renderer.cpp
 Source/Renderer/Shader.h
@@ -39,6 +41,10 @@ Source/Scene/ComponentPool.h
 Source/Scene/ComponentPoolBase.h
 Source/Scene/Entity.h
 Source/Scene/Scene.h
+Source/Scene/Scene.cpp
+Source/Scene/System.h
+Source/Scene/TransformDebugSystem.h
+Source/Scene/World.h
 )
 
 add_library(Core STATIC)
@@ -53,7 +59,10 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
 
 
 target_include_directories(Core PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/Source 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source
+)
+
+target_include_directories(Core PUBLIC SYSTEM 
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include
 )

@@ -1,82 +1,42 @@
 #pragma once
 
+#include "World.h"
+#include "System.h"
 #include "Entity.h"
-#include "ComponentPoolBase.h"
-#include "ComponentPool.h"
-
-#include "Core/ngnpch.h"
-#include <typeindex>
 
 namespace NGN
 {
-	class Scene
+	class Scene 
 	{
 	public:
+		Scene();
 
-		Scene() : m_NextEntityID(1) {}
+		Entity CreateEntity();
+		void DestroyEntity(Entity entity);
 
-		Entity CreateEntity()
+		void OnUpdate(float dt);
+		void OnRender();
+
+		World& GetWorld() { return m_World; }
+		const World& GetWorld() const { return m_World; }
+
+		template<typename TSystem, typename... Args>
+		TSystem& AddSystem(Args&&... args)
 		{
-			return Entity{ m_NextEntityID++ };
-		}
+			static_assert(std::is_base_of_v<System, TSystem>,
+				"TSystem must derive from System");
 
-		void DestroyEntity(Entity entity)
-		{
-			for (auto& [_, pool] : m_ComponentPools)
-				if (pool->Has(entity.ID))
-					pool->Remove(entity.ID);
-		}
+			auto system = std::make_unique<TSystem>(std::forward<Args>(args)...);
+			TSystem& ref = *system;
 
-		template<typename T>
-		T& AddComponent(Entity entity)
-		{
-			auto& comp = GetOrCreatePool<T>().Add(entity.ID);
-			NGN::Log::GetCoreLogger()->info("Added component pool: {0} for Entity {1}", typeid(T).name(), entity.ID);
-			return comp;
+			system->OnCreate(*this);
+			m_Systems.push_back(std::move(system));
 
-		}
-
-		template<typename T>
-		bool HasComponent(Entity entity)
-		{
-			auto comp = m_ComponentPools.find(typeid(T));
-			if (comp == m_ComponentPools.end())
-				return false;
-			return static_cast<ComponentPool<T>*>(comp->second.get())->Has(entity.ID);
-		}
-
-		template<typename T>
-		T& GetComponent(Entity entity)
-		{
-			return GetPool<T>().Get(entity.ID);
-		}
-
-		template<typename T>
-		std::vector<T>& GetAll()
-		{
-			auto it = m_ComponentPools.find(typeid(T));
-			assert(it != m_ComponentPools.end() && "Component pool does not exist");
-			return static_cast<ComponentPool<T>*>(it->second.get())->Data();
+			return ref;
 		}
 
 	private:
-		template<typename T>
-		ComponentPool<T>& GetPool()
-		{
-			return *static_cast<ComponentPool<T>*>(m_ComponentPools.at(typeid(T)).get());
-		}
-
-		template<typename T>
-		ComponentPool<T>& GetOrCreatePool()
-		{
-			const auto& type = typeid(T);
-			if (!m_ComponentPools.contains(type))
-				m_ComponentPools[type] = std::make_unique<ComponentPool<T>>();
-			return *static_cast<ComponentPool<T>*>(m_ComponentPools[type].get());
-		}
-
-	private:
-		EntityID m_NextEntityID;
-		std::unordered_map<std::type_index, std::unique_ptr<IComponentPool>> m_ComponentPools;
+		World m_World;
+		std::vector<std::unique_ptr<System>> m_Systems;
 	};
 }
