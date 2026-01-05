@@ -10,5 +10,6 @@ namespace NGN
 	public:
 		virtual ~IComponentPool() = default;
 		virtual void Remove(EntityID entity) = 0;
+		virtual bool Has(EntityID id) const = 0;
 	};
 }

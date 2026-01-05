@@ -6,6 +6,7 @@ set(SOURCES
     Source/AppLayer.cpp
     Source/OverlayLayer.h
     Source/OverlayLayer.cpp
+    Source/TestLayer.h
     Source/VoidLayer.h
     Source/VoidLayer.cpp
 )

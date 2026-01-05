@@ -10,7 +10,7 @@ namespace NGN
 		glm::vec3 Scale{ 1.0f, 1.0f, 1.0f };
 	};
 
-	struct SpriteComponent
+	struct SpriteRendererComponent
 	{
 		uint32_t TextureID = 0;
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };

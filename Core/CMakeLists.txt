@@ -35,13 +35,15 @@ Source/Renderer/Shader.h
 Source/Renderer/Shader.cpp
 
 Source/Scene/Components.h
+Source/Scene/ComponentPool.h
+Source/Scene/ComponentPoolBase.h
 Source/Scene/Entity.h
 Source/Scene/Scene.h
 )
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Scene/ComponentPool.h" "Source/Scene/ComponentPoolBase.h")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

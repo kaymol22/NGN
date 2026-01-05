@@ -13,6 +13,8 @@ namespace NGN
 	{
 	public:
 
+		Scene() : m_NextEntityID(1) {}
+
 		Entity CreateEntity()
 		{
 			return Entity{ m_NextEntityID++ };
@@ -21,13 +23,17 @@ namespace NGN
 		void DestroyEntity(Entity entity)
 		{
 			for (auto& [_, pool] : m_ComponentPools)
-				pool->Remove(entity.ID);
+				if (pool->Has(entity.ID))
+					pool->Remove(entity.ID);
 		}
 
 		template<typename T>
 		T& AddComponent(Entity entity)
 		{
-			return GetOrCreatePool<T>.Add(entity.ID);
+			auto& comp = GetOrCreatePool<T>().Add(entity.ID);
+			NGN::Log::GetCoreLogger()->info("Added component pool: {0} for Entity {1}", typeid(T).name(), entity.ID);
+			return comp;
+
 		}
 
 		template<typename T>
@@ -48,7 +54,9 @@ namespace NGN
 		template<typename T>
 		std::vector<T>& GetAll()
 		{
-			return GetPool<T>().Data();
+			auto it = m_ComponentPools.find(typeid(T));
+			assert(it != m_ComponentPools.end() && "Component pool does not exist");
+			return static_cast<ComponentPool<T>*>(it->second.get())->Data();
 		}
 
 	private:
@@ -61,7 +69,7 @@ namespace NGN
 		template<typename T>
 		ComponentPool<T>& GetOrCreatePool()
 		{
-			auto type = typeid(T);
+			const auto& type = typeid(T);
 			if (!m_ComponentPools.contains(type))
 				m_ComponentPools[type] = std::make_unique<ComponentPool<T>>();
 			return *static_cast<ComponentPool<T>*>(m_ComponentPools[type].get());
