@@ -18,7 +18,26 @@ namespace NGN
 		void OnRender();
 
 		World& GetWorld() { return m_World; }
+		// To be used to fetch systems
 		const World& GetWorld() const { return m_World; }
+
+		template<typename T, typename... Args>
+		T& AddComponent(Entity entity, Args&&... args)
+		{
+			return m_World.AddComponent<T>(entity);
+		}
+
+		template<typename T>
+		bool HasComponent(Entity entity)
+		{
+			return m_World.HasComponent<T>(entity);
+		}
+
+		template<typename T>
+		bool GetComponent(Entity entity)
+		{
+			return m_World.GetComponent<T>(entity);
+		}
 
 		template<typename TSystem, typename... Args>
 		TSystem& AddSystem(Args&&... args)

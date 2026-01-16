@@ -42,6 +42,8 @@ Source/Scene/ComponentPoolBase.h
 Source/Scene/Entity.h
 Source/Scene/Scene.h
 Source/Scene/Scene.cpp
+Source/Scene/SpriteRenderSystem.cpp
+Source/Scene/SpriteRenderSystem.h
 Source/Scene/System.h
 Source/Scene/TransformDebugSystem.h
 Source/Scene/World.h

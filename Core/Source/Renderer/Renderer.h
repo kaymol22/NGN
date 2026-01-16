@@ -2,10 +2,12 @@
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include <filesystem>
 
-namespace Renderer{
+namespace Renderer
+{
 
 	struct Texture {
 		GLuint Handle = 0;
@@ -17,6 +19,17 @@ namespace Renderer{
 		GLuint Handle = 0;
 		Texture ColorAttachment;
 	};
+
+	void Init();
+	void Shutdown();
+
+	// TODO: Change down the line to take camera as arg
+	void BeginScene(const glm::mat4& viewProjection);
+	void EndScene();
+
+
+	// TODO: Separate to Renderer & Renderer2D 
+	void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
 
 	Texture CreateTexture(int width, int height);
 	Texture LoadTexture(const std::filesystem::path& path);

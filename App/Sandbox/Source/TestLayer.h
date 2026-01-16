@@ -19,16 +19,15 @@ public:
 		NGN::Log::GetCoreLogger()->info("TestLayer attached");
 
 		m_Scene = std::make_unique<NGN::Scene>();
-		auto& world = m_Scene->GetWorld();
 
-		auto a = world.CreateEntity();
-		auto b = world.CreateEntity();
+		auto a = m_Scene->CreateEntity();
+		auto b = m_Scene->CreateEntity();
 
-		world.AddComponent<NGN::TransformComponent>(a).Translation = { 1,2,3 };
-		world.AddComponent<NGN::TransformComponent>(b).Translation = { 4,5,6 };
+		m_Scene->AddComponent<NGN::TransformComponent>(a).Translation = { 1,2,3 };
+		m_Scene->AddComponent<NGN::TransformComponent>(b).Translation = { 4,5,6 };
 
-		world.AddComponent<NGN::SpriteRendererComponent>(a);
-		world.AddComponent<NGN::SpriteRendererComponent>(b);
+		m_Scene->AddComponent<NGN::SpriteRendererComponent>(a);
+		m_Scene->AddComponent<NGN::SpriteRendererComponent>(b);
 
 		m_Scene->AddSystem<NGN::TransformDebugSystem>();
 	}

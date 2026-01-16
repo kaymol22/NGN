@@ -15,7 +15,7 @@ OverlayLayer::OverlayLayer()
 {
 	std::println("Created new OverlayLayer");
 
-	m_Shader = Renderer::CreateGraphicsShader("Shaders/Transform.vertex.glsl", "Shaders/Texture.frag.glsl");
+	m_Shader = Renderer::CreateGraphicsShader("assets/Shaders/Transform.vertex.glsl", "assets/Shaders/Texture.frag.glsl");
 
 	glCreateVertexArrays(1, &m_VertexArray);
 	glCreateBuffers(1, &m_VertexBuffer);
@@ -54,7 +54,7 @@ OverlayLayer::OverlayLayer()
 	glVertexArrayAttribBinding(m_VertexArray, 0, 0);
 	glVertexArrayAttribBinding(m_VertexArray, 1, 0);
 
-	m_Texture = Renderer::LoadTexture("Textures/Button.png");
+	m_Texture = Renderer::LoadTexture("assets/Textures/Button.png");
 }
 
 OverlayLayer::~OverlayLayer()
