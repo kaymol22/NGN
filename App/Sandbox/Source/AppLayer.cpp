@@ -16,7 +16,7 @@ AppLayer::AppLayer()
 	std::println("Created new AppLayer!");
 	
 	// Create shaders
-	m_Shader = Renderer::CreateGraphicsShader("Shaders/Fullscreen.vert.glsl", "Shaders/Flame.glsl");
+	m_Shader = Renderer::CreateGraphicsShader("assets/Shaders/Fullscreen.vert.glsl", "assets/Shaders/Flame.glsl");
 
 	// Create geometry
 	glCreateVertexArrays(1, &m_VertexArray);

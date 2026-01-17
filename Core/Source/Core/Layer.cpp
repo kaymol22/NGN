@@ -18,6 +18,7 @@ namespace NGN {
 				if (layer.get() == from)
 				{
 					layer = std::move(to);
+					layer->OnAttach();
 					return;
 				}
 			}

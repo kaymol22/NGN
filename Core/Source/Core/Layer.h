@@ -9,7 +9,7 @@ namespace NGN {
 	public:
 		virtual ~Layer() = default;
 
-		// virtual void OnAttach() {}
+		virtual void OnAttach() {}
 		// virtual void OnDetach() {}
 		virtual void OnEvent(Event& event) {}
 
