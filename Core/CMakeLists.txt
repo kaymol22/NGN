@@ -32,6 +32,7 @@ Source/Renderer/GLUtils.cpp
 Source/Renderer/OrthographicCamera.cpp
 Source/Renderer/OrthographicCamera.h
 Source/Renderer/Renderer.h
+Source/Renderer/Renderer2D.h
 Source/Renderer/Renderer.cpp
 Source/Renderer/Shader.h
 Source/Renderer/Shader.cpp
@@ -51,7 +52,7 @@ Source/Scene/World.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "Source/Renderer/RendererAPI.h" "Source/Core/Assert.h")
 
 # enable precompile headers
 ngn_enable_pch(Core)
@@ -87,6 +88,8 @@ set_target_properties(Core PROPERTIES CXX_STANDARD 23 )
 
 # ensure GLFW doesn't include system gl headers
 target_compile_definitions(Core PUBLIC GLFW_INCLUDE_NONE)
+
+target_compile_definitions(Core PRIVATE $<$<CONFIG:Debug>:NGN_DEBUG>)
 
 # Link GLFW & OpenGL
 target_link_libraries(Core PUBLIC 

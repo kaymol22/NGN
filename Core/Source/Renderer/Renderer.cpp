@@ -14,7 +14,7 @@ namespace Renderer {
 	{
 		Texture result;
 		result.Width = width;
-		result.Height= height;
+		result.Height = height;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &result.Handle);
 
@@ -68,7 +68,6 @@ namespace Renderer {
 		return result;
 	}
 
-	// TODO: Set viewport intent - framebuffer size comes from texture at the moment
 	Framebuffer CreateFramebufferWithTexture(const Texture texture)
 	{
 		Framebuffer result;
@@ -88,7 +87,7 @@ namespace Renderer {
 	{
 		glNamedFramebufferTexture(framebuffer.Handle, GL_COLOR_ATTACHMENT0, texture.Handle, 0);
 
-		if (glCheckNamedFramebufferStatus(framebuffer.Handle, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		{
 			std::cerr << "Framebuffer is not complete: " << std::endl;
 			return false;
@@ -107,57 +106,4 @@ namespace Renderer {
 			0, 0, framebuffer.ColorAttachment.Width, framebuffer.ColorAttachment.Height,				// Destination rect
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
-
-	void Init()
-	{
-		glCreateVertexArrays(1, &s_Quad.VAO);
-		glCreateBuffers(1, &s_Quad.VBO);
-
-		struct QuadVertex
-		{
-			glm::vec3 Position;
-			glm::vec2 TexCoord;
-		};
-
-		QuadVertex vertices[4] = {
-			{{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f}},
-			{{ 0.5f, -0.5f, 0.0f}, {1.0f, 0.0f}},
-			{{ 0.5f,  0.5f, 0.0f}, {1.0f, 1.0f}},
-			{{-0.5f,  0.5f, 0.0f}, {0.0f, 1.0f}},
-		};
-	}
-
-	void BeginScene(const glm::mat4& vp)
-	{
-
-	}
-
-	void EndScene()
-	{
-
-	}
-
-	void Shutdown()
-	{
-
-	}
-
-	static void DrawQuad()
-	{
-		printf("Drawing quad");
-	}
-
-}
-
-namespace
-{
-	struct QuadData
-	{
-		GLuint VAO = 0;
-		GLuint VBO = 0;
-	};
-	
-	QuadData s_Quad;
-	GLuint s_SpriteShader = 0;
-	glm::mat4 s_ViewProjection;
 }
