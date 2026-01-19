@@ -4,9 +4,10 @@ set(SOURCES
 vendor/stb/stb_image.h
 vendor/stb/stb_image.cpp
 
-Source/Core/Base.h
+Source/Core/Assert.h
 Source/Core/Application.h
 Source/Core/Application.cpp
+Source/Core/Base.h
 Source/Core/Window.h
 Source/Core/Window.cpp
 Source/Core/Layer.h
@@ -24,22 +25,27 @@ Source/Events/ApplicationEvent.h
 Source/Events/KeyEvent.h
 Source/Events/MouseEvent.h
 
+Source/ImGui/ImGuiLayer.h
+Source/ImGui/ImGuiLayer.cpp
+
 Source/Math/Math.h
 Source/Math/Math.cpp
 
+Source/Renderer/Framebuffer.cpp
 Source/Renderer/GLUtils.h
 Source/Renderer/GLUtils.cpp
 Source/Renderer/OrthographicCamera.cpp
 Source/Renderer/OrthographicCamera.h
 Source/Renderer/Renderer.h
+Source/Renderer/RendererAPI.h
 Source/Renderer/Renderer2D.h
 Source/Renderer/Renderer.cpp
 Source/Renderer/Shader.h
 Source/Renderer/Shader.cpp
 
-Source/Scene/Components.h
 Source/Scene/ComponentPool.h
 Source/Scene/ComponentPoolBase.h
+Source/Scene/Components.h
 Source/Scene/Entity.h
 Source/Scene/Scene.h
 Source/Scene/Scene.cpp
@@ -48,11 +54,16 @@ Source/Scene/SpriteRenderSystem.h
 Source/Scene/System.h
 Source/Scene/TransformDebugSystem.h
 Source/Scene/World.h
+
+Source/Platform/OpenGL/OpenGLFramebuffer.h
+Source/Platform/OpenGL/OpenGLFramebuffer.cpp
+Source/Platform/OpenGL/OpenGLTexture.h
+Source/Platform/OpenGL/OpenGLTexture.cpp
 )
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Renderer/RendererAPI.h" "Source/Core/Assert.h")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)
@@ -75,8 +86,8 @@ if (EXISTS "${CMAKE_SOURCE_DIR}/External/glad/include")
     target_include_directories(Core PUBLIC "${CMAKE_SOURCE_DIR}/External/glad/include")
 endif()
 
-if (EXISTS "${CMAKE_SOURCE_DIR}/External/glfw3/include")
-    target_include_directories(Core PUBLIC "${CMAKE_SOURCE_DIR}/External/glfw3/include")
+if (EXISTS "${CMAKE_SOURCE_DIR}/External/glfw/include")
+    target_include_directories(Core PUBLIC "${CMAKE_SOURCE_DIR}/External/glfw/include")
 endif()
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/External/glm")
@@ -96,4 +107,5 @@ target_link_libraries(Core PUBLIC
     glad
     glfw
     glm::glm
+    imgui
 )

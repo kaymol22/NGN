@@ -7,10 +7,11 @@ namespace NGN {
 	class Layer
 	{
 	public:
+		Layer(const std::string& name = "Layer");
 		virtual ~Layer() = default;
 
 		virtual void OnAttach() {}
-		// virtual void OnDetach() {}
+		virtual void OnDetach() {}
 		virtual void OnEvent(Event& event) {}
 
 		virtual void OnUpdate(float timeStep) {}
@@ -25,5 +26,6 @@ namespace NGN {
 
 	private:
 		void QueueTransition(std::unique_ptr<Layer> layer);
+		std::string m_DebugName;
 	};
 }

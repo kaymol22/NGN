@@ -1,9 +1,11 @@
 #pragma once
 
+// TODO: Abstract Core renderer class from GL/GLFW
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include "RendererAPI.h"
 #include <filesystem>
 
 namespace Renderer
@@ -20,9 +22,6 @@ namespace Renderer
 		Texture ColorAttachment;
 	};
 
-	void Init();
-	void Shutdown();
-
 	// TODO: Change down the line to take camera as arg
 	void BeginScene(const glm::mat4& viewProjection);
 	void EndScene();
@@ -36,4 +35,20 @@ namespace Renderer
 	Framebuffer CreateFramebufferWithTexture(const Texture texture);
 	bool AttachTextureToFramebuffer(Framebuffer& framebuffer, const Texture texture);
 	void BlitFramebufferToSwapchain(const Framebuffer framebuffer);
+}
+
+namespace NGN
+{
+	class Renderer
+	{
+	public:
+		static void Init(RendererAPIType api = RendererAPIType::OpenGL);
+		static void Shutdown();
+
+		void BeginScene(const glm::mat4& viewProjection);
+		void EndScene();
+
+	private:
+		RendererAPIType s_API;
+	};
 }

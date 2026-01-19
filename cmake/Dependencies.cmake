@@ -11,7 +11,8 @@ set(GLFW_LOCAL_PATH "${CMAKE_SOURCE_DIR}/External/glfw")
 
 if (EXISTS "${GLFW_LOCAL_PATH}/CMakeLists.txt")
     message(STATUS "Using local GLFW at ${GLFW_LOCAL_PATH}")
-    add_subdirectory(${GLFW_LOCAL_PATH} EXCLUDE_FROM_ALL)
+    add_subdirectory(${GLFW_LOCAL_PATH})
+    set_target_properties(glfw PROPERTIES OUTPUT_NAME "glfw3")
 else()
     message(STATUS "Fetching GLFW from GitHub...")
     FetchContent_Declare(
@@ -19,7 +20,7 @@ else()
         DOWNLOAD_EXTRACT_TIMESTAMP OFF
         URL https://github.com/glfw/glfw/archive/refs/tags/3.4.zip
     )
-    FetchContent_MakeAvailable(glfw3)
+    FetchContent_MakeAvailable(glfw)
 endif()
 
 # -------------------------
@@ -80,6 +81,59 @@ if (TARGET ${GLM_REAL_TARGET})
         message(STATUS "Patching include directories for ${GLM_REAL_TARGET}")
         target_include_directories(${GLM_REAL_TARGET} INTERFACE "${GLM_LOCAL_PATH}")
     endif()
+endif()
+
+# -------------------------
+# IMGUI
+# -------------------------
+set(IMGUI_LOCAL_PATH "${CMAKE_SOURCE_DIR}/External/imgui")
+
+if (EXISTS "${IMGUI_LOCAL_PATH}/imgui.cpp")
+    message(STATUS "Using local ImGui at ${IMGUI_LOCAL_PATH}")
+
+    add_library(imgui STATIC
+        ${IMGUI_LOCAL_PATH}/imgui.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_draw.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_widgets.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_tables.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_demo.cpp
+        ${IMGUI_LOCAL_PATH}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_LOCAL_PATH}/backends/imgui_impl_opengl3.cpp
+    )
+
+    target_include_directories(imgui PUBLIC
+        ${IMGUI_LOCAL_PATH}
+        ${IMGUI_LOCAL_PATH}/backends
+    )
+
+    # Backend dependencies for ImGui
+    target_link_libraries(imgui PUBLIC glfw glad)
+
+else()
+    message(STATUS "Fetching ImGui from Github...")
+    FetchContent_Declare(
+        imgui
+        DOWNLOAD_EXTRACT_TIMESTAMP OFF
+        URL https://github.com/ocornut/imgui/archive/refs/heads/master.zip
+    )
+    FetchContent_Populate(imgui)
+
+    add_library(imgui STATIC
+        ${IMGUI_LOCAL_PATH}/imgui.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_draw.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_widgets.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_tables.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_impl_glfw.cpp
+        ${IMGUI_LOCAL_PATH}/imgui_impl_opengl3.cpp
+    )
+    
+    target_include_directories(imgui PUBLIC
+        ${IMGUI_LOCAL_PATH}
+        ${IMGUI_LOCAL_PATH}/backends
+    )
+
+    # Backend dependencies for ImGui
+    target_link_libraries(imgui PUBLIC glfw glad)
 endif()
 
 set_target_properties(glm PROPERTIES FOLDER "Dependencies")

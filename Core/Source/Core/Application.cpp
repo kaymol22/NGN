@@ -9,6 +9,9 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+// Remove later
+#include <imgui.h>
+
 #include <assert.h>
 #include <ranges>
 
@@ -36,6 +39,9 @@ namespace NGN {
 
 		m_Window = NGN::CreateScope<Window>(m_Specification.WindowSpec);
 		m_Window->Create();
+		// TEMP: Change later to actually be included in layer system
+		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
+		m_ImGuiLayer->OnAttach();
 
 		Renderer::Utils::InitOpenGLDebugMessageCallback();
 	}
@@ -73,6 +79,14 @@ namespace NGN {
 			// Main Layer update here
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(timeStep);
+
+			// TEMP: Simple window test for ImGui
+			m_ImGuiLayer->Begin();
+			ImGui::Begin("NGN Engine Test");
+			ImGui::Text("Welcome to the engine from ImGui :)");
+			ImGui::SliderFloat("Test Slider", &m_ImGuiLayer->m_TestValue, 0.0f, 1.0f);
+			ImGui::End();
+			m_ImGuiLayer->End();
 
 			// Keep Render and update separate - manual management of render thread
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)

@@ -11,12 +11,6 @@ namespace NGN
 	public:
 		void OnRender(Scene& scene) override
 		{
-			auto& world = scene.GetWorld();
-
-			auto& transforms = world.GetAll<TransformComponent>();
-			auto& sprites = world.GetAll<SpriteRendererComponent>();
-
-			/*Renderer::BeginScene(m_ViewProjection)*/
 		}
 	};
 }

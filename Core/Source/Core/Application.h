@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "Window.h"
 #include "Events/Event.h"
+#include "ImGui/ImGuiLayer.h"
 
 #include <glm/glm.hpp>
 
@@ -58,6 +59,7 @@ namespace NGN {
 	private:
 		ApplicationSpecification m_Specification;
 		NGN::Scope<Window> m_Window;
+		NGN::Ref<ImGuiLayer> m_ImGuiLayer; // TEMP: Testing ImGui
 		bool m_Running = false;
 
 		// Vector of unique pointers for layers
