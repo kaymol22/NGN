@@ -9,14 +9,15 @@
 
 #include <iostream>
 
-class TestLayer : public NGN::Layer
+class GameLayer : public NGN::Layer
 {
 public:
-	TestLayer() = default;
+	GameLayer()
+		: Layer("Game", NGN::LayerFlags::WorldSpace) {}
 	
 	void OnAttach() override
 	{
-		NGN::Log::GetCoreLogger()->info("TestLayer attached");
+		NGN::Log::GetCoreLogger()->info("GameLayer attached");
 
 		m_Scene = std::make_unique<NGN::Scene>();
 
@@ -32,9 +33,14 @@ public:
 		m_Scene->AddSystem<NGN::TransformDebugSystem>();
 	}
 
-	void OnUpdate(float ts)
+	void OnUpdate(NGN::Timestep ts)
 	{
 		m_Scene->OnUpdate(ts);
+	}
+
+	void OnRender()
+	{
+		m_Scene->OnRender();
 	}
 	
 private:

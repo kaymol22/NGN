@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "RendererAPI.h"
+#include "RenderCommand.h"
 #include <filesystem>
 
 namespace Renderer
@@ -42,13 +42,24 @@ namespace NGN
 	class Renderer
 	{
 	public:
-		static void Init(RendererAPIType api = RendererAPIType::OpenGL);
+		static void Init();
 		static void Shutdown();
 
-		void BeginScene(const glm::mat4& viewProjection);
-		void EndScene();
+		static void BeginScene(const glm::mat4& viewProjection);
+		static void EndScene();
+
+		static void OnWindowResize(uint32_t width, uint32_t height);
+
+		// TODO: Research renderer submission & queues - shader, VAO's, transforms
+
+		static RendererAPIType GetAPI() { return RendererAPI::GetAPI();  }
 
 	private:
-		RendererAPIType s_API;
+		struct SceneData
+		{
+			glm::mat4 ViewProjectionMatrix;
+		};
+
+		static Scope<SceneData> s_SceneData;
 	};
 }

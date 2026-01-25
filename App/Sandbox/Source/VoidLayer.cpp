@@ -5,7 +5,7 @@
 #include "Core/Application.h"
 #include "Renderer/Renderer.h"
 
-void VoidLayer::OnUpdate(float timeStep)
+void VoidLayer::OnUpdate(NGN::Timestep ts)
 {
 	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_2) == GLFW_PRESS)
 	{

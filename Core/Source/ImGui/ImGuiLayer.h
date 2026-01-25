@@ -11,7 +11,10 @@ namespace NGN
 	class ImGuiLayer : public Layer
 	{
 	public:
-		ImGuiLayer();
+		ImGuiLayer() : Layer(
+							"ImGui",
+							LayerFlags::UsesImGui | LayerFlags::ScreenSpace | LayerFlags::Debug) {}
+		
 		virtual ~ImGuiLayer() override = default;
 
 		virtual void OnAttach() override;
@@ -22,7 +25,9 @@ namespace NGN
 		void End();
 
 		void BlockEvents(bool block) { m_BlockEvents = block; }
+
 		void SetDarkThemeColors();
+		
 		uint32_t GetActiveWidgetID() const;
 		
 		// Test, remove later

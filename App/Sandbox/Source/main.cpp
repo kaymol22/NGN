@@ -2,7 +2,8 @@
 
 #include "AppLayer.h"
 #include "OverlayLayer.h"
-#include "TestLayer.h"
+#include "GameLayer.h"
+#include "DebugLayer.h"
 #include "Core/Log.h"
 
 int main() {
@@ -21,6 +22,7 @@ int main() {
 	NGN::Application application(appSpec);
 	/*application.PushLayer<AppLayer>();
 	application.PushLayer<OverlayLayer>();*/
-	application.PushLayer<TestLayer>();
+	application.PushLayer<GameLayer>();
+	application.PushLayer<DebugLayer>();
 	application.Run();
 }

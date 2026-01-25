@@ -64,9 +64,9 @@ void AppLayer::OnEvent(NGN::Event& event)
 	dispatcher.Dispatch<NGN::WindowCloseEvent>([this](NGN::WindowCloseEvent& e) { return OnWindowClosed(e); });
 }
 
-void AppLayer::OnUpdate(float timeStep)
+void AppLayer::OnUpdate(NGN::Timestep ts)
 {
-	m_Time += timeStep;
+	/*m_Time += timeStep;*/
 
 	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_1) == GLFW_PRESS)
 	{

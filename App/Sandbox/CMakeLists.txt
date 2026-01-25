@@ -4,9 +4,10 @@ set(SOURCES
     Source/main.cpp
     Source/AppLayer.h
     Source/AppLayer.cpp
+    Source/DebugLayer.h
+    Source/GameLayer.h
     Source/OverlayLayer.h
     Source/OverlayLayer.cpp
-    Source/TestLayer.h
     Source/VoidLayer.h
     Source/VoidLayer.cpp
 )

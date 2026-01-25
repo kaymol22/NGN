@@ -1,8 +1,8 @@
 #include "Core/ngnpch.h"
-
 #include "Renderer.h"
+#include "Renderer2D.h"
 
-#include "GLUtils.h"
+#include "Platform/OpenGL/GLUtils.h"
 
 #include <print>
 
@@ -105,5 +105,38 @@ namespace Renderer {
 		glBlitFramebuffer(0, 0, framebuffer.ColorAttachment.Width, framebuffer.ColorAttachment.Height,  // Source rect
 			0, 0, framebuffer.ColorAttachment.Width, framebuffer.ColorAttachment.Height,				// Destination rect
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	}
+}
+
+namespace NGN
+{
+
+	void Renderer::Init()
+	{
+		//TODO: Profile here
+
+		RenderCommand::Init();
+		//Renderer2D::Init();
+	}
+
+	void Renderer::Shutdown()
+	{
+		//Renderer2D::Shutdown();
+	}
+
+	void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
+	// TODO: Pass in camera later
+	void Renderer::BeginScene(const glm::mat4& viewProjection)
+	{
+		NGN_CORE_INFO("Renderer::BeginScene called");
+	}
+
+	void Renderer::EndScene()
+	{
+		NGN_CORE_INFO("Renderer::EndScene called");
 	}
 }

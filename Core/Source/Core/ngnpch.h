@@ -16,6 +16,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+
+#include "Base.h"
+
 #ifdef NGN_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif 

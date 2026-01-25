@@ -4,7 +4,8 @@
 #include "Core/ngnpch.h"
 
 #include "Application.h"
-#include "Renderer/GLUtils.h"
+#include "Renderer/RenderCommand.h"
+#include "Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -37,13 +38,19 @@ namespace NGN {
 
 		m_Specification.WindowSpec.EventCallback = [this](Event& event) { RaiseEvent(event); };
 
+		// Window Creation
 		m_Window = NGN::CreateScope<Window>(m_Specification.WindowSpec);
 		m_Window->Create();
-		// TEMP: Change later to actually be included in layer system
+
+		// Select renderer API from app spec
+		RendererAPI::SetAPI(m_Specification.RendererAPI);
+
+		// Initialise renderer (backend + rendercommand)
+		Renderer::Init();
+		
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
 
-		Renderer::Utils::InitOpenGLDebugMessageCallback();
 	}
 
 	Application::~Application()
@@ -73,25 +80,52 @@ namespace NGN {
 			}
 
 			float currentTime = GetTime();
-			float timeStep = glm::clamp(currentTime - lastTime, 0.001f, 0.1f);
+			float delta = currentTime - lastTime;
 			lastTime = currentTime;
 
-			// Main Layer update here
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-				layer->OnUpdate(timeStep);
+			m_Timestep = Timestep(glm::clamp(delta, 0.001f, 0.1f));
 
-			// TEMP: Simple window test for ImGui
+			/*========== Updates =============*/
+			// TODO: Look into fixed vs variable update - future expansion for suspending/pausing layers
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+				layer->OnUpdate(m_Timestep);
+
+			/*========== Rendering =============*/
+			glm::vec4 clearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+			NGN::RenderCommand::SetClearColor(clearColor);
+			NGN::RenderCommand::Clear();
+
+			// World Space Render
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+			{
+				if (layer->HasFlag(LayerFlags::WorldSpace))
+					layer->OnRender();
+			}
+
+			// ScreenSpace/Overlay Render
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+			{
+				if (layer->HasFlag(LayerFlags::ScreenSpace))
+					layer->OnRender();
+			}
+
+			// Debug/Profiling Render
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+			{
+				if (layer->HasFlag(LayerFlags::Debug))
+					layer->OnRender();
+			}
+
+			/*========== ImGuiRendering =============*/
 			m_ImGuiLayer->Begin();
-			ImGui::Begin("NGN Engine Test");
-			ImGui::Text("Welcome to the engine from ImGui :)");
-			ImGui::SliderFloat("Test Slider", &m_ImGuiLayer->m_TestValue, 0.0f, 1.0f);
-			ImGui::End();
-			m_ImGuiLayer->End();
 
-			// Keep Render and update separate - manual management of render thread
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-				layer->OnRender();
+			{
+				if (layer->HasFlag(LayerFlags::UsesImGui))
+					layer->OnImGuiRender();
+			}
 
+			m_ImGuiLayer->End();
 
 			m_Window->Update();
 

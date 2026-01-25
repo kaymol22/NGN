@@ -17,7 +17,7 @@ public:
 
 	virtual void OnEvent(NGN::Event& event) override;
 
-	void OnUpdate(float timeStep) override;
+	void OnUpdate(NGN::Timestep ts) override;
 	void OnRender() override;
 private:
 	bool IsButtonHovered() const;

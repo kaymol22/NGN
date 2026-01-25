@@ -4,7 +4,9 @@
 #include "Layer.h"
 #include "Window.h"
 #include "Events/Event.h"
+#include "Timestep.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/RendererAPI.h"
 
 #include <glm/glm.hpp>
 
@@ -16,6 +18,7 @@ namespace NGN {
 	{
 		std::string Name = "Application";
 		WindowSpecification WindowSpec;
+		RendererAPIType RendererAPI = RendererAPIType::OpenGL;
 	};
 
 	class Application
@@ -54,19 +57,29 @@ namespace NGN {
 
 		Window& GetWindow() { return *m_Window; }
 
+		Timestep GetTimestep() const { return m_Timestep; }
+
 		static Application& Get();
 		static float GetTime();
 	private:
-		ApplicationSpecification m_Specification;
-		NGN::Scope<Window> m_Window;
-		NGN::Ref<ImGuiLayer> m_ImGuiLayer; // TEMP: Testing ImGui
-		bool m_Running = false;
-
+		
 		// Vector of unique pointers for layers
 		// TODO: Evaluate switch to std::stack - though not guarenteed to be contiguous like vector or string*
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
+		size_t m_OverlayInsertIndex = 0;
 
 		std::vector<std::move_only_function<void()>> m_PendingTransitions;
+	
+	private:
+		ApplicationSpecification m_Specification;
+		
+		NGN::Scope<Window> m_Window;
+		
+		NGN::Ref<ImGuiLayer> m_ImGuiLayer; // TEMP: Testing ImGui
+
+		Timestep m_Timestep;
+		
+		bool m_Running = false;
 
 		friend class Layer;
 	};

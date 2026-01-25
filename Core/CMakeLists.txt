@@ -8,17 +8,18 @@ Source/Core/Assert.h
 Source/Core/Application.h
 Source/Core/Application.cpp
 Source/Core/Base.h
-Source/Core/Window.h
-Source/Core/Window.cpp
+Source/Core/KeyCodes.h
 Source/Core/Layer.h
 Source/Core/Layer.cpp
-Source/Core/KeyCodes.h
-Source/Core/MouseCodes.h
 Source/Core/Log.h
 Source/Core/Log.cpp
+Source/Core/MouseCodes.h
 Source/Core/ngnpch.h
 Source/Core/ngnpch.cpp
 Source/Core/PlatformDetection.h
+Source/Core/Timestep.h
+Source/Core/Window.h
+Source/Core/Window.cpp
 
 Source/Events/Event.h
 Source/Events/ApplicationEvent.h
@@ -32,11 +33,12 @@ Source/Math/Math.h
 Source/Math/Math.cpp
 
 Source/Renderer/Framebuffer.cpp
-Source/Renderer/GLUtils.h
-Source/Renderer/GLUtils.cpp
 Source/Renderer/OrthographicCamera.cpp
 Source/Renderer/OrthographicCamera.h
+Source/Renderer/RenderCommand.cpp
+Source/Renderer/RenderCommand.h
 Source/Renderer/Renderer.h
+Source/Renderer/RendererAPI.cpp
 Source/Renderer/RendererAPI.h
 Source/Renderer/Renderer2D.h
 Source/Renderer/Renderer.cpp
@@ -57,8 +59,12 @@ Source/Scene/World.h
 
 Source/Platform/OpenGL/OpenGLFramebuffer.h
 Source/Platform/OpenGL/OpenGLFramebuffer.cpp
+Source/Platform/OpenGL/OpenGLRendererAPI.cpp
+Source/Platform/OpenGL/OpenGLRendererAPI.h
 Source/Platform/OpenGL/OpenGLTexture.h
 Source/Platform/OpenGL/OpenGLTexture.cpp
+Source/Platform/OpenGL/GLUtils.h
+Source/Platform/OpenGL/GLUtils.cpp
 )
 
 add_library(Core STATIC)

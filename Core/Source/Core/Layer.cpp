@@ -6,11 +6,6 @@
 
 namespace NGN {
 
-	Layer::Layer(const std::string& name)
-		: m_DebugName(name)
-	{
-	}
-
 	void Layer::QueueTransition(std::unique_ptr<Layer> toLayer)
 	{
 		auto* app = &Application::Get();

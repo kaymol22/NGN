@@ -74,7 +74,7 @@ void OverlayLayer::OnEvent(NGN::Event& event)
 	dispatcher.Dispatch<NGN::MouseButtonPressedEvent>([this](NGN::MouseButtonPressedEvent& e) { return OnMouseButtonPressed(e); });
 }
 
-void OverlayLayer::OnUpdate(float timeStep)
+void OverlayLayer::OnUpdate(NGN::Timestep ts)
 {
 	m_IsHovered = IsButtonHovered();
 }

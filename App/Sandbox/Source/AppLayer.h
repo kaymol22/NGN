@@ -18,7 +18,7 @@ public:
 
 	virtual void OnEvent(NGN::Event& event) override;
 
-	virtual void OnUpdate(float timeStep) override;
+	virtual void OnUpdate(NGN::Timestep ts) override;
 	virtual void OnRender() override;
 private:
 	bool OnMouseButtonPressed(NGN::MouseButtonPressedEvent& event);

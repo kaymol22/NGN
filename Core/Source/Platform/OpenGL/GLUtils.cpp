@@ -4,7 +4,7 @@
 
 #include <format>
 
-namespace Renderer::Utils {
+namespace GLUtils {
 
 	const char* GLDebugSourceToString(GLenum source)
 	{
@@ -59,9 +59,9 @@ namespace Renderer::Utils {
 		if (severity != GL_DEBUG_SEVERITY_MEDIUM && severity != GL_DEBUG_SEVERITY_HIGH)
 			return;
 
-		const char* sourceStr = Utils::GLDebugSourceToString(source);
-		const char* typeStr = Utils::GLDebugTypeToString(type);
-		const char* severityStr = Utils::GLDebugSeverityToString(severity);
+		const char* sourceStr = GLUtils::GLDebugSourceToString(source);
+		const char* typeStr = GLUtils::GLDebugTypeToString(type);
+		const char* severityStr = GLUtils::GLDebugSeverityToString(severity);
 
 		std::cout << std::format("[OpenGL] [{} - {} ({})]: [{}] {}\n", severityStr, typeStr, id, sourceStr, message);
 	}

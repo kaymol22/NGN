@@ -12,7 +12,7 @@ public:
 	VoidLayer() = default;
 	virtual ~VoidLayer() = default;
 
-	void OnUpdate(float timeStep) override;
+	void OnUpdate(NGN::Timestep ts) override;
 	void OnRender() override;
 private:
 	uint32_t m_Shader = 0;

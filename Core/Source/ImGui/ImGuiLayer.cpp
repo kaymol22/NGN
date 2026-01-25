@@ -11,10 +11,6 @@
 
 namespace NGN
 {
-	ImGuiLayer::ImGuiLayer()
-		: Layer("ImGuiLayer")
-	{
-	}
 
 	void ImGuiLayer::OnAttach()
 	{
