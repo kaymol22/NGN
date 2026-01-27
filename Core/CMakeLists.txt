@@ -69,7 +69,7 @@ Source/Platform/OpenGL/GLUtils.cpp
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "Source/Platform/OpenGL/OpenGLShader.h" "Source/Platform/OpenGL/OpenGLShader.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

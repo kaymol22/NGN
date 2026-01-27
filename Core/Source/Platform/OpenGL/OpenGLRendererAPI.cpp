@@ -12,6 +12,8 @@ namespace NGN
 
 #ifdef NGN_DEBUG
 		GLUtils::InitOpenGLDebugMessageCallback();
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
 	}
 
