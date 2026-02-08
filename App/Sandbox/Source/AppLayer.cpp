@@ -11,7 +11,7 @@
 
 #include <print>
 
-AppLayer::AppLayer()
+AppLayer::AppLayer() : Layer("Game", NGN::LayerFlags::WorldSpace)
 {
 	std::println("Created new AppLayer!");
 	
@@ -66,7 +66,7 @@ void AppLayer::OnEvent(NGN::Event& event)
 
 void AppLayer::OnUpdate(NGN::Timestep ts)
 {
-	/*m_Time += timeStep;*/
+	m_Time += ts.GetSeconds();
 
 	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_1) == GLFW_PRESS)
 	{

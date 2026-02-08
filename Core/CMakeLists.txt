@@ -32,6 +32,7 @@ Source/ImGui/ImGuiLayer.cpp
 Source/Math/Math.h
 Source/Math/Math.cpp
 
+Source/Renderer/Buffer.h
 Source/Renderer/Framebuffer.cpp
 Source/Renderer/OrthographicCamera.cpp
 Source/Renderer/OrthographicCamera.h
@@ -40,10 +41,12 @@ Source/Renderer/RenderCommand.h
 Source/Renderer/Renderer.h
 Source/Renderer/RendererAPI.cpp
 Source/Renderer/RendererAPI.h
+Source/Renderer/Renderer2D.cpp
 Source/Renderer/Renderer2D.h
 Source/Renderer/Renderer.cpp
 Source/Renderer/Shader.h
 Source/Renderer/Shader.cpp
+Source/Renderer/VertexArray.h
 
 Source/Scene/ComponentPool.h
 Source/Scene/ComponentPoolBase.h
@@ -57,19 +60,23 @@ Source/Scene/System.h
 Source/Scene/TransformDebugSystem.h
 Source/Scene/World.h
 
+Source/Platform/OpenGL/OpenGLBuffer.h
 Source/Platform/OpenGL/OpenGLFramebuffer.h
 Source/Platform/OpenGL/OpenGLFramebuffer.cpp
 Source/Platform/OpenGL/OpenGLRendererAPI.cpp
 Source/Platform/OpenGL/OpenGLRendererAPI.h
+Source/Platform/OpenGL/OpenGLShader.cpp
+Source/Platform/OpenGL/OpenGLShader.h
 Source/Platform/OpenGL/OpenGLTexture.h
 Source/Platform/OpenGL/OpenGLTexture.cpp
+Source/Platform/OpenGL/OpenGLVertexArray.h
 Source/Platform/OpenGL/GLUtils.h
 Source/Platform/OpenGL/GLUtils.cpp
 )
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Platform/OpenGL/OpenGLShader.h" "Source/Platform/OpenGL/OpenGLShader.cpp")
+target_sources(Core PRIVATE ${SOURCES} "Source/Platform/OpenGL/OpenGLVertexArray.cpp" "Source/Platform/OpenGL/OpenGLBuffer.cpp" "Source/Renderer/Buffer.cpp" "Source/Renderer/VertexArray.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

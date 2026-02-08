@@ -7,6 +7,8 @@
 
 void VoidLayer::OnUpdate(NGN::Timestep ts)
 {
+	m_Time = ts.GetSeconds();
+
 	if (glfwGetKey(NGN::Application::Get().GetWindow().GetHandle(), GLFW_KEY_2) == GLFW_PRESS)
 	{
 		TransitionTo<AppLayer>();

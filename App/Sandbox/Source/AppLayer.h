@@ -14,6 +14,7 @@ class AppLayer : public NGN::Layer
 {
 public:
 	AppLayer();
+
 	virtual ~AppLayer();
 
 	virtual void OnEvent(NGN::Event& event) override;

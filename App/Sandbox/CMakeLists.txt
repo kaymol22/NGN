@@ -5,6 +5,7 @@ set(SOURCES
     Source/AppLayer.h
     Source/AppLayer.cpp
     Source/DebugLayer.h
+    Source/GameLayer.cpp
     Source/GameLayer.h
     Source/OverlayLayer.h
     Source/OverlayLayer.cpp

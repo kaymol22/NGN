@@ -60,6 +60,35 @@ namespace NGN
 			return static_cast<ComponentPool<T>*>(it->second.get())->Data();
 		}
 
+		// Variadic template func - can pass in any number of Component types to return
+		// entities with all arg components
+		// TODO: Look into how to get smallest pool set to firstPool dynamically,
+		//		potentially expand to check cache first, return iterable container?
+		template<typename... Components>
+		std::vector<Entity> View()
+		{
+			NGN_CORE_ASSERT(sizeof...(Components) > 0, "World: View requires at least one component");
+
+			// Chooses first type in arg - try to call smallest pool first for now**
+			using First = std::tuple_element_t<0, std::tuple<Components...>>;
+			auto& firstPool = GetPool<First>();
+
+			std::vector<Entity> result;
+			// Reserve memory the size of first pool - worst case result
+			result.reserve(firstPool.Data().size());
+
+			for (auto& [_, entityID] : firstPool.IndexToEntity())
+			{
+				Entity entity{ entityID };
+
+				// Fold expression - check if all return true regardless of arg count, build vector of desired entities
+				if ((HasComponent<Components>(entity) && ...))
+					result.push_back(entity);
+			}
+
+			return result;
+		}
+
 	private:
 		template<typename T>
 		ComponentPool<T>& GetPool()

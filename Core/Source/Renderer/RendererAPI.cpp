@@ -14,6 +14,7 @@ namespace NGN
 			return nullptr;
 
 		case RendererAPIType::OpenGL:
+			NGN_CORE_INFO("s_RendererAPI initialized to OpenGL");
 			return CreateScope<OpenGLRendererAPI>();
 		}
 

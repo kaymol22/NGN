@@ -61,8 +61,11 @@ namespace NGN {
 
 		static Application& Get();
 		static float GetTime();
+
 	private:
-		
+		bool OnWindowResize(WindowResizeEvent& e);
+
+	private:
 		// Vector of unique pointers for layers
 		// TODO: Evaluate switch to std::stack - though not guarenteed to be contiguous like vector or string*
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
@@ -80,6 +83,7 @@ namespace NGN {
 		Timestep m_Timestep;
 		
 		bool m_Running = false;
+		bool m_Minimized = false;
 
 		friend class Layer;
 	};

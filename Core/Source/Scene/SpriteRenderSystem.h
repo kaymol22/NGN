@@ -3,14 +3,14 @@
 #include "Scene.h"
 #include "System.h"
 #include "Components.h"
+#include "Renderer/OrthographicCamera.h"
 
 namespace NGN
 {
 	class SpriteRenderSystem : public System
 	{
 	public:
-		void OnRender(Scene& scene) override
-		{
-		}
+		void OnCreate(Scene& scene) override;
+		void OnRender(Scene& scene) override;
 	};
 }

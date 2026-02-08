@@ -9,7 +9,7 @@
 class VoidLayer : public NGN::Layer
 {
 public:
-	VoidLayer() = default;
+	VoidLayer() : Layer("Game", NGN::LayerFlags::WorldSpace) {}
 	virtual ~VoidLayer() = default;
 
 	void OnUpdate(NGN::Timestep ts) override;

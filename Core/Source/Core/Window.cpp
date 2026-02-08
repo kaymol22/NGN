@@ -37,7 +37,14 @@ namespace NGN {
 		}
 
 		glfwMakeContextCurrent(m_Handle);
-		gladLoadGL(glfwGetProcAddress);
+		if (!gladLoadGL(glfwGetProcAddress))
+		{
+			NGN_CORE_ASSERT(false, "Failed to initialize GLAD");
+		}
+
+		NGN_CORE_INFO("OpenGL Vendor: {}", (const char*)glGetString(GL_VENDOR));
+		NGN_CORE_INFO("OpenGL Renderer: {}", (const char*)glGetString(GL_RENDERER));
+		NGN_CORE_INFO("OpenGL Version: {}", (const char*)glGetString(GL_VERSION));
 
 		glfwSwapInterval(m_Specification.VSync ? 1 : 0);
 

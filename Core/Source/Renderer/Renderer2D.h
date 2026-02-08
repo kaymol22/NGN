@@ -6,6 +6,8 @@
 
 namespace NGN
 {
+	using EntityID = uint32_t;
+
 	class Renderer2D
 	{
 	public:
@@ -16,12 +18,15 @@ namespace NGN
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
 		/* For editor/debug */
 		static void BeginScene(const OrthographicCamera& camera);
+		static void BeginScene(const glm::mat4& vpMatrix);
 
 		static void EndScene();
 
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, const glm::vec4& color);
-		static void DrawQuad(const::glm::mat4& transform, const glm::vec4& color);
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color, EntityID id);
+
+		static void Flush();
 	};
 }

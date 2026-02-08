@@ -47,6 +47,12 @@ namespace NGN {
 
 		// Initialise renderer (backend + rendercommand)
 		Renderer::Init();
+		// Call resize event once at startup
+		glm::vec2 size = m_Window->GetFramebufferSize();
+		Renderer::OnWindowResize(
+			static_cast<uint32_t>(size.x),
+			static_cast<uint32_t>(size.y)
+		);
 		
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
@@ -84,6 +90,7 @@ namespace NGN {
 			lastTime = currentTime;
 
 			m_Timestep = Timestep(glm::clamp(delta, 0.001f, 0.1f));
+			glm::vec2 framebufferSize = Application::GetFramebufferSize();
 
 			/*========== Updates =============*/
 			// TODO: Look into fixed vs variable update - future expansion for suspending/pausing layers
@@ -92,6 +99,7 @@ namespace NGN {
 
 			/*========== Rendering =============*/
 			glm::vec4 clearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
 			NGN::RenderCommand::SetClearColor(clearColor);
 			NGN::RenderCommand::Clear();
 
@@ -148,6 +156,20 @@ namespace NGN {
 			if (event.Handled)
 				break;
 		}
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		m_Minimized = false;
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
 	}
 
 	glm::vec2 Application::GetFramebufferSize() const

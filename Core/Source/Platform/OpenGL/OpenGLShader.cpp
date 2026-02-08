@@ -170,4 +170,52 @@ namespace NGN
 
 		m_RendererID = program;
 	}
+
+	int OpenGLShader::GetUniformLocation(const std::string& name)
+	{
+		if (m_UniformLocationCache.contains(name))
+			return m_UniformLocationCache[name];
+
+		int location = glGetUniformLocation(m_RendererID, name.c_str());
+		if (location == -1)
+			NGN_CORE_WARN("Uniform '{}' not found in shader '{}'", name, m_Name);
+
+		m_UniformLocationCache[name] = location;
+		return location;
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, int value)
+	{
+
+	}
+
+	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	{
+
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, float value)
+	{
+
+	}
+
+	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
+	{
+
+	}
+
+	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
+	{
+
+	}
+
+	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
+	{
+
+	}
+
+	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
+	{
+
+	}
 }

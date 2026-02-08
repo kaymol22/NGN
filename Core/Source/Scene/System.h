@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Renderer/OrthographicCamera.h"
+
 namespace NGN
 {
 	class Scene;
@@ -12,5 +14,6 @@ namespace NGN
 		virtual void OnCreate(Scene& scene) {}
 		virtual void OnUpdate(Scene& scene, float dt) {}
 		virtual void OnRender(Scene& scene) {}
+		/*virtual void OnRender(Scene& scene, const OrthographicCamera& camera) {}*/
 	};
 }

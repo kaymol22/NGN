@@ -45,16 +45,27 @@ namespace NGN
 			size_t index = m_EntityToIndex[entity];
 			size_t last = m_Data.size() - 1;
 
+			EntityID lastEntity = m_IndexToEntity[last];
+
 			// Move target to last slot in array
 			m_Data[index] = std::move(m_Data[last]);
 
-			EntityID movedEntity = m_IndexToEntity[last];
-			m_EntityToIndex[movedEntity] = index;
-			m_IndexToEntity[index] = movedEntity;
+			m_EntityToIndex[lastEntity] = index;
+			m_IndexToEntity[index] = lastEntity;
 
 			m_Data.pop_back();
 			m_EntityToIndex.erase(entity);
 			m_IndexToEntity.erase(last);
+		}
+
+		const std::unordered_map<size_t, EntityID>& IndexToEntity() const
+		{
+			return m_IndexToEntity;
+		}
+
+		const std::unordered_map<size_t, EntityID>& EntityToIndex() const
+		{
+			return m_EntityToIndex;
 		}
 
 		std::vector<T>& Data() { return m_Data; }
