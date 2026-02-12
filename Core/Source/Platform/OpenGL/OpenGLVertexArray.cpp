@@ -67,14 +67,14 @@ namespace NGN
 				case ShaderDataType::Float4:
 				{
 					/* DEBUG */
-					NGN_CORE_INFO(
+					/*NGN_CORE_INFO(
 						"VAO Attr {0}: type={1}, components={2}, stride={3}, offset={4}",
 						m_VertexBufferIndex,
 						(int)element.Type,
 						element.GetComponentCount(),
 						layout.GetStride(),
 						element.Offset
-					);
+					);*/
 
 					glVertexAttribPointer(
 						m_VertexBufferIndex,
@@ -94,14 +94,14 @@ namespace NGN
 				case ShaderDataType::Bool:
 				{
 					/* DEBUG */
-					NGN_CORE_INFO(
+					/*NGN_CORE_INFO(
 						"VAO Attr {0}: type={1}, components={2}, stride={3}, offset={4}",
 						m_VertexBufferIndex,
 						(int)element.Type,
 						element.GetComponentCount(),
 						layout.GetStride(),
 						element.Offset
-					);
+					);*/
 
 					glVertexAttribIPointer(
 						m_VertexBufferIndex,

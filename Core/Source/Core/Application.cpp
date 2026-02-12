@@ -2,6 +2,7 @@
 	Owns main window, manages update loop, tracks layers
 */
 #include "Core/ngnpch.h"
+#include "Core/Profile.h"
 
 #include "Application.h"
 #include "Renderer/RenderCommand.h"
@@ -28,6 +29,7 @@ namespace NGN {
 
 	Application::Application(const ApplicationSpecification& specification) : m_Specification(specification)
 	{
+		NGN_CORE_ASSERT(!s_Application, "Application already exists!");
 		s_Application = this;
 
 		glfwSetErrorCallback(GLFWErrorCallback);
@@ -57,12 +59,15 @@ namespace NGN {
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
 
+		// Start Profiling Session
+		NGN_PROFILE_BEGIN_SESSION("NGN Runtime", "logs/ngn_profile.json");
 	}
 
 	Application::~Application()
 	{
-		m_Window->Destroy();
+		NGN_PROFILE_END_SESSION();
 
+		m_Window->Destroy();
 		glfwTerminate();
 
 		s_Application = nullptr;
@@ -70,6 +75,8 @@ namespace NGN {
 
 	void Application::Run()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		m_Running = true;
 
 		float lastTime = GetTime();

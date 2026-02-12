@@ -33,12 +33,12 @@ public:
 		auto b = m_Scene->CreateEntity();
 
 		auto& aTransform = m_Scene->AddComponent<NGN::TransformComponent>(a);
-		aTransform.Translation = { 0, 0, 0 };
-		aTransform.Scale = { 100, 100, 1 };
+		aTransform.Translation = { 0.5f, -0.5f, 0.0f };
+		aTransform.Scale = { 0.25f, 0.25f, 1.0f };
 		
 		auto& bTransform = m_Scene->AddComponent<NGN::TransformComponent>(b);
-		bTransform.Translation = { -100, 100, 0 };
-		bTransform.Scale = { 50, 50, 1 };
+		bTransform.Translation = { 0.5f, 0.5f, 0.0f };
+		bTransform.Scale = { 0.25f, 0.25f, 1.0f };
 
 		auto& aColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(a);
 		auto& bColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(b);
@@ -60,17 +60,11 @@ public:
 
 	void OnRender()
 	{
-		NGN_CORE_INFO("GameLayer::OnRender()");
+		NGN_INFO("GameLayer::OnRender()");
+		m_Scene->SetActiveCamera(m_Camera.GetProjectionMatrix());
 		m_Scene->OnRender();
 
 		NGN_INFO("VP= {0}", glm::to_string(m_Camera.GetViewProjectionMatrix()));
-		NGN::Renderer2D::BeginScene(m_Camera.GetViewProjectionMatrix());
-		NGN::Renderer2D::DrawQuad(
-			glm::scale(glm::mat4(1.0f), glm::vec3(0.5f)),
-			{ 1, 0, 0, 1 },
-			0
-		);
-		NGN::Renderer2D::EndScene();
 	}
 	
 private:

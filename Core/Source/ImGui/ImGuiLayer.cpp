@@ -8,6 +8,7 @@
 
 #include "Core/Application.h"
 #include "Core/Window.h"
+#include "Core/Profile.h"
 
 namespace NGN
 {
@@ -15,6 +16,7 @@ namespace NGN
 	void ImGuiLayer::OnAttach()
 	{
 		// TODO: Profile here
+		/*NGN_PROFILE_FUNCTION();*/
 
 		// Set up Dear ImGui Context
 		IMGUI_CHECKVERSION();

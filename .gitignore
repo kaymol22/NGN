@@ -2,7 +2,6 @@ out/
 build/
 ngn-build/
 bin/
-Debug/
 Release/
 
 .vs/

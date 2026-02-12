@@ -21,9 +21,7 @@ namespace NGN
 	{
 		World& world = scene.GetWorld();
 
-		/*Renderer2D::BeginScene();
-
-		Renderer2D::DrawQuad(glm::translate(glm::mat4(1.0f), { 100,100,0 }), {1,0,0,1}, 0);
+		Renderer2D::BeginScene(scene.GetViewProjection());
 
 		for (Entity entity : world.View<TransformComponent, SpriteRendererComponent>())
 		{
@@ -42,6 +40,6 @@ namespace NGN
 			);
 		}
 
-		Renderer2D::EndScene();*/
+		Renderer2D::EndScene();
 	}
 }

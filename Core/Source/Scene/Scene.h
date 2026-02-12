@@ -21,6 +21,7 @@ namespace NGN
 		// To be used to fetch systems
 		const World& GetWorld() const { return m_World; }
 
+		// ============ Components ============ //
 		template<typename T, typename... Args>
 		T& AddComponent(Entity entity, Args&&... args)
 		{
@@ -38,7 +39,7 @@ namespace NGN
 		{
 			return m_World.GetComponent<T>(entity);
 		}
-
+		// ============ Systems ============ //
 		template<typename TSystem, typename... Args>
 		TSystem& AddSystem(Args&&... args)
 		{
@@ -53,9 +54,20 @@ namespace NGN
 
 			return ref;
 		}
+		// ============ Camera ============ //
+		void SetActiveCamera(const glm::mat4& viewProj)
+		{
+			m_ViewProjection = viewProj;
+		}
+
+		const glm::mat4& GetViewProjection() const
+		{
+			return m_ViewProjection;
+		}
 
 	private:
 		World m_World;
 		std::vector<std::unique_ptr<System>> m_Systems;
+		glm::mat4 m_ViewProjection;
 	};
 }

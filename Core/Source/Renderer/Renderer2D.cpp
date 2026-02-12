@@ -36,6 +36,7 @@ namespace NGN
 		QuadVertex* QuadVertexBufferPtr = nullptr;
 
 		glm::mat4 ViewProjection;
+		Renderer2D::Renderer2DStats Stats;
 	};
 
 	static Renderer2DData s_Data;
@@ -84,12 +85,14 @@ namespace NGN
 
 		// TEMP: Simple hardcoded shader for now
 		s_Data.QuadShader = Shader::Create("Renderer2D_Quad", "assets/Shaders/Quad.vert.glsl", "assets/Shaders/Quad.frag.glsl");
-		NGN_CORE_INFO("Renderer2D initialized....");
+		/*NGN_CORE_INFO("Renderer2D initialized....");*/
 	}
 
 	// Reset state / bind camera
 	void Renderer2D::BeginScene(const glm::mat4& vpMatrix)
 	{
+		Renderer2DStats::ResetStats();
+
 		s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 
@@ -100,7 +103,7 @@ namespace NGN
 			vpMatrix
 		);
 
-		NGN_CORE_INFO("Renderer2D::BeginScene called. Test ViewProjection:\n{0}", glm::to_string(vpMatrix));
+		/*NGN_CORE_INFO("Renderer2D::BeginScene called. Test ViewProjection:\n{0}", glm::to_string(vpMatrix));*/
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, EntityID id)
@@ -126,18 +129,19 @@ namespace NGN
 			s_Data.QuadVertexBufferPtr->Color = color;
 			s_Data.QuadVertexBufferPtr->EntityID = id;
 
-			NGN_CORE_INFO("quadPos[{0}] = {1}", i, glm::to_string(s_Data.QuadVertexBufferPtr->Position));
+			/*NGN_CORE_INFO("quadPos[{0}] = {1}", i, glm::to_string(s_Data.QuadVertexBufferPtr->Position));
 
 			NGN_CORE_INFO("Vertex {0}: Pos={1}, Color={2}, ID={3}",
 				i,
 				glm::to_string(s_Data.QuadVertexBufferPtr->Position),
 				glm::to_string(s_Data.QuadVertexBufferPtr->Color),
 				s_Data.QuadVertexBufferPtr->EntityID
-			);
+			);*/
 
 			s_Data.QuadVertexBufferPtr++;
 		}
 
+		s_Data.Stats.QuadCount++;
 		s_Data.QuadIndexCount += 6;
 	}
 
@@ -182,6 +186,8 @@ namespace NGN
 
 	void Renderer2D::Flush()
 	{
+		NGN_CORE_ASSERT(s_Data.QuadIndexCount <= s_Data.MaxIndices, "Renderer2D batch overflow!");
+
 		if (s_Data.QuadIndexCount)
 		{
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
@@ -192,6 +198,18 @@ namespace NGN
 
 			s_Data.QuadShader->Bind();
 			RenderCommand::DrawIndexed(s_Data.QuadVA, s_Data.QuadIndexCount);
+
+			s_Data.Stats.DrawCalls++;
 		}
+	}
+
+	void Renderer2D::Renderer2DStats::ResetStats()
+	{
+		s_Data.Stats = {};
+	}
+
+	Renderer2D::Renderer2DStats Renderer2D::Renderer2DStats::GetStats()
+	{
+		return s_Data.Stats;
 	}
 }
