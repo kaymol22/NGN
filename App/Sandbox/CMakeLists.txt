@@ -1,7 +1,8 @@
 #### SANDBOX APP ####
 # Build the Sandbox executable
+add_executable(Sandbox)
+
 set(SOURCES
-    Source/main.cpp
     Source/AppLayer.h
     Source/AppLayer.cpp
     Source/DebugLayer.h
@@ -9,11 +10,10 @@ set(SOURCES
     Source/GameLayer.h
     Source/OverlayLayer.h
     Source/OverlayLayer.cpp
+    Source/SandboxApp.cpp
     Source/VoidLayer.h
     Source/VoidLayer.cpp
 )
-
-add_executable(Sandbox)
 
 target_sources(Sandbox PRIVATE ${SOURCES})
 

@@ -58,15 +58,10 @@ namespace NGN {
 		
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
-
-		// Start Profiling Session
-		NGN_PROFILE_BEGIN_SESSION("NGN Runtime", "logs/ngn_profile.json");
 	}
 
 	Application::~Application()
 	{
-		NGN_PROFILE_END_SESSION();
-
 		m_Window->Destroy();
 		glfwTerminate();
 
@@ -75,8 +70,6 @@ namespace NGN {
 
 	void Application::Run()
 	{
-		NGN_PROFILE_FUNCTION();
-
 		m_Running = true;
 
 		float lastTime = GetTime();
@@ -84,6 +77,9 @@ namespace NGN {
 		// Main App Loop
 		while (m_Running)
 		{
+			Instrumentor::Get().ClearFrameResults();
+
+			NGN_PROFILE_FUNCTION("Run Loop");
 			glfwPollEvents();
 
 			if (m_Window->ShouldClose())

@@ -15,8 +15,7 @@ namespace NGN
 
 	void ImGuiLayer::OnAttach()
 	{
-		// TODO: Profile here
-		/*NGN_PROFILE_FUNCTION();*/
+		NGN_PROFILE_FUNCTION();
 
 		// Set up Dear ImGui Context
 		IMGUI_CHECKVERSION();
@@ -37,7 +36,8 @@ namespace NGN
 
 	void ImGuiLayer::OnDetach()
 	{
-		// TODO: Profile here
+		NGN_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -55,6 +55,8 @@ namespace NGN
 	// Start of Frame
 	void ImGuiLayer::Begin()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -62,6 +64,8 @@ namespace NGN
 	// End of Frame 
 	void ImGuiLayer::End()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 

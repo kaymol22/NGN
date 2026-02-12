@@ -40,5 +40,17 @@ public:
 		}
 
 		ImGui::End();
+
+		ImGui::Begin("Profiler");
+
+		const auto& results = NGN::Instrumentor::Get().GetFrameResults();
+
+		for (const auto& result : results)
+		{
+			float durationMs = (result.End - result.Start) * 0.001f;
+			ImGui::Text("%s: %.3f ms", result.Name.c_str(), durationMs);
+		}
+
+		ImGui::End();
 	}
 };

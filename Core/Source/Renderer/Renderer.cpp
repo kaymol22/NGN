@@ -113,7 +113,7 @@ namespace NGN
 
 	void Renderer::Init()
 	{
-		//TODO: Profile here
+		NGN_PROFILE_FUNCTION();
 
 		RenderCommand::Init();
 		Renderer2D::Init();

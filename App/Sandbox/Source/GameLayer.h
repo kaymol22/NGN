@@ -25,6 +25,8 @@ public:
 	
 	void OnAttach() override
 	{
+		NGN_PROFILE_FUNCTION();
+
 		NGN::Log::GetCoreLogger()->info("GameLayer attached");
 
 		m_Scene = std::make_unique<NGN::Scene>();
@@ -60,6 +62,8 @@ public:
 
 	void OnRender()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		NGN_INFO("GameLayer::OnRender()");
 		m_Scene->SetActiveCamera(m_Camera.GetProjectionMatrix());
 		m_Scene->OnRender();

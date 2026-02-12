@@ -1,1 +1,0 @@
-{ "otherData": {}, "traceEvents": [{"cat":"function","dur":3130278,"name":"void __cdecl NGN::Application::Run(void)","ph":"X","pid":0,"tid":2299374808, "ts":338218934991},]}

@@ -35,6 +35,16 @@ namespace NGN
 
 		void WriteProfile(const ProfileResult& result);
 
+		const std::vector<ProfileResult>& GetFrameResults() const
+		{
+			return m_FrameResults;
+		}
+
+		void ClearFrameResults()
+		{
+			m_FrameResults.clear();
+		}
+
 	private:
 		Instrumentor();
 		~Instrumentor();
@@ -45,6 +55,9 @@ namespace NGN
 		std::mutex m_Mutex;
 		InstrumentationSession* m_CurrentSession;
 		std::ofstream m_OutputStream;
+		int m_ProfileCount = 0;
+
+		std::vector<ProfileResult> m_FrameResults;
 	};
 
 	class InstrumentationTimer

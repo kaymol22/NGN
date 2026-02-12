@@ -19,6 +19,8 @@
 
 #include "Base.h"
 
+#include "Profile.h"
+
 #ifdef NGN_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif 

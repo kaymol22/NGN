@@ -1,7 +1,9 @@
 #include "OpenGLBuffer.h"
 
+#include "Core/ngnpch.h"
+
 #include <glad/gl.h>
-//TODO: Add profiling here
+
 namespace NGN
 {
 	/*==================================================*/
@@ -9,6 +11,7 @@ namespace NGN
 	/*==================================================*/
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
 	{
+		NGN_PROFILE_FUNCTION();
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
@@ -16,6 +19,7 @@ namespace NGN
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
+		NGN_PROFILE_FUNCTION();
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_DYNAMIC_DRAW);
@@ -28,11 +32,13 @@ namespace NGN
 
 	void OpenGLVertexBuffer::Bind() const
 	{
+		NGN_PROFILE_FUNCTION();
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	}
 
 	void OpenGLVertexBuffer::Unbind() const
 	{
+		NGN_PROFILE_FUNCTION();
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
@@ -48,6 +54,8 @@ namespace NGN
 
 	OpenGLIndexBuffer::OpenGLIndexBuffer(const uint32_t* indices, uint32_t count) : m_Count(count)
 	{
+		NGN_PROFILE_FUNCTION();
+
 		glCreateBuffers(1, &m_RendererID);
 
 		// Need to have VAO bound to create valid GL_ELEMENT_ARRAY_BUFFER
@@ -59,6 +67,8 @@ namespace NGN
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		glDeleteBuffers(1, &m_RendererID);
 	}
 

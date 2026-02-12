@@ -8,6 +8,7 @@ Source/Core/Assert.h
 Source/Core/Application.h
 Source/Core/Application.cpp
 Source/Core/Base.h
+Source/Core/EntryPoint.h
 Source/Core/Instrumentor.cpp
 Source/Core/Instrumentor.h
 Source/Core/KeyCodes.h
@@ -23,6 +24,8 @@ Source/Core/Profile.h
 Source/Core/Timestep.h
 Source/Core/Window.h
 Source/Core/Window.cpp
+
+Source/Debug/ChromeProfiling.h
 
 Source/Events/Event.h
 Source/Events/ApplicationEvent.h
@@ -83,7 +86,7 @@ Source/Platform/OpenGL/GLUtils.cpp
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Debug/ChromeProfiling.h")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

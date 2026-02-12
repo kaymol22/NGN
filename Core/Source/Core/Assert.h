@@ -9,7 +9,7 @@
 	{																\
 		if (!(x))													\
 		{															\
-			NGN_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__);	\
+			NGN_CORE_ERROR("Assertion Failed: {0}", #x);	\
 			NGN_DEBUGBREAK();										\
 		}															\
 	}

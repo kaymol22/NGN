@@ -14,11 +14,24 @@
 
 namespace NGN {
 
+	struct ApplicationCmdLineArgs
+	{
+		int Count = 0;
+		char** Args = nullptr;
+
+		const char* operator[](int index) const
+		{
+			NGN_CORE_ASSERT(index < Count, "Index out of Bounds");
+			return Args[index];
+		}
+	};
+
 	struct ApplicationSpecification
 	{
 		std::string Name = "Application";
 		WindowSpecification WindowSpec;
 		RendererAPIType RendererAPI = RendererAPIType::OpenGL;
+		ApplicationCmdLineArgs CommandLineArgs;
 	};
 
 	class Application
@@ -87,5 +100,8 @@ namespace NGN {
 
 		friend class Layer;
 	};
+
+	// Define in Client App
+	Application* CreateApplication(ApplicationCmdLineArgs args);
 
 }

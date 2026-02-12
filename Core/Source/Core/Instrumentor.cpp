@@ -14,6 +14,8 @@ namespace NGN
 	{
 		std::lock_guard lock(m_Mutex);
 
+		m_ProfileCount = 0;
+
 		if (m_CurrentSession)
 			EndSession();
 
@@ -65,6 +67,11 @@ namespace NGN
 		if (!m_CurrentSession)
 			return;
 
+		m_FrameResults.push_back(result);
+
+		if (m_ProfileCount++ > 0)
+			m_OutputStream << ",";
+
 		m_OutputStream
 			<< "{"
 			<< "\"cat\":\"function\","
@@ -74,7 +81,8 @@ namespace NGN
 			<< "\"pid\":0,"
 			<< "\"tid\":" << result.ThreadID << ", "
 			<< "\"ts\":" << result.Start
-			<< "},";
+			<< "}";
+
 		m_OutputStream.flush();
 	}
 
@@ -98,8 +106,5 @@ namespace NGN
 
 		Instrumentor::Get().WriteProfile({ m_Name, start, end, threadID });
 		m_Stopped = true;
-
-		float duration = (end - start) * 0.001f;
-		std::cout << "Duration: " << (end - start) << "ms" << std::endl;
 	}
 }
