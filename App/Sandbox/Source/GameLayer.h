@@ -45,8 +45,8 @@ public:
 		auto& aColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(a);
 		auto& bColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(b);
 
-		aColor.Color = { 1.0f, 0.1f, 0.1f, 1.0f };
-		bColor.Color = { 0.1f, 1.0f, 0.1f, 1.0f };
+		aColor.Color = { 0.0f, 1.0f, 0.0f, 1.0f };
+		bColor.Color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 		m_Scene->AddSystem<NGN::SpriteRenderSystem>();
 		/*m_Scene->AddSystem<NGN::TransformDebugSystem>();*/

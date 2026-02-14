@@ -100,6 +100,7 @@ target_include_directories(Core PUBLIC
 )
 
 target_include_directories(Core PUBLIC SYSTEM 
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/entt/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include
 )

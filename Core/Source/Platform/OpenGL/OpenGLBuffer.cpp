@@ -60,8 +60,8 @@ namespace NGN
 
 		// Need to have VAO bound to create valid GL_ELEMENT_ARRAY_BUFFER
 		// Bind with GL_ARRAY_BUFFER to load data regardless of VAO state
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 
 	}
 

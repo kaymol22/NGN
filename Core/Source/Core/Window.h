@@ -38,6 +38,14 @@ namespace NGN {
 
 		bool ShouldClose() const;
 
+		void SetVSync(bool enabled)
+		{
+			glfwSwapInterval(enabled ? 1 : 0);
+			m_Specification.VSync = enabled;
+		}
+
+		bool IsVSync() const { return m_Specification.VSync; }
+
 		GLFWwindow* GetHandle() const { return m_Handle; }
 	private:
 		WindowSpecification m_Specification;

@@ -24,6 +24,7 @@ namespace NGN
 		static constexpr uint32_t MaxQuads = 1000;
 		static constexpr uint32_t MaxVertices = MaxQuads * 4;
 		static constexpr uint32_t MaxIndices = MaxQuads * 6;
+		static constexpr uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		Ref<VertexArray> QuadVA;
 		Ref<VertexBuffer> QuadVB;
@@ -83,9 +84,7 @@ namespace NGN
 		// CPU side buffer
 		s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];
 
-		// TEMP: Simple hardcoded shader for now
 		s_Data.QuadShader = Shader::Create("Renderer2D_Quad", "assets/Shaders/Quad.vert.glsl", "assets/Shaders/Quad.frag.glsl");
-		/*NGN_CORE_INFO("Renderer2D initialized....");*/
 	}
 
 	// Reset state / bind camera
@@ -103,7 +102,7 @@ namespace NGN
 			vpMatrix
 		);
 
-		/*NGN_CORE_INFO("Renderer2D::BeginScene called. Test ViewProjection:\n{0}", glm::to_string(vpMatrix));*/
+
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, EntityID id)
@@ -122,21 +121,14 @@ namespace NGN
 			{ -0.5f,  0.5f, 0.0f, 1.0f }
 		};
 
+		NGN_CORE_INFO("DrawQuad EntityID = {0}, Color = {1}", id, glm::to_string(color));
+
 		for (size_t i = 0; i < 4; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position =
 				transform * quadPositions[i];
 			s_Data.QuadVertexBufferPtr->Color = color;
 			s_Data.QuadVertexBufferPtr->EntityID = id;
-
-			/*NGN_CORE_INFO("quadPos[{0}] = {1}", i, glm::to_string(s_Data.QuadVertexBufferPtr->Position));
-
-			NGN_CORE_INFO("Vertex {0}: Pos={1}, Color={2}, ID={3}",
-				i,
-				glm::to_string(s_Data.QuadVertexBufferPtr->Position),
-				glm::to_string(s_Data.QuadVertexBufferPtr->Color),
-				s_Data.QuadVertexBufferPtr->EntityID
-			);*/
 
 			s_Data.QuadVertexBufferPtr++;
 		}
@@ -147,36 +139,6 @@ namespace NGN
 
 	void Renderer2D::EndScene()
 	{
-		// TODO: Replicate for circles + lines
-		//if (s_Data.QuadIndexCount == 0)
-		//	return;
-
-		//uint32_t dataSize =
-		//	(uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
-
-		//// DEBUG
-		//NGN_CORE_INFO("Renderer2D::EndScene. QuadIndexCount={0}, dataSize={1} bytes", s_Data.QuadIndexCount, dataSize);
-		//size_t vertexCount = dataSize / sizeof(QuadVertex);
-		//NGN_CORE_INFO("Uploading {0} vertices to the GPU", vertexCount);
-
-		//for (size_t i = 0; i < std::min<size_t>(vertexCount, 8ul); i++)  // show first 8 vertices max
-		//{
-		//	const QuadVertex& v = s_Data.QuadVertexBufferBase[i];
-		//	NGN_CORE_INFO("Vertex {0}: Pos={1}, Color={2}, ID={3}",
-		//		i,
-		//		glm::to_string(v.Position),
-		//		glm::to_string(v.Color),
-		//		v.EntityID
-		//	);
-		//}
-
-		//s_Data.QuadVA->Bind();
-		//s_Data.QuadVB->Bind();
-		//s_Data.QuadVB->SetData(s_Data.QuadVertexBufferBase, dataSize);
-
-		//s_Data.QuadShader->Bind();
-		//RenderCommand::DrawIndexed(s_Data.QuadVA, s_Data.QuadIndexCount);
-
 		Renderer2D::Flush();
 
 		// Reset
@@ -192,6 +154,13 @@ namespace NGN
 		{
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 			
+			// DEBUG
+			NGN_CORE_INFO("Flushing {0} quads, {1} indices, {2} bytes",
+				s_Data.Stats.QuadCount, s_Data.QuadIndexCount, dataSize);
+
+			// DEBUG: Check first vertex color
+			NGN_CORE_INFO("First vertex color: {0}", glm::to_string(s_Data.QuadVertexBufferBase[0].Color));
+
 			s_Data.QuadVA->Bind();
 			s_Data.QuadVB->Bind(); 
 			s_Data.QuadVB->SetData(s_Data.QuadVertexBufferBase, dataSize);

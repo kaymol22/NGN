@@ -34,9 +34,16 @@ public:
 		ImGui::Text("Vertices: %u", stats.GetTotalVertexCount());
 		ImGui::Text("Indeces: %u", stats.GetTotalIndexCount());
 		ImGui::Unindent();
-		if (ImGui::Button("Open Profiling Trace"))
+
+		bool vsync = NGN::Application::Get().GetWindow().IsVSync();
+		if (ImGui::Checkbox("VSync", &vsync))
 		{
-			NGN::Profiling::OpenChromeTracing("logs/ngn_profile.json");
+			NGN::Application::Get().GetWindow().SetVSync(vsync);
+		}
+
+		if (ImGui::Button("Open Perfetto"))
+		{
+			NGN::Profiling::OpenChromeTracing("logs/NGNProfile-Runtime.json");
 		}
 
 		ImGui::End();
