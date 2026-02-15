@@ -34,7 +34,7 @@ if (EXISTS "${GLAD_LOCAL_PATH}/include/glad/gl.h")
     # Manually create library for glad (header-only or prebuilt)
     add_library(glad STATIC
         ${GLAD_LOCAL_PATH}/src/gl.c
-    )
+     )
 
     target_include_directories(glad PUBLIC
         ${GLAD_LOCAL_PATH}/include
@@ -99,7 +99,7 @@ if (EXISTS "${IMGUI_LOCAL_PATH}/imgui.cpp")
         ${IMGUI_LOCAL_PATH}/imgui_demo.cpp
         ${IMGUI_LOCAL_PATH}/backends/imgui_impl_glfw.cpp
         ${IMGUI_LOCAL_PATH}/backends/imgui_impl_opengl3.cpp
-    )
+     )
 
     target_include_directories(imgui PUBLIC
         ${IMGUI_LOCAL_PATH}
