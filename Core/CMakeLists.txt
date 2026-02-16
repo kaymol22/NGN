@@ -86,7 +86,7 @@ Source/Platform/OpenGL/GLUtils.cpp
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Scene/eScene.h" "Source/Scene/eScene.cpp" "Source/Scene/eEntity.h")
+target_sources(Core PRIVATE ${SOURCES} "Source/Scene/eScene.h" "Source/Scene/eScene.cpp" "Source/Scene/eEntity.h" "Source/Renderer/GraphicsContext.h" "Source/Renderer/GraphicsContext.cpp" "Source/Platform/OpenGL/OpenGLContext.h" "Source/Platform/OpenGL/OpenGLContext.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)
