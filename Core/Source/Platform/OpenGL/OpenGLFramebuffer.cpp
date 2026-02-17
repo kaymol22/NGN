@@ -106,7 +106,7 @@ namespace NGN
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& specification)
 		: m_Spec(specification)
 	{
-		for (auto spec : m_Spec.Attachments.Attachments)
+		for (FramebufferTextureSpecification spec : m_Spec.Attachments.Attachments)
 		{
 			if (!Utils::IsDepthFormat(spec.TextureFormat))
 				m_ColorAttachmentSpecifications.emplace_back(spec);

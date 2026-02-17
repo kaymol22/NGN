@@ -10,6 +10,9 @@
 #include "Core/Window.h"
 #include "Core/Profile.h"
 
+// TODO: Remove later - ImGui abstraction
+#include <GLFW/glfw3.h>
+
 namespace NGN
 {
 
@@ -28,7 +31,7 @@ namespace NGN
 		ImGui::StyleColorsDark();
 
 		Application& app = Application::Get();
-		GLFWwindow* window = app.GetWindow().GetHandle();
+		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 460");
@@ -69,8 +72,8 @@ namespace NGN
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 
-		io.DisplaySize = ImVec2((float)app.GetWindow().GetFramebufferSize().x,
-								(float)app.GetWindow().GetFramebufferSize().y);
+		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(),
+								(float)app.GetWindow().GetHeight());
 
 		// Render ImGui
 		ImGui::Render();

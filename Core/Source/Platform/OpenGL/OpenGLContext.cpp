@@ -6,7 +6,7 @@
 
 namespace NGN
 {
-	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
+	OpenGLContext::OpenGLContext(void* windowHandle) : m_WindowHandle(windowHandle)
 	{
 		NGN_CORE_ASSERT(windowHandle, "Window handle is null, could not create OpenGL context");
 	}
@@ -15,7 +15,9 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		glfwMakeContextCurrent(m_WindowHandle);
+		auto* glfwWindow = static_cast<GLFWwindow*>(m_WindowHandle);
+
+		glfwMakeContextCurrent(glfwWindow);
 
 		if (!gladLoadGL(glfwGetProcAddress))
 		{
@@ -32,6 +34,6 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		glfwSwapBuffers(m_WindowHandle);
+		glfwSwapBuffers(static_cast<GLFWwindow*>(m_WindowHandle));
 	}
 }

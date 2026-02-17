@@ -7,14 +7,11 @@
 #include "Application.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer.h"
+#include "Utils/PlatformUtils.h"
 
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-// Remove later
-#include <imgui.h>
-
-#include <assert.h>
+// Need for reverse iteration of layer stack on event dispatch - may remove later
 #include <ranges>
 
 
@@ -22,35 +19,26 @@ namespace NGN {
 
 	static Application* s_Application = nullptr;
 
-	static void GLFWErrorCallback(int error, const char* description)
-	{
-		std::cerr << "[GLFW Error]: " << description << std::endl;
-	}
-
 	Application::Application(const ApplicationSpecification& specification) : m_Specification(specification)
 	{
 		NGN_CORE_ASSERT(!s_Application, "Application already exists!");
 		s_Application = this;
 
-		glfwSetErrorCallback(GLFWErrorCallback);
-		glfwInit();
-
 		if (m_Specification.WindowSpec.Title.empty())
 			m_Specification.WindowSpec.Title = m_Specification.Name;
 
-		m_Specification.WindowSpec.EventCallback = [this](Event& event) { RaiseEvent(event); };
-
-		// Window Creation
-		m_Window = NGN::CreateScope<Window>(m_Specification.WindowSpec);
-		m_Window->Create();
-
 		// Select renderer API from app spec
 		RendererAPI::SetAPI(m_Specification.RendererAPI);
+		
+		// Window Creation + Graphics Context initialization
+		m_Window = Window::Create(m_Specification.WindowSpec);
+		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
 
 		// Initialise renderer (backend + rendercommand)
 		Renderer::Init();
+
 		// Call resize event once at startup
-		glm::vec2 size = m_Window->GetFramebufferSize();
+		glm::vec2 size = glm::vec2(m_Window->GetWidth(), m_Window->GetHeight());
 		Renderer::OnWindowResize(
 			static_cast<uint32_t>(size.x),
 			static_cast<uint32_t>(size.y)
@@ -62,8 +50,10 @@ namespace NGN {
 
 	Application::~Application()
 	{
-		m_Window->Destroy();
-		glfwTerminate();
+		NGN_PROFILE_FUNCTION();
+
+		/*m_Window::Shutdown();*/
+		Renderer::Shutdown();
 
 		s_Application = nullptr;
 	}
@@ -72,27 +62,17 @@ namespace NGN {
 	{
 		m_Running = true;
 
-		float lastTime = GetTime();
-
 		// Main App Loop
 		while (m_Running)
 		{
 			Instrumentor::Get().ClearFrameResults();
 
-			NGN_PROFILE_FUNCTION("Run Loop");
-			glfwPollEvents();
+			NGN_PROFILE_SCOPE("Run Loop");
 
-			if (m_Window->ShouldClose())
-			{
-				Stop();
-				break;
-			}
+			float currentTime = Time::GetTime();
+			m_Timestep = currentTime - m_LastFrameTime;
+			m_LastFrameTime = currentTime;
 
-			float currentTime = GetTime();
-			float delta = currentTime - lastTime;
-			lastTime = currentTime;
-
-			m_Timestep = Timestep(glm::clamp(delta, 0.001f, 0.1f));
 			glm::vec2 framebufferSize = Application::GetFramebufferSize();
 
 			/*========== Updates =============*/
@@ -138,7 +118,7 @@ namespace NGN {
 
 			m_ImGuiLayer->End();
 
-			m_Window->Update();
+			m_Window->OnUpdate();
 
 			for (auto& transition : m_PendingTransitions)
 				transition();
@@ -153,12 +133,26 @@ namespace NGN {
 
 	void Application::RaiseEvent(Event& event)
 	{
+		NGN_PROFILE_FUNCTION();
+		// Application level events handled first
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<WindowCloseEvent>(NGN_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(NGN_BIND_EVENT_FN(Application::OnWindowResize));
+
+		// Go to layer stack if not handled
 		for (auto& layer : std::views::reverse(m_LayerStack))
 		{
 			layer->OnEvent(event);
 			if (event.Handled)
 				break;
 		}
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e)
+	{
+		Stop();
+		e.Handled = true;
+		return true;
 	}
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
@@ -172,22 +166,18 @@ namespace NGN {
 		m_Minimized = false;
 		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 
+		e.Handled = true;
 		return false;
 	}
 
 	glm::vec2 Application::GetFramebufferSize() const
 	{
-		return m_Window->GetFramebufferSize();
+		return glm::vec2(m_Window->GetWidth(), m_Window->GetHeight());
 	}
 
 	Application& Application::Get()
 	{
-		assert(s_Application);
+		NGN_CORE_ASSERT(s_Application);
 		return *s_Application;
-	}
-
-	float Application::GetTime()
-	{
-		return (float)glfwGetTime();
 	}
 }

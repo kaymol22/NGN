@@ -41,6 +41,8 @@ Source/Math/Math.cpp
 Source/Renderer/Buffer.cpp
 Source/Renderer/Buffer.h
 Source/Renderer/Framebuffer.cpp
+Source/Renderer/GraphicsContext.h
+Source/Renderer/GraphicsContext.cpp
 Source/Renderer/OrthographicCamera.cpp
 Source/Renderer/OrthographicCamera.h
 Source/Renderer/RenderCommand.cpp
@@ -70,6 +72,8 @@ Source/Scene/World.h
 
 Source/Platform/OpenGL/OpenGLBuffer.cpp
 Source/Platform/OpenGL/OpenGLBuffer.h
+Source/Platform/OpenGL/OpenGLContext.cpp
+Source/Platform/OpenGL/OpenGLContext.h
 Source/Platform/OpenGL/OpenGLFramebuffer.h
 Source/Platform/OpenGL/OpenGLFramebuffer.cpp
 Source/Platform/OpenGL/OpenGLRendererAPI.cpp
@@ -86,7 +90,7 @@ Source/Platform/OpenGL/GLUtils.cpp
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Scene/eScene.h" "Source/Scene/eScene.cpp" "Source/Scene/eEntity.h" "Source/Renderer/GraphicsContext.h" "Source/Renderer/GraphicsContext.cpp" "Source/Platform/OpenGL/OpenGLContext.h" "Source/Platform/OpenGL/OpenGLContext.cpp")
+target_sources(Core PRIVATE ${SOURCES} "Source/Scene/eScene.h" "Source/Scene/eScene.cpp" "Source/Scene/eEntity.h" "Source/Platform/Windows/WinWindow.h" "Source/Platform/Windows/WinWindow.cpp" "Source/Utils/PlatformUtils.h" "Source/Platform/Windows/WindowsPlatformUtils.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

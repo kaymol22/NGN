@@ -66,16 +66,16 @@ namespace NGN {
 			return nullptr;
 		}
 
+		Timestep GetTimestep() const { return m_Timestep; }
+
 		glm::vec2 GetFramebufferSize() const;
 
 		Window& GetWindow() { return *m_Window; }
 
-		Timestep GetTimestep() const { return m_Timestep; }
-
 		static Application& Get();
-		static float GetTime();
 
 	private:
+		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
@@ -89,10 +89,11 @@ namespace NGN {
 	private:
 		ApplicationSpecification m_Specification;
 		
-		NGN::Scope<Window> m_Window;
+		Scope<Window> m_Window;
 		
-		NGN::Ref<ImGuiLayer> m_ImGuiLayer; // TEMP: Testing ImGui
+		Ref<ImGuiLayer> m_ImGuiLayer;
 
+		float m_LastFrameTime = 0.0f;
 		Timestep m_Timestep;
 		
 		bool m_Running = false;
@@ -101,7 +102,7 @@ namespace NGN {
 		friend class Layer;
 	};
 
-	// Define in Client App
+	// Define in Client + Editor App
 	Application* CreateApplication(ApplicationCmdLineArgs args);
 
 }

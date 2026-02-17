@@ -1,9 +1,5 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
-
-#include <glm/glm.hpp>
-
 #include "Events/Event.h"
 
 namespace NGN {
@@ -11,47 +7,41 @@ namespace NGN {
 	struct WindowSpecification
 	{
 		std::string Title;
-		uint32_t Width = 1280;
-		uint32_t Height = 720;
+		uint32_t Width;
+		uint32_t Height;
 		bool IsResizeable = true;
 		bool VSync = true;
 
-		using EventCallbackFn = std::function<void(Event&)>;
-		EventCallbackFn EventCallback;
+		WindowSpecification(const std::string& title = "NGN Engine",
+			uint32_t width = 1280,
+			uint32_t height = 720,
+			bool isResizeable = true,
+			bool vSync = true)
+			: Title(title), Width(width), Height(height), IsResizeable(isResizeable), VSync(vSync)
+		{
+		}
 	};
 
 	class Window
 	{
 	public:
-		Window(const WindowSpecification& specification = WindowSpecification());
-		~Window();
+		using EventCallbackFn = std::function<void(Event&)>;
 
-		void Create();
-		void Destroy();
+		virtual ~Window() = default;
 
-		void Update();
+		virtual void OnUpdate() = 0;
 
-		void RaiseEvent(Event& event);
+		virtual uint32_t GetWidth() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 
-		glm::vec2 GetFramebufferSize() const;
-		glm::vec2 GetMousePos() const;
+		virtual void SetVSync(bool enabled) = 0;
+		virtual bool IsVSync() const = 0;
 
-		bool ShouldClose() const;
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
-		void SetVSync(bool enabled)
-		{
-			glfwSwapInterval(enabled ? 1 : 0);
-			m_Specification.VSync = enabled;
-		}
+		virtual void* GetNativeWindow() const = 0;
 
-		bool IsVSync() const { return m_Specification.VSync; }
-
-		GLFWwindow* GetHandle() const { return m_Handle; }
-	private:
-		WindowSpecification m_Specification;
-
-		GLFWwindow* m_Handle = nullptr;
-
+		static Scope<Window> Create(const WindowSpecification& spec = WindowSpecification());
 	};
 
 }
