@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/UUID.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -8,6 +10,24 @@
 
 namespace NGN
 {
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+		IDComponent(const UUID& id) : ID(id) {}
+	};
+
+	struct TagComponent
+	{
+		std::string Tag;
+
+		TagComponent() = default;
+		TagComponent(const TagComponent&) = default;
+		TagComponent(const std::string& tag) : Tag(tag) {}
+	};
+
 	struct TransformComponent {
 		glm::vec3 Translation{ 0.0f, 0.0f, 0.0f };
 		glm::vec3 Rotation{ 0.0f, 0.0f, 0.0f };
@@ -42,15 +62,5 @@ namespace NGN
 	struct CameraComponent
 	{
 		bool Primary = true;
-	};
-
-	struct TagComponent
-	{
-		// debugging and editor 
-		std::string Tag;
-
-		TagComponent() = default;
-		TagComponent(const TagComponent&) = default;
-		TagComponent(const std::string& tag) : Tag(tag) {}
 	};
 }

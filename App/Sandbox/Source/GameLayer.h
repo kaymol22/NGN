@@ -5,8 +5,7 @@
 
 #include "Scene/Scene.h"
 #include "Scene/Components.h"
-#include "Scene/TransformDebugSystem.h"
-#include "Scene/SpriteRenderSystem.h"
+#include "Scene/Systems/SpriteRenderSystem.h"
 
 #include "Renderer/Renderer2D.h"
 
@@ -31,25 +30,24 @@ public:
 
 		m_Scene = std::make_unique<NGN::Scene>();
 
-		auto a = m_Scene->CreateEntity();
-		auto b = m_Scene->CreateEntity();
+		auto a = m_Scene->CreateEntity("Entity A");
+		auto b = m_Scene->CreateEntity("Entity B");
 
-		auto& aTransform = m_Scene->AddComponent<NGN::TransformComponent>(a);
+		auto& aTransform = a.GetComponent<NGN::TransformComponent>();
 		aTransform.Translation = { 0.5f, -0.5f, 0.0f };
 		aTransform.Scale = { 0.25f, 0.25f, 1.0f };
 		
-		auto& bTransform = m_Scene->AddComponent<NGN::TransformComponent>(b);
+		auto& bTransform = b.GetComponent<NGN::TransformComponent>();
 		bTransform.Translation = { 0.5f, 0.5f, 0.0f };
 		bTransform.Scale = { 0.25f, 0.25f, 1.0f };
 
-		auto& aColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(a);
-		auto& bColor = m_Scene->AddComponent<NGN::SpriteRendererComponent>(b);
+		auto& aColor = a.AddComponent<NGN::SpriteRendererComponent>();
+		auto& bColor = b.AddComponent<NGN::SpriteRendererComponent>();
 
 		aColor.Color = { 0.0f, 1.0f, 0.0f, 1.0f };
 		bColor.Color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 		m_Scene->AddSystem<NGN::SpriteRenderSystem>();
-		/*m_Scene->AddSystem<NGN::TransformDebugSystem>();*/
 
 		m_Camera.SetProjection(-1.0f, 1.0f, -1.0f, 1.0f);
 		m_Camera.SetPosition({ 0.0f, 0.0f, 0.0f });

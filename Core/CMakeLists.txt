@@ -22,6 +22,8 @@ Source/Core/ngnpch.cpp
 Source/Core/PlatformDetection.h
 Source/Core/Profile.h
 Source/Core/Timestep.h
+Source/Core/UUID.cpp
+Source/Core/UUID.h
 Source/Core/Window.h
 Source/Core/Window.cpp
 
@@ -58,17 +60,15 @@ Source/Renderer/Shader.cpp
 Source/Renderer/VertexArray.cpp
 Source/Renderer/VertexArray.h
 
-Source/Scene/ComponentPool.h
-Source/Scene/ComponentPoolBase.h
 Source/Scene/Components.h
+Source/Scene/Entity.cpp
 Source/Scene/Entity.h
-Source/Scene/Scene.h
 Source/Scene/Scene.cpp
-Source/Scene/SpriteRenderSystem.cpp
-Source/Scene/SpriteRenderSystem.h
-Source/Scene/System.h
-Source/Scene/TransformDebugSystem.h
-Source/Scene/World.h
+Source/Scene/Scene.h
+Source/Scene/Systems/SpriteRenderSystem.cpp
+Source/Scene/Systems/SpriteRenderSystem.h
+Source/Scene/Systems/System.h
+
 
 Source/Platform/OpenGL/OpenGLBuffer.cpp
 Source/Platform/OpenGL/OpenGLBuffer.h
@@ -86,11 +86,16 @@ Source/Platform/OpenGL/OpenGLVertexArray.cpp
 Source/Platform/OpenGL/OpenGLVertexArray.h
 Source/Platform/OpenGL/GLUtils.h
 Source/Platform/OpenGL/GLUtils.cpp
+Source/Platform/Windows/WindowsPlatformUtils.cpp
+Source/Platform/Windows/WinWindow.cpp
+Source/Platform/Windows/WinWindow.h
+
+Source/Utils/PlatformUtils.h
 )
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "Source/Scene/eScene.h" "Source/Scene/eScene.cpp" "Source/Scene/eEntity.h" "Source/Platform/Windows/WinWindow.h" "Source/Platform/Windows/WinWindow.cpp" "Source/Utils/PlatformUtils.h" "Source/Platform/Windows/WindowsPlatformUtils.cpp")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

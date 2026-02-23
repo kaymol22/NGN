@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Scene.h"
+#include "Scene/Scene.h"
 #include "System.h"
-#include "Components.h"
+#include "Scene/Components.h"
 #include "Renderer/OrthographicCamera.h"
 
 namespace NGN

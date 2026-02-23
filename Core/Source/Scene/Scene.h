@@ -1,64 +1,73 @@
 #pragma once
 
-#include "World.h"
-#include "System.h"
-#include "Entity.h"
+#include <entt.hpp>
+#include "Core/ngnpch.h"
+
+#include "Core/Timestep.h"
+#include "Core/UUID.h"
+#include "Components.h"
+
+#include <glm/glm.hpp>
+
+#include <memory>
+#include <vector>
 
 namespace NGN
 {
-	class Scene 
+	class System;
+	class Entity;
+
+	class Scene
 	{
 	public:
 		Scene();
+		~Scene();
 
-		Entity CreateEntity();
+		Entity CreateEntity(const std::string& name);
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name);
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(float dt);
+		Entity GetEntityByUUID(UUID id);
+		bool EntityExists(UUID id) const;
+
+		void OnUpdate(Timestep ts);
 		void OnRender();
 
-		World& GetWorld() { return m_World; }
-		// To be used to fetch systems
-		const World& GetWorld() const { return m_World; }
-
-		// ============ Components ============ //
-		template<typename T, typename... Args>
-		T& AddComponent(Entity entity, Args&&... args)
+		// Return all entities with specific components - variadic for multiple 
+		template <typename... Components>
+		auto GetEntitiesWithComponents()
 		{
-			return m_World.AddComponent<T>(entity);
+			static_assert(sizeof... (Components) > 0, "Must specify at least one component type");
+			auto view = m_Registry.view<Components...>();
+			std::vector<Entity> results;
+			for (auto entity : view)
+			{
+				results.emplace_back(entity, this);
+			}
+			return results;
 		}
 
-		template<typename T>
-		bool HasComponent(Entity entity)
-		{
-			return m_World.HasComponent<T>(entity);
-		}
+		// For registry queries + component management
+		entt::registry& GetRegistry() { return m_Registry; }
+		const entt::registry& GetRegistry() const { return m_Registry; }
 
-		template<typename T>
-		bool GetComponent(Entity entity)
-		{
-			return m_World.GetComponent<T>(entity);
-		}
-		// ============ Systems ============ //
-		template<typename TSystem, typename... Args>
+		// ================== Systems ================== //
+		template <typename TSystem, typename... Args>
 		TSystem& AddSystem(Args&&... args)
 		{
-			static_assert(std::is_base_of_v<System, TSystem>,
-				"TSystem must derive from System");
-
+			/*NGN_CORE_ASSERT(std::is_base_of_v<System, TSystem>, "TSystem must be derived from System");*/
+			
 			auto system = std::make_unique<TSystem>(std::forward<Args>(args)...);
 			TSystem& ref = *system;
 
-			system->OnCreate(*this);
+			ref.OnCreate(*this);
 			m_Systems.push_back(std::move(system));
 
 			return ref;
 		}
+
 		// ============ Camera ============ //
-		void SetActiveCamera(const glm::mat4& viewProj)
-		{
-			m_ViewProjection = viewProj;
-		}
+		void SetActiveCamera(const glm::mat4& viewProj) { m_ViewProjection = viewProj; }
 
 		const glm::mat4& GetViewProjection() const
 		{
@@ -66,8 +75,13 @@ namespace NGN
 		}
 
 	private:
-		World m_World;
+		entt::registry m_Registry;
 		std::vector<std::unique_ptr<System>> m_Systems;
+		std::unordered_map<UUID, entt::entity> m_EntityMap;
 		glm::mat4 m_ViewProjection;
+
+		friend class Entity;
 	};
 }
+
+#include "Entity.h"
