@@ -11,6 +11,8 @@ Source/Core/Base.h
 Source/Core/EntryPoint.h
 Source/Core/Instrumentor.cpp
 Source/Core/Instrumentor.h
+Source/Core/Input.cpp
+Source/Core/Input.h
 Source/Core/KeyCodes.h
 Source/Core/Layer.h
 Source/Core/Layer.cpp
@@ -86,6 +88,8 @@ Source/Platform/OpenGL/OpenGLVertexArray.cpp
 Source/Platform/OpenGL/OpenGLVertexArray.h
 Source/Platform/OpenGL/GLUtils.h
 Source/Platform/OpenGL/GLUtils.cpp
+Source/Platform/Windows/WindowsInput.cpp
+Source/Platform/Windows/WindowsInput.h
 Source/Platform/Windows/WindowsPlatformUtils.cpp
 Source/Platform/Windows/WinWindow.cpp
 Source/Platform/Windows/WinWindow.h

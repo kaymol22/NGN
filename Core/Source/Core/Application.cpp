@@ -3,6 +3,7 @@
 */
 #include "Core/ngnpch.h"
 #include "Core/Profile.h"
+#include "Core/Input.h"
 
 #include "Application.h"
 #include "Renderer/RenderCommand.h"
@@ -36,6 +37,8 @@ namespace NGN {
 
 		// Initialise renderer (backend + rendercommand)
 		Renderer::Init();
+		// Initialise input system (platform specific)
+		Input::Init();
 
 		// Call resize event once at startup
 		glm::vec2 size = glm::vec2(m_Window->GetWidth(), m_Window->GetHeight());
@@ -54,6 +57,7 @@ namespace NGN {
 
 		/*m_Window::Shutdown();*/
 		Renderer::Shutdown();
+		Input::Shutdown();
 
 		s_Application = nullptr;
 	}

@@ -41,11 +41,8 @@ public:
 		bTransform.Translation = { 0.5f, 0.5f, 0.0f };
 		bTransform.Scale = { 0.25f, 0.25f, 1.0f };
 
-		auto& aColor = a.AddComponent<NGN::SpriteRendererComponent>();
-		auto& bColor = b.AddComponent<NGN::SpriteRendererComponent>();
-
-		aColor.Color = { 0.0f, 1.0f, 0.0f, 1.0f };
-		bColor.Color = { 1.0f, 0.0f, 0.0f, 1.0f };
+		a.AddComponent<NGN::SpriteRendererComponent>(glm::vec4{ 1.0f, 1.0f, 0.0f, 1.0f });
+		b.AddComponent<NGN::SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
 		m_Scene->AddSystem<NGN::SpriteRenderSystem>();
 
