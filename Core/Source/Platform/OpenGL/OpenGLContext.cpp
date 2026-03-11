@@ -23,11 +23,6 @@ namespace NGN
 		{
 			NGN_CORE_ASSERT(false, "Failed to initialize GLAD");
 		}
-
-		NGN_CORE_INFO("OpenGL Info:");
-		NGN_CORE_INFO("	Vendor: {0}", (const char*)glGetString(GL_VENDOR));
-		NGN_CORE_INFO("	Renderer: {0}", (const char*)glGetString(GL_RENDERER));
-		NGN_CORE_INFO("	Version: {0}", (const char*)glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()

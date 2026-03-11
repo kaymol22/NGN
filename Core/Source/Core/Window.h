@@ -39,6 +39,7 @@ namespace NGN {
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 
+		// Platform-specific window handle for graphics context, etc.
 		virtual void* GetNativeWindow() const = 0;
 
 		static Scope<Window> Create(const WindowSpecification& spec = WindowSpecification());

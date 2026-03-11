@@ -21,7 +21,7 @@ namespace NGN
 
 	struct Renderer2DData
 	{
-		static constexpr uint32_t MaxQuads = 1000;
+		static constexpr uint32_t MaxQuads = 20000;
 		static constexpr uint32_t MaxVertices = MaxQuads * 4;
 		static constexpr uint32_t MaxIndices = MaxQuads * 6;
 		static constexpr uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
@@ -121,7 +121,7 @@ namespace NGN
 			{ -0.5f,  0.5f, 0.0f, 1.0f }
 		};
 
-		NGN_CORE_INFO("DrawQuad EntityID = {0}, Color = {1}", id, glm::to_string(color));
+		/*NGN_CORE_INFO("DrawQuad EntityID = {0}, Color = {1}", id, glm::to_string(color));*/
 
 		for (size_t i = 0; i < 4; i++)
 		{
@@ -155,11 +155,8 @@ namespace NGN
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 			
 			// DEBUG
-			NGN_CORE_INFO("Flushing {0} quads, {1} indices, {2} bytes",
-				s_Data.Stats.QuadCount, s_Data.QuadIndexCount, dataSize);
-
-			// DEBUG: Check first vertex color
-			NGN_CORE_INFO("First vertex color: {0}", glm::to_string(s_Data.QuadVertexBufferBase[0].Color));
+			/*NGN_CORE_INFO("Flushing {0} quads, {1} indices, {2} bytes",
+				s_Data.Stats.QuadCount, s_Data.QuadIndexCount, dataSize);*/
 
 			s_Data.QuadVA->Bind();
 			s_Data.QuadVB->Bind(); 

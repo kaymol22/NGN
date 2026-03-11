@@ -41,9 +41,9 @@ namespace NGN
 		vertexArray->Bind();
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
 		// DEBUG
-		GLint ebo = 0;
+		/*GLint ebo = 0;
 		glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &ebo);
-		NGN_CORE_INFO("EBO bound at draw time: {0}", ebo);
+		NGN_CORE_INFO("EBO bound at draw time: {0}", ebo);*/
 		
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}

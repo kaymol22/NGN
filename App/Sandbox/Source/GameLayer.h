@@ -2,6 +2,8 @@
 
 #include "Core/Layer.h"
 #include "Core/Log.h"
+#include "Core/Input.h"
+#include "Events/KeyEvent.h"
 
 #include "Scene/Scene.h"
 #include "Scene/Components.h"
@@ -25,8 +27,6 @@ public:
 	void OnAttach() override
 	{
 		NGN_PROFILE_FUNCTION();
-
-		NGN::Log::GetCoreLogger()->info("GameLayer attached");
 
 		m_Scene = std::make_unique<NGN::Scene>();
 
@@ -52,6 +52,11 @@ public:
 
 	void OnUpdate(NGN::Timestep ts)
 	{
+		if (NGN::Input::IsKeyPressed(NGN::Key::A))
+		{
+			NGN_INFO("Key A is pressed");
+		}
+
 		m_Scene->OnUpdate(ts);
 	}
 
@@ -59,11 +64,22 @@ public:
 	{
 		NGN_PROFILE_FUNCTION();
 
-		NGN_INFO("GameLayer::OnRender()");
 		m_Scene->SetActiveCamera(m_Camera.GetProjectionMatrix());
 		m_Scene->OnRender();
 
-		NGN_INFO("VP= {0}", glm::to_string(m_Camera.GetViewProjectionMatrix()));
+		/*NGN_INFO("VP= {0}", glm::to_string(m_Camera.GetViewProjectionMatrix()));*/
+	}
+
+	void OnEvent(NGN::Event& e) override
+	{
+		NGN::EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<NGN::KeyPressedEvent>
+			([this](NGN::KeyPressedEvent& e)
+			{
+				NGN_INFO("Event: Key {0} pressed", e.GetKeyCode());
+				return false;
+			}
+		);
 	}
 	
 private:
