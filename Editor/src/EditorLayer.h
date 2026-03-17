@@ -1,9 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
-#include "Core/Layer.h"
-#include "Scene/eScene.h"
+#include "NGN.h"
 
 namespace NGN
 {
@@ -13,10 +10,29 @@ namespace NGN
 		EditorLayer();
 		virtual ~EditorLayer() = default;
 
-		void OnUpdate(Timestep ts);
-		void OnImGuiRender();
-		void OnEvent(Event e);
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
 
+		void OnUpdate(Timestep ts) override;
+		virtual void OnImGuiRender() override;
+		void OnEvent(Event& e) override;
+
+	private:
+		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void OpenScene(const std::filesystem::path& path);
+		void SaveScene();
+		void SaveSceneAs();
+
+		void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
+
+		void OnScenePlay();
+		void OnScenePause();
+		void OnSceneStop();
+	
 	private:
 		/*NGN::OrthographicCameraController m_CameraController;*/
 		

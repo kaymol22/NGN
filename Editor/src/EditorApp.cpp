@@ -1,4 +1,4 @@
-//#include <NGN.h>
+#include <NGN.h>
 #include "Core/EntryPoint.h"
 #include "EditorLayer.h"
 
@@ -12,13 +12,20 @@ namespace NGN
 			PushLayer<EditorLayer>();
 		}
 
-		Application* CreateApplication(ApplicationCmdLineArgs args)
+		~EditorApp()
 		{
-			ApplicationSpecification spec;
-			spec.Name = "Editor";
-			spec.CommandLineArgs = args;
-
-			return new EditorApp(spec);
 		}
 	};
+
+	Application* CreateApplication(ApplicationCmdLineArgs args)
+	{
+		ApplicationSpecification spec;
+		spec.Name = "NGN Editor";
+		spec.RendererAPI = NGN::RendererAPIType::OpenGL;
+		spec.WindowSpec.Width = 1600;
+		spec.WindowSpec.Height = 900;
+		spec.CommandLineArgs = args;
+
+		return new EditorApp(spec);
+	}
 }

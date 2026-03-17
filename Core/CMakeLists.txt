@@ -4,97 +4,101 @@ set(SOURCES
 vendor/stb/stb_image.h
 vendor/stb/stb_image.cpp
 
-Source/Core/Assert.h
-Source/Core/Application.h
-Source/Core/Application.cpp
-Source/Core/Base.h
-Source/Core/EntryPoint.h
-Source/Core/Instrumentor.cpp
-Source/Core/Instrumentor.h
-Source/Core/Input.cpp
-Source/Core/Input.h
-Source/Core/KeyCodes.h
-Source/Core/Layer.h
-Source/Core/Layer.cpp
-Source/Core/Log.h
-Source/Core/Log.cpp
-Source/Core/MouseCodes.h
-Source/Core/ngnpch.h
-Source/Core/ngnpch.cpp
-Source/Core/PlatformDetection.h
-Source/Core/Profile.h
-Source/Core/Timestep.h
-Source/Core/UUID.cpp
-Source/Core/UUID.h
-Source/Core/Window.h
-Source/Core/Window.cpp
+src/ngnpch.h
+src/ngnpch.cpp
+src/NGN.h
 
-Source/Debug/ChromeProfiling.h
+src/Core/Assert.h
+src/Core/Application.h
+src/Core/Application.cpp
+src/Core/Base.h
+src/Core/EntryPoint.h
+src/Core/Instrumentor.cpp
+src/Core/Instrumentor.h
+src/Core/Input.cpp
+src/Core/Input.h
+src/Core/KeyCodes.h
+src/Core/Layer.h
+src/Core/Layer.cpp
+src/Core/Log.h
+src/Core/Log.cpp
+src/Core/MouseCodes.h
+src/Core/PlatformDetection.h
+src/Core/Profile.h
+src/Core/Timestep.h
+src/Core/UUID.cpp
+src/Core/UUID.h
+src/Core/Window.h
+src/Core/Window.cpp
 
-Source/Events/Event.h
-Source/Events/ApplicationEvent.h
-Source/Events/KeyEvent.h
-Source/Events/MouseEvent.h
+src/Debug/ChromeProfiling.h
 
-Source/ImGui/ImGuiLayer.h
-Source/ImGui/ImGuiLayer.cpp
+src/Events/Event.h
+src/Events/ApplicationEvent.h
+src/Events/KeyEvent.h
+src/Events/MouseEvent.h
 
-Source/Math/Math.h
-Source/Math/Math.cpp
+src/ImGui/ImGuiLayer.h
+src/ImGui/ImGuiLayer.cpp
 
-Source/Renderer/Buffer.cpp
-Source/Renderer/Buffer.h
-Source/Renderer/Framebuffer.cpp
-Source/Renderer/GraphicsContext.h
-Source/Renderer/GraphicsContext.cpp
-Source/Renderer/OrthographicCamera.cpp
-Source/Renderer/OrthographicCamera.h
-Source/Renderer/RenderCommand.cpp
-Source/Renderer/RenderCommand.h
-Source/Renderer/Renderer.h
-Source/Renderer/RendererAPI.cpp
-Source/Renderer/RendererAPI.h
-Source/Renderer/Renderer2D.cpp
-Source/Renderer/Renderer2D.h
-Source/Renderer/Renderer.cpp
-Source/Renderer/Shader.h
-Source/Renderer/Shader.cpp
-Source/Renderer/VertexArray.cpp
-Source/Renderer/VertexArray.h
+src/Math/Math.h
+src/Math/Math.cpp
 
-Source/Scene/Components.h
-Source/Scene/Entity.cpp
-Source/Scene/Entity.h
-Source/Scene/Scene.cpp
-Source/Scene/Scene.h
-Source/Scene/Systems/SpriteRenderSystem.cpp
-Source/Scene/Systems/SpriteRenderSystem.h
-Source/Scene/Systems/System.h
+src/Renderer/Buffer.cpp
+src/Renderer/Buffer.h
+src/Renderer/Font.cpp
+src/Renderer/Font.h
+src/Renderer/Framebuffer.cpp
+src/Renderer/GraphicsContext.h
+src/Renderer/GraphicsContext.cpp
+src/Renderer/OrthographicCamera.cpp
+src/Renderer/OrthographicCamera.h
+src/Renderer/RenderCommand.cpp
+src/Renderer/RenderCommand.h
+src/Renderer/Renderer.h
+src/Renderer/RendererAPI.cpp
+src/Renderer/RendererAPI.h
+src/Renderer/Renderer2D.cpp
+src/Renderer/Renderer2D.h
+src/Renderer/Renderer.cpp
+src/Renderer/Shader.h
+src/Renderer/Shader.cpp
+src/Renderer/VertexArray.cpp
+src/Renderer/VertexArray.h
+
+src/Scene/Components.h
+src/Scene/Entity.cpp
+src/Scene/Entity.h
+src/Scene/Scene.cpp
+src/Scene/Scene.h
+src/Scene/Systems/SpriteRenderSystem.cpp
+src/Scene/Systems/SpriteRenderSystem.h
+src/Scene/Systems/System.h
 
 
-Source/Platform/OpenGL/OpenGLBuffer.cpp
-Source/Platform/OpenGL/OpenGLBuffer.h
-Source/Platform/OpenGL/OpenGLContext.cpp
-Source/Platform/OpenGL/OpenGLContext.h
-Source/Platform/OpenGL/OpenGLFramebuffer.h
-Source/Platform/OpenGL/OpenGLFramebuffer.cpp
-Source/Platform/OpenGL/OpenGLRendererAPI.cpp
-Source/Platform/OpenGL/OpenGLRendererAPI.h
-Source/Platform/OpenGL/OpenGLShader.cpp
-Source/Platform/OpenGL/OpenGLShader.h
-Source/Platform/OpenGL/OpenGLTexture.h
-Source/Platform/OpenGL/OpenGLTexture.cpp
-Source/Platform/OpenGL/OpenGLVertexArray.cpp
-Source/Platform/OpenGL/OpenGLVertexArray.h
-Source/Platform/OpenGL/GLUtils.h
-Source/Platform/OpenGL/GLUtils.cpp
-Source/Platform/Windows/WindowsInput.cpp
-Source/Platform/Windows/WindowsInput.h
-Source/Platform/Windows/WindowsPlatformUtils.cpp
-Source/Platform/Windows/WinWindow.cpp
-Source/Platform/Windows/WinWindow.h
+src/Platform/OpenGL/OpenGLBuffer.cpp
+src/Platform/OpenGL/OpenGLBuffer.h
+src/Platform/OpenGL/OpenGLContext.cpp
+src/Platform/OpenGL/OpenGLContext.h
+src/Platform/OpenGL/OpenGLFramebuffer.h
+src/Platform/OpenGL/OpenGLFramebuffer.cpp
+src/Platform/OpenGL/OpenGLRendererAPI.cpp
+src/Platform/OpenGL/OpenGLRendererAPI.h
+src/Platform/OpenGL/OpenGLShader.cpp
+src/Platform/OpenGL/OpenGLShader.h
+src/Platform/OpenGL/OpenGLTexture.h
+src/Platform/OpenGL/OpenGLTexture.cpp
+src/Platform/OpenGL/OpenGLVertexArray.cpp
+src/Platform/OpenGL/OpenGLVertexArray.h
+src/Platform/OpenGL/GLUtils.h
+src/Platform/OpenGL/GLUtils.cpp
+src/Platform/Windows/WindowsInput.cpp
+src/Platform/Windows/WindowsInput.h
+src/Platform/Windows/WindowsPlatformUtils.cpp
+src/Platform/Windows/WinWindow.cpp
+src/Platform/Windows/WinWindow.h
 
-Source/Utils/PlatformUtils.h
+src/Utils/PlatformUtils.h
 )
 
 add_library(Core STATIC)
@@ -109,7 +113,7 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${SOURCES})
 
 
 target_include_directories(Core PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/Source
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_include_directories(Core PUBLIC SYSTEM 

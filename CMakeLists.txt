@@ -16,7 +16,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/Dependencies.cmake)
 
 function(ngn_enable_pch target)
 	target_precompile_headers(${target} PRIVATE
-		"${CMAKE_SOURCE_DIR}/Core/Source/Core/ngnpch.h"
+		"${CMAKE_SOURCE_DIR}/Core/src/ngnpch.h"
 	)
 
 	if (MSVC)
@@ -27,4 +27,5 @@ endfunction()
 
 # Project modules
 add_subdirectory(Core)
+add_subdirectory(Editor)
 add_subdirectory(App/Sandbox)
