@@ -143,13 +143,13 @@ namespace NGN
 		bool multisample = m_Spec.Samples > 1;
 
 		// Set color Attachment based on spec
-		if (m_Spec.Attachments.Attachments.size())
+		if (m_ColorAttachmentSpecifications.size())
 		{
-			m_ColorAttachments.resize(m_Spec.Attachments.Attachments.size());
+			m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
 			Utils::CreateTextures(multisample, m_ColorAttachments.data(), m_ColorAttachments.size());
 
 			// Configure each color attachment and attach to fb - Max 4 color attachments for now
-			for (size_t i = 0; i < m_Spec.Attachments.Attachments.size(); i++)
+			for (size_t i = 0; i < m_ColorAttachmentSpecifications.size(); i++)
 			{
 				Utils::BindTexture(multisample, m_ColorAttachments[i]);
 				FramebufferTextureSpecification& spec = m_ColorAttachmentSpecifications[i];

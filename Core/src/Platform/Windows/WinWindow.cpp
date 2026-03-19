@@ -50,7 +50,7 @@ namespace NGN
 			NGN_PROFILE_SCOPE("glfwCreateWindow");
 		#if defined(NGN_DEBUG)
 			if (Renderer::GetAPI() == RendererAPIType::OpenGL)
-				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 		#endif
 			m_Window = glfwCreateWindow((int)spec.Width, (int)spec.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			NGN_CORE_ASSERT(m_Window, "Failed to create GLFW window");

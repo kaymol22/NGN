@@ -16,8 +16,34 @@ namespace NGN
 	{
 		glm::vec4 Position;
 		glm::vec4 Color;
+		glm::vec2 TexCoord;
+		float TexIndex;
+		float TilingFactor;
+		
 		int EntityID;
 	};
+
+	struct CircleVertex
+	{
+		glm::vec3 WorldPosition;
+		glm::vec3 LocalPosition;
+		glm::vec4 Color;
+		float Thickness;
+		float Fade;
+
+		int EntityID;
+	};
+
+	struct LineVertex
+	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+		glm::vec2 TexCoord;
+
+		int EntityID;
+	};
+
+	// TODO: Text Rendering
 
 	struct Renderer2DData
 	{
@@ -31,12 +57,33 @@ namespace NGN
 		Ref<IndexBuffer> QuadIB;
 		Ref<Shader> QuadShader;
 
-		uint32_t QuadIndexCount = 0;
+		Ref<VertexArray> CircleVA;
+		Ref<VertexBuffer> CircleVB;
+		Ref<Shader> CircleShader;
 
+		Ref<VertexArray> LineVA;
+		Ref<VertexBuffer> LineVB;
+		Ref<Shader> LineShader;
+
+		uint32_t QuadIndexCount = 0;
 		QuadVertex* QuadVertexBufferBase = nullptr;
 		QuadVertex* QuadVertexBufferPtr = nullptr;
+		Ref<Texture2D> WhiteTexture;
 
-		glm::mat4 ViewProjection;
+		uint32_t CircleIndexCount = 0;
+		CircleVertex* CircleVertexBufferBase = nullptr;
+		CircleVertex* CircleVertexBufferPtr = nullptr;
+
+		uint32_t LineVertexCount = 0;
+		LineVertex* LineVertexBufferBase = nullptr;
+		LineVertex* LineVertexBufferPtr = nullptr;
+
+		struct CameraData
+		{
+			glm::mat4 ViewProjection;
+		};
+		CameraData CamBuffer;
+		Ref<UniformBuffer> CameraUniformBuffer;
 		Renderer2D::Renderer2DStats Stats;
 	};
 

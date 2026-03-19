@@ -7,8 +7,8 @@
 #include <iostream>
 
 //TEMP: Debugging
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
+//#define GLM_ENABLE_EXPERIMENTAL
+//#include <glm/gtx/string_cast.hpp>
 
 namespace NGN
 {

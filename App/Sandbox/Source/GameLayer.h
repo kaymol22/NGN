@@ -1,9 +1,6 @@
 #pragma once
 
-#include "Core/Layer.h"
-#include "Core/Log.h"
-#include "Core/Input.h"
-#include "Events/KeyEvent.h"
+#include "NGN.h"
 
 #include "Scene/Scene.h"
 #include "Scene/Components.h"
@@ -20,8 +17,7 @@ class GameLayer : public NGN::Layer
 {
 public:
 	GameLayer()
-		: Layer("Game", NGN::LayerFlags::WorldSpace)
-		, m_Camera(-1.0f, 1.0f, -1.0f, 1.0f)
+		: Layer("Game", NGN::LayerFlags::WorldSpace), m_CameraController(1280.0f / 720.0f)
 	{}
 	
 	void OnAttach() override
@@ -46,17 +42,12 @@ public:
 
 		m_Scene->AddSystem<NGN::SpriteRenderSystem>();
 
-		m_Camera.SetProjection(-1.0f, 1.0f, -1.0f, 1.0f);
-		m_Camera.SetPosition({ 0.0f, 0.0f, 0.0f });
+
 	}
 
 	void OnUpdate(NGN::Timestep ts)
 	{
-		if (NGN::Input::IsKeyPressed(NGN::Key::A))
-		{
-			NGN_INFO("Key A is pressed");
-		}
-
+		m_CameraController.OnUpdate(ts);
 		m_Scene->OnUpdate(ts);
 	}
 
@@ -64,7 +55,7 @@ public:
 	{
 		NGN_PROFILE_FUNCTION();
 
-		m_Scene->SetActiveCamera(m_Camera.GetProjectionMatrix());
+		m_Scene->SetActiveCamera(m_CameraController.GetCamera().GetViewProjectionMatrix());
 		m_Scene->OnRender();
 
 		/*NGN_INFO("VP= {0}", glm::to_string(m_Camera.GetViewProjectionMatrix()));*/
@@ -72,17 +63,10 @@ public:
 
 	void OnEvent(NGN::Event& e) override
 	{
-		NGN::EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<NGN::KeyPressedEvent>
-			([this](NGN::KeyPressedEvent& e)
-			{
-				NGN_INFO("Event: Key {0} pressed", e.GetKeyCode());
-				return false;
-			}
-		);
+		m_CameraController.OnEvent(e);
 	}
 	
 private:
 	std::unique_ptr<NGN::Scene> m_Scene;
-	NGN::OrthographicCamera m_Camera;
+	NGN::OrthographicCameraController m_CameraController;
 };

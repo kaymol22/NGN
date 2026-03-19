@@ -6,7 +6,8 @@
 namespace NGN
 {
 	Scene::Scene()
-	{ 
+	{
+		NGN_CORE_INFO("Scene Created");
 	}
 
 	Scene::~Scene()

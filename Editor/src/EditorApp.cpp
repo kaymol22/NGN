@@ -22,8 +22,6 @@ namespace NGN
 		ApplicationSpecification spec;
 		spec.Name = "NGN Editor";
 		spec.RendererAPI = NGN::RendererAPIType::OpenGL;
-		spec.WindowSpec.Width = 1600;
-		spec.WindowSpec.Height = 900;
 		spec.CommandLineArgs = args;
 
 		return new EditorApp(spec);

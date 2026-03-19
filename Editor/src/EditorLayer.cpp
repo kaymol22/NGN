@@ -13,6 +13,18 @@ namespace NGN
 		NGN_PROFILE_FUNCTION();
 
 		// Load & create textures for editor resources here
+
+		FramebufferSpecification fbSpec;
+		fbSpec.Attachments = {
+			FramebufferTextureFormat::RGBA8,
+			FramebufferTextureFormat::RED_INTEGER,
+			FramebufferTextureFormat::Depth
+		};
+		fbSpec.Width = 800;
+		fbSpec.Height = 600;
+		m_Framebuffer = Framebuffer::Create(fbSpec);
+
+		m_ActiveScene = CreateRef<Scene>();
 	}
 
 	void EditorLayer::OnDetach()

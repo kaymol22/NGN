@@ -15,7 +15,7 @@
 namespace NGN
 {
 	class System;
-	class Entity;
+	class Entity; // Forward declaration
 
 	class Scene
 	{
@@ -84,4 +84,5 @@ namespace NGN
 	};
 }
 
+// Include Entity.h after Scene class definition to avoid circular include
 #include "Entity.h"

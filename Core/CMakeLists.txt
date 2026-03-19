@@ -53,6 +53,8 @@ src/Renderer/GraphicsContext.h
 src/Renderer/GraphicsContext.cpp
 src/Renderer/OrthographicCamera.cpp
 src/Renderer/OrthographicCamera.h
+src/Renderer/OrthographicCameraController.cpp
+src/Renderer/OrthographicCameraController.h
 src/Renderer/RenderCommand.cpp
 src/Renderer/RenderCommand.h
 src/Renderer/Renderer.h
