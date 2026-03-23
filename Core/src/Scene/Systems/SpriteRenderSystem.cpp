@@ -14,7 +14,7 @@ namespace NGN
 {
 	void SpriteRenderSystem::OnCreate(Scene& scene)
 	{
-
+		NGN_PROFILE_FUNCTION();
 	}
 
 	// TODO: Should implement EventListener for when new entity added to scene - 
@@ -22,12 +22,12 @@ namespace NGN
 
 	// void OnEntityAdded(Event& event) {}
 
-	void SpriteRenderSystem::OnRender(Scene& scene)
+	void SpriteRenderSystem::OnRender(Scene& scene, const OrthographicCamera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
 
 		// Use over GetEntitiesWithComponents to avoid creating temporary vector of entities
-		auto& registry = scene.GetRegistry();
+		/*auto& registry = scene.GetRegistry();
 
 		Renderer2D::BeginScene(scene.GetViewProjection());
 
@@ -40,6 +40,11 @@ namespace NGN
 
 			Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color, id.ID);
 		}
-		Renderer2D::EndScene();
+		Renderer2D::EndScene();*/
+	}
+
+	void SpriteRenderSystem::OnUpdate(Scene& scene, Timestep ts)
+	{
+		NGN_PROFILE_FUNCTION();
 	}
 }

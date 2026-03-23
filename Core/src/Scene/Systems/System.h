@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Timestep.h"
+#include "Renderer/OrthographicCamera.h"
 
 namespace NGN
 {
@@ -14,6 +15,6 @@ namespace NGN
 		virtual void OnCreate(Scene& scene) {}
 		virtual void OnUpdate(Scene& scene, Timestep ts) {}
 		virtual void OnRender(Scene& scene) {}
-		/*virtual void OnRender(Scene& scene, const OrthographicCamera& camera) {}*/
+		virtual void OnRender(Scene& scene, const OrthographicCamera& camera) {}
 	};
 }

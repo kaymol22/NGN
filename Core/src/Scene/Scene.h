@@ -6,6 +6,7 @@
 #include "Core/Timestep.h"
 #include "Core/UUID.h"
 #include "Components.h"
+#include "Renderer/OrthographicCamera.h"
 
 #include <glm/glm.hpp>
 
@@ -67,7 +68,7 @@ namespace NGN
 		}
 
 		// ============ Camera ============ //
-		void SetActiveCamera(const glm::mat4& viewProj) { m_ViewProjection = viewProj; }
+		void SetActiveCamera(const OrthographicCamera& camera) { m_ViewProjection = camera.GetViewProjectionMatrix(); }
 
 		const glm::mat4& GetViewProjection() const
 		{

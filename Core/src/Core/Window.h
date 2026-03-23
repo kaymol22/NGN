@@ -13,8 +13,8 @@ namespace NGN {
 		bool VSync = true;
 
 		WindowSpecification(const std::string& title = "NGN Engine",
-			uint32_t width = 1280,
-			uint32_t height = 720,
+			uint32_t width = 1600,
+			uint32_t height = 900,
 			bool isResizeable = true,
 			bool vSync = true)
 			: Title(title), Width(width), Height(height), IsResizeable(isResizeable), VSync(vSync)

@@ -12,7 +12,7 @@ namespace NGN
 		switch (RendererAPI::GetAPI())
 		{
 			case RendererAPIType::None:		NGN_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-			case RendererAPIType::OpenGL:	return CreateRef<OpenGLTexture>(specification);
+			case RendererAPIType::OpenGL:	return CreateRef<OpenGLTexture2D>(specification);
 		}
 
 		NGN_CORE_ASSERT(false, "Unknown RendererAPI");
@@ -24,7 +24,7 @@ namespace NGN
 		switch (RendererAPI::GetAPI())
 		{
 			case RendererAPIType::None:		NGN_CORE_ASSERT(false, "RendererAPI::None is not supported"); return nullptr;
-			case RendererAPIType::OpenGL:	return CreateRef<OpenGLTexture>(filepath);
+			case RendererAPIType::OpenGL:	return CreateRef<OpenGLTexture2D>(filepath);
 		}
 
 		NGN_CORE_ASSERT(false, "Unknown RendererAPI");

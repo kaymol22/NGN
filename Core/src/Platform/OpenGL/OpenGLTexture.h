@@ -1,25 +1,40 @@
 #pragma once
 
 #include "Renderer/Texture.h"
+#include <glad/gl.h>
 
 namespace NGN
 {
-	class OpenGLTexture : public Texture2D
+	class OpenGLTexture2D : public Texture2D
 	{
 	public:
-		OpenGLTexture(const TextureSpecification& specification);
-		OpenGLTexture(const std::string& path);
+		OpenGLTexture2D(const TextureSpecification& specification);
+		OpenGLTexture2D(const std::string& path);
 
-		virtual ~OpenGLTexture();
+		virtual ~OpenGLTexture2D();
 
 		uint32_t GetWidth() const override { return m_Width; }
 		uint32_t GetHeight() const override { return m_Height; }
-		uint32_t GetRenderID() const override { return m_RendererID; }
+		uint32_t GetRendererID() const override { return m_RendererID; }
 		const std::string& GetPath() const override { return m_Path; }
+
+		virtual void SetData(void* data, uint32_t size) override;
+		virtual void Bind(uint32_t slot = 0) const override;
+		virtual bool IsLoaded() const override { return m_IsLoaded; }
+
+		virtual bool operator==(const Texture& other) const override
+		{
+			return m_RendererID == other.GetRendererID();
+		}
 
 	private:
 		uint32_t m_RendererID = 0;
+		TextureSpecification m_Specification;
+
 		uint32_t m_Width = 0, m_Height = 0;
 		std::string m_Path;
+
+		bool m_IsLoaded = false;
+		GLenum m_InternalFormat, m_DataFormat;
 	};
 }

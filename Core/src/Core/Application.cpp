@@ -85,10 +85,8 @@ namespace NGN {
 				layer->OnUpdate(m_Timestep);
 
 			/*========== Rendering =============*/
-			glm::vec4 clearColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-			NGN::RenderCommand::SetClearColor(clearColor);
-			NGN::RenderCommand::Clear();
+			
 
 			// World Space Render
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)

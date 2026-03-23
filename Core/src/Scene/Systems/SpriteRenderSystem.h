@@ -11,6 +11,7 @@ namespace NGN
 	{
 	public:
 		void OnCreate(Scene& scene) override;
-		void OnRender(Scene& scene) override;
+		void OnUpdate(Scene& scene, Timestep ts) override;
+		void OnRender(Scene& scene, const OrthographicCamera& camera);
 	};
 }

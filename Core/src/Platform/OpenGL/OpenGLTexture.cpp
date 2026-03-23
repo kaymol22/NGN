@@ -4,87 +4,131 @@
 
 namespace NGN
 {
-	OpenGLTexture::OpenGLTexture(const TextureSpecification& specification)
-		: m_Width(specification.Width), m_Height(specification.Height)
+	namespace Utils
 	{
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-
-		// Mapping engine format to OpenGL format
-		GLenum internalFormat = GL_RGBA8;
-		GLenum dataFormat = GL_RGBA;
-
-		switch (specification.Format)
+		static GLenum ImageFormatToGLDataFormat(ImageFormat format)
 		{
-		case ImageFormat::RGBA8:
-			internalFormat = GL_RGBA8;
-			dataFormat = GL_RGBA;
-			break;
-		case ImageFormat::R8:
-			internalFormat = GL_R8;
-			dataFormat = GL_RED;
-			break;
-		case ImageFormat::RGB8:
-			internalFormat = GL_RGB8;
-			dataFormat = GL_RGB;
-			break;
-		case ImageFormat::RGBA32F:
-			internalFormat = GL_RGBA32F;
-			dataFormat = GL_RGBA;
-			break;
-		default:
-			internalFormat = GL_RGBA8;
-			dataFormat = GL_RGBA;
+			switch (format)
+			{
+				case ImageFormat::None:		return 0;
+				case ImageFormat::R8:		return GL_RED;
+				case ImageFormat::RGB8:		return GL_RGB;
+				case ImageFormat::RGBA8:	return GL_RGBA;
+				case ImageFormat::RGBA32F:	return GL_RGBA;
+			}
+
+			NGN_CORE_ASSERT(false, "Unknown image format");
+			return 0;
 		}
 
-		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+		static GLenum ImageFormatToGLInternalFormat(ImageFormat format)
+		{
+			switch (format)
+			{
+				case ImageFormat::None:		return 0;
+				case ImageFormat::R8:		return GL_R8;
+				case ImageFormat::RGB8:		return GL_RGB8;
+				case ImageFormat::RGBA8:	return GL_RGBA8;
+				case ImageFormat::RGBA32F:	return GL_RGBA32F;
+			}
+
+			NGN_CORE_ASSERT(false, "Unknown image format");
+			return 0;
+		}
+	}
+
+	OpenGLTexture2D::OpenGLTexture2D(const TextureSpecification& specification)
+		: m_Specification(specification), m_Width(m_Specification.Width), m_Height(m_Specification.Height)
+	{
+		NGN_PROFILE_FUNCTION();
+
+		m_InternalFormat = Utils::ImageFormatToGLInternalFormat(m_Specification.Format);
+		m_DataFormat = Utils::ImageFormatToGLDataFormat(m_Specification.Format);
+
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
 
 		// set default params
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
-	OpenGLTexture::OpenGLTexture(const std::string& filePath)
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& filePath)
 		: m_Path(filePath)
 	{
+		NGN_PROFILE_FUNCTION();
+
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
-		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
+		stbi_uc* data = nullptr;
+		data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
 
-		if (!data)
+		if (data)
 		{
-			// TODO: Implement NGN_CORE_ASSERT here
-			m_Width = m_Height = 0;
-			return;
+			m_IsLoaded = true;
+
+			m_Width = width;
+			m_Height = height;
+			GLenum internalFormat = 0, dataFormat = 0;
+
+			if (channels == 4) { internalFormat = GL_RGBA8; dataFormat = GL_RGBA; }
+			else if (channels == 3) { internalFormat = GL_RGB8; dataFormat = GL_RGB; }
+			else if (channels == 1) { internalFormat = GL_R8; dataFormat = GL_RED; }
+
+			m_InternalFormat = internalFormat;
+			m_DataFormat = dataFormat;
+
+			glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+			glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+			glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+
+			// set default params
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+			if (true) // TODO: check specification.GenerateMipMaps
+				glGenerateTextureMipmap(m_RendererID);
+
+			stbi_image_free(data);
 		}
-
-		m_Width = width;
-		m_Height = height;
-
-		GLenum internalFormat = 0, dataFormat = 0;
-		if (channels == 4) { internalFormat = GL_RGBA8; dataFormat = GL_RGBA; }
-		else if (channels == 3) { internalFormat = GL_RGB8; dataFormat = GL_RGB; }
-		else if (channels == 1) { internalFormat = GL_R8; dataFormat = GL_RED; }
-
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
-
-		// set default params
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		if (true) // TODO: check specification.GenerateMipMaps
-			glGenerateTextureMipmap(m_RendererID);
-
-		stbi_image_free(data);
+		else
+		{
+			NGN_CORE_ERROR("Failed to load texture: {0}", filePath);
+			// Set safe default values if load fails
+			m_Width = 1;
+			m_Height = 1;
+			m_InternalFormat = GL_RGBA8;
+			m_DataFormat = GL_RGBA;
+			m_IsLoaded = false;
+		}
 	}
 
-	OpenGLTexture::~OpenGLTexture()
+	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		NGN_PROFILE_FUNCTION();
+
 		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLTexture2D::SetData(void* data, uint32_t size)
+	{
+		NGN_PROFILE_FUNCTION();
+
+		// bpp = bytes per pixel - need to calculate based on data format
+		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3; // TODO: Handle more formats
+		NGN_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture");
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+	}
+
+	void OpenGLTexture2D::Bind(uint32_t slot) const
+	{
+		NGN_PROFILE_FUNCTION();
+
+		glBindTextureUnit(slot, m_RendererID);
 	}
 }

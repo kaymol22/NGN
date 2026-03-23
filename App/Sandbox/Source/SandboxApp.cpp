@@ -9,6 +9,7 @@ public:
 
 	Sandbox(const NGN::ApplicationSpecification& spec) : NGN::Application(spec)
 	{
+		NGN_INFO("Creating Sandbox Application");
 		PushLayer<GameLayer>();
 		PushLayer<DebugLayer>();
 	}

@@ -49,6 +49,7 @@ src/Renderer/Buffer.h
 src/Renderer/Font.cpp
 src/Renderer/Font.h
 src/Renderer/Framebuffer.cpp
+src/Renderer/Framebuffer.h
 src/Renderer/GraphicsContext.h
 src/Renderer/GraphicsContext.cpp
 src/Renderer/OrthographicCamera.cpp
@@ -65,6 +66,8 @@ src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
 src/Renderer/Shader.h
 src/Renderer/Shader.cpp
+src/Renderer/Texture.cpp
+src/Renderer/Texture.h
 src/Renderer/VertexArray.cpp
 src/Renderer/VertexArray.h
 
