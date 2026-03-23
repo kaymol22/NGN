@@ -1,5 +1,10 @@
 #include "GameLayer.h"
 
+GameLayer::GameLayer() : Layer("GameLayer"), 
+m_CameraController(NGN::Application::Get().GetFramebufferSize().x / NGN::Application::Get().GetFramebufferSize().y)
+{
+}
+
 void GameLayer::OnAttach()
 {
 	NGN_PROFILE_FUNCTION();

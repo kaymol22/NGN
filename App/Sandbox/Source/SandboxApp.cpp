@@ -24,8 +24,9 @@ NGN::Application* NGN::CreateApplication(NGN::ApplicationCmdLineArgs args)
 	ApplicationSpecification spec;
 	spec.Name = "NGN Sandbox";
 	spec.RendererAPI = NGN::RendererAPIType::OpenGL;
-	spec.WindowSpec.Width = 1000;
-	spec.WindowSpec.Height = 1000;
+	spec.WindowSpec.Title = "NGN Sandbox";
+	spec.WindowSpec.Width = 1280;
+	spec.WindowSpec.Height = 720;
 	spec.CommandLineArgs = args;
 
 	return new Sandbox(spec);

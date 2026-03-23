@@ -12,9 +12,7 @@
 class GameLayer : public NGN::Layer
 {
 public:
-	GameLayer()
-		: Layer("Game", NGN::LayerFlags::WorldSpace), m_CameraController(1280.0f / 720.0f)
-	{}
+	GameLayer();
 	
 	virtual void OnAttach() override;
 
