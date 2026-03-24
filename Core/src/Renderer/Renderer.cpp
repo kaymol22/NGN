@@ -18,7 +18,7 @@ namespace NGN
 	void Renderer::Shutdown()
 	{
 		NGN_PROFILE_FUNCTION();
-		/*Renderer2D::Shutdown();*/
+		Renderer2D::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)

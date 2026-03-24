@@ -62,6 +62,9 @@ namespace NGN
 		NGN_CORE_ASSERT(m_Context, "Failed to create graphics context");
 		m_Context->Init();
 
+		// Apply VSync setting after context is initialized
+		SetVSync(m_Data.VSync);
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		// Set Callbacks

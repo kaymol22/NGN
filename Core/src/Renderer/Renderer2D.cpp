@@ -57,6 +57,8 @@ namespace NGN
 		Ref<Shader> QuadShader;
 		Ref<Texture2D> WhiteTexture; // Basic Texture for non textured quads, circles and lines
 
+		Ref<IndexBuffer> QuadIB; // Reused for circles
+
 		Ref<VertexArray> CircleVA;
 		Ref<VertexBuffer> CircleVB;
 		Ref<Shader> CircleShader;
@@ -134,8 +136,8 @@ namespace NGN
 			offset += 4;
 		}
 
-		Ref<IndexBuffer> s_IndexBuffer = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
-		s_Data.QuadVA->SetIndexBuffer(s_IndexBuffer);
+		s_Data.QuadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
+		s_Data.QuadVA->SetIndexBuffer(s_Data.QuadIB);
 		delete[] quadIndices;
 
 		/* ======================= Circles ======================== */
@@ -151,7 +153,7 @@ namespace NGN
 			{ShaderDataType::Int, "a_EntityID"}
 		});
 		s_Data.CircleVA->AddVertexBuffer(s_Data.CircleVB);
-		s_Data.CircleVA->SetIndexBuffer(s_IndexBuffer); // Reuse quad ibo
+		s_Data.CircleVA->SetIndexBuffer(s_Data.QuadIB); // Reuse quad ibo
 		s_Data.CircleVertexBufferBase = new CircleVertex[s_Data.MaxVertices];
 
 		/* ======================= Lines ======================== */
@@ -198,6 +200,8 @@ namespace NGN
 		NGN_PROFILE_FUNCTION();
 
 		delete[] s_Data.QuadVertexBufferBase;
+		delete[] s_Data.CircleVertexBufferBase;
+		delete[] s_Data.LineVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -271,7 +275,7 @@ namespace NGN
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.CircleVertexBufferPtr - (uint8_t*)s_Data.CircleVertexBufferBase);
 			s_Data.CircleVB->SetData(s_Data.CircleVertexBufferBase, dataSize);
 
-			s_Data.CircleShader->Bind();
+		 s_Data.CircleShader->Bind();
 			RenderCommand::DrawIndexed(s_Data.CircleVA, s_Data.CircleIndexCount);
 			s_Data.Stats.DrawCalls++;
 		}
