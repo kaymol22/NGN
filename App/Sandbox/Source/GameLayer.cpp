@@ -1,7 +1,7 @@
 #include "GameLayer.h"
 
 GameLayer::GameLayer() : Layer("GameLayer"), 
-m_CameraController(NGN::Application::Get().GetFramebufferSize().x / NGN::Application::Get().GetFramebufferSize().y)
+m_CameraController(NGN::Application::Get().GetFramebufferSize().x / NGN::Application::Get().GetFramebufferSize().y, true)
 {
 }
 
@@ -29,6 +29,7 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 
 	NGN::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	NGN::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerBoardTexture, 10.0f);
+	NGN::Renderer2D::DrawQuad({ -5.0f, 0.0f, -0.1f }, { 2.0f, 2.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
 	NGN::Renderer2D::EndScene();
 }
 

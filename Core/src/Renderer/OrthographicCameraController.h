@@ -29,6 +29,7 @@ namespace NGN
 		bool OnWindowResized(WindowResizeEvent& e);
 	
 	private:
+		float m_TranslateSpeedBoost = 2.0f;
 		float m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
 		OrthographicCamera m_Camera;

@@ -19,7 +19,6 @@ namespace NGN
 		// Bind Platform Implementation
 		#ifdef NGN_PLATFORM_WINDOWS
 			WindowsInput::CreateInput();
-			NGN_CORE_INFO("Initialized Windows Input System");
 		#endif
 	}
 
@@ -27,7 +26,6 @@ namespace NGN
 	{
 		#ifdef NGN_PLATFORM_WINDOWS
 			WindowsInput::DestroyInput();
-			NGN_CORE_INFO("Destroyed Windows Input System");
 		#endif
 	}
 
