@@ -40,11 +40,18 @@ namespace NGN
 	{
 		vertexArray->Bind();
 		uint32_t count = indexCount ? indexCount : vertexArray->GetIndexBuffer()->GetCount();
-		// DEBUG
-		/*GLint ebo = 0;
-		glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &ebo);
-		NGN_CORE_INFO("EBO bound at draw time: {0}", ebo);*/
 		
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+	}
+
+	void OpenGLRendererAPI::DrawLines(const Ref<VertexArray> vertexArray, uint32_t vertexCount)
+	{
+		vertexArray->Bind();
+		glDrawArrays(GL_LINES, 0, vertexCount);
+	}
+
+	void OpenGLRendererAPI::SetLineWidth(float width)
+	{
+		glLineWidth(width);
 	}
 }

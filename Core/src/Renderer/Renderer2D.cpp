@@ -79,7 +79,7 @@ namespace NGN
 		LineVertex* LineVertexBufferBase = nullptr;
 		LineVertex* LineVertexBufferPtr = nullptr;
 
-		float LineWidth = 1.0f;
+		float LineWidth = 3.0f;
 
 		std::array<Ref<Texture2D>, MaxTextureSlots> TextureSlots;
 		uint32_t TextureSlotIndex = 1; // 0 = white texture
@@ -286,8 +286,8 @@ namespace NGN
 			s_Data.LineVB->SetData(s_Data.LineVertexBufferBase, dataSize);
 
 			s_Data.LineShader->Bind();
-			/*RenderCommand::SetLineWidth(GetLineWidth());*/
-			RenderCommand::DrawIndexed(s_Data.LineVA, s_Data.LineVertexCount);
+			RenderCommand::SetLineWidth(GetLineWidth());
+			RenderCommand::DrawLines(s_Data.LineVA, s_Data.LineVertexCount);
 			s_Data.Stats.DrawCalls++;
 		}
 	}
