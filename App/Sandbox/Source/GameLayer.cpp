@@ -35,8 +35,8 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 	NGN::Renderer2D::DrawRotatedQuad({ 5.0f, 0.0f, -0.1f }, { 2.0f, 2.0f }, rotation, m_CheckerBoardTexture, 1.0f, { 1.0f, 1.0f, 1.0f, 1.0f });
 	NGN::Renderer2D::DrawRotatedQuad({ 0.0f, 3.0f, -0.1f }, { 3.0f, 3.0f }, { 0.0f, 0.5f, 0.5f, 1.0f }, rotation);
 	NGN::Renderer2D::DrawRect({ 0.0f, -3.0f, -0.1f }, { 3.0f, 3.0f }, { 0.5f, 0.5f, 0.0f, 1.0f });
-	NGN::Renderer2D::DrawLine({ -5.0f, -5.0f, -0.1f }, { 5.0f, 5.0f, -0.1f }, { 0.0f, 1.0f, 0.0f, 1.0f });
-	NGN::Renderer2D::DrawLine({  -5.0f,  5.0f, -0.1f }, { 5.0f, -5.0f, -0.1f }, { 0.0f, 0.0f, 1.0f, 1.0f });
+	/*NGN::Renderer2D::DrawLine({ -5.0f, -5.0f, -0.1f }, { 5.0f, 5.0f, -0.1f }, { 0.0f, 1.0f, 0.0f, 1.0f });
+	NGN::Renderer2D::DrawLine({  -5.0f,  5.0f, -0.1f }, { 5.0f, -5.0f, -0.1f }, { 0.0f, 0.0f, 1.0f, 1.0f });*/
 	NGN::Renderer2D::EndScene();
 }
 
