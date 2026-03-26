@@ -31,6 +31,7 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 	NGN::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerBoardTexture, 10.0f);
 	NGN::Renderer2D::DrawQuad({ -5.0f, 0.0f, -0.1f }, { 2.0f, 2.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
 	NGN::Renderer2D::DrawLine({ -5.0f, -5.0f, -0.1f }, { 5.0f, 5.0f, -0.1f }, { 0.0f, 1.0f, 0.0f, 1.0f });
+	NGN::Renderer2D::DrawLine({  -5.0f,  5.0f, -0.1f }, { 5.0f, -5.0f, -0.1f }, { 0.0f, 0.0f, 1.0f, 1.0f });
 	NGN::Renderer2D::EndScene();
 }
 
