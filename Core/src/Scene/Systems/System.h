@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Timestep.h"
+#include "Renderer/Renderer2D.h"
 #include "Renderer/OrthographicCamera.h"
 
 namespace NGN
@@ -11,7 +12,6 @@ namespace NGN
 	{
 	public:
 		virtual ~System() = default;
-
 		virtual void OnCreate(Scene& scene) {}
 		virtual void OnUpdate(Scene& scene, Timestep ts) {}
 		virtual void OnRender(Scene& scene) {}
