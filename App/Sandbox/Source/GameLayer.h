@@ -27,4 +27,7 @@ private:
 	NGN::OrthographicCameraController m_CameraController;
 
 	NGN::Ref<NGN::Texture2D> m_CheckerBoardTexture;
+	NGN::Ref<NGN::Texture2D> m_SpriteSheet;
+
+	NGN::Ref<NGN::SubTexture2D> m_WaterSprite, m_GrassSprite, m_TreeSprite;
 };

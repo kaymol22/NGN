@@ -66,6 +66,8 @@ src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
 src/Renderer/Shader.h
 src/Renderer/Shader.cpp
+src/Renderer/SubTexture.cpp
+src/Renderer/SubTexture.h
 src/Renderer/Texture.cpp
 src/Renderer/Texture.h
 src/Renderer/VertexArray.cpp

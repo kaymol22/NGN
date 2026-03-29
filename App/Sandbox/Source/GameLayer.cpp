@@ -10,6 +10,12 @@ void GameLayer::OnAttach()
 	NGN_PROFILE_FUNCTION();
 
 	m_CheckerBoardTexture = NGN::Texture2D::Create("assets/Textures/Checkerboard.png");
+	m_SpriteSheet = NGN::Texture2D::Create("assets/Textures/spritesheet-1.png");
+
+	constexpr glm::vec2 cellSize = { 64.0f, 64.0f };
+	m_WaterSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet,   { 11, 11 }, { 1, 1 }, cellSize);
+	m_GrassSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 1, 11 }, { 1, 1 }, cellSize);
+	m_TreeSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 0, 1 }, { 1, 2 }, cellSize);
 }
 
 void GameLayer::OnDetach()
@@ -31,12 +37,11 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 
 	NGN::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	NGN::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerBoardTexture, 10.0f);
-	NGN::Renderer2D::DrawQuad({ -5.0f, 0.0f, -0.1f }, { 2.0f, 2.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
-	NGN::Renderer2D::DrawRotatedQuad({ 5.0f, 0.0f, -0.1f }, { 2.0f, 2.0f }, rotation, m_CheckerBoardTexture, 1.0f, { 1.0f, 1.0f, 1.0f, 1.0f });
+	NGN::Renderer2D::DrawQuad({ -3.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, m_GrassSprite);
+	NGN::Renderer2D::DrawQuad({ -1.0f, 0.0f, -0.1f }, { 1.0f, 2.0f }, m_TreeSprite);
+	NGN::Renderer2D::DrawQuad({ 1.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, m_WaterSprite);
+	NGN::Renderer2D::DrawRotatedQuad({ 5.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, rotation, m_WaterSprite, 1.0f, { 1.0f, 1.0f, 1.0f, 1.0f });
 	NGN::Renderer2D::DrawRotatedQuad({ 0.0f, 3.0f, -0.1f }, { 3.0f, 3.0f }, { 0.0f, 0.5f, 0.5f, 1.0f }, rotation);
-	NGN::Renderer2D::DrawRect({ 0.0f, -3.0f, -0.1f }, { 3.0f, 3.0f }, { 0.5f, 0.5f, 0.0f, 1.0f });
-	NGN::Renderer2D::DrawLine({ -5.0f, -5.0f, -0.1f }, { 5.0f, 5.0f, -0.1f }, { 0.0f, 1.0f, 0.0f, 1.0f });
-	NGN::Renderer2D::DrawLine({  -5.0f,  5.0f, -0.1f }, { 5.0f, -5.0f, -0.1f }, { 0.0f, 0.0f, 1.0f, 1.0f });
 	NGN::Renderer2D::EndScene();
 }
 

@@ -31,5 +31,6 @@
 #include "Renderer/Framebuffer.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/Texture.h"
+#include "Renderer/SubTexture.h"
 
 #include "Renderer/OrthographicCameraController.h"
