@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NGN.h"
+#include <imgui.h>
 
 namespace NGN
 {
@@ -41,5 +42,6 @@ namespace NGN
 
 		Ref<Framebuffer> m_Framebuffer;
 		Ref<Scene> m_ActiveScene = nullptr;
+		Ref<Texture2D> m_CheckerboardTexture;
 	};
 }

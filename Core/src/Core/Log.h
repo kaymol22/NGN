@@ -8,29 +8,36 @@ namespace NGN {
 
 	class Log {
 	public:
-		static void Init();
+		// Singleton creation on first call - safe destruction at app exit
+		static Log& Get();
 
-		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+		std::shared_ptr<spdlog::logger>& GetCoreLogger() { return m_CoreLogger; }
+		std::shared_ptr<spdlog::logger>& GetClientLogger() { return m_ClientLogger; }
+
+		Log(const Log&) = delete;
+		Log(Log&&) = delete;
+		Log& operator=(const Log&) = delete;
+		Log& operator=(Log&&) = delete;
 
 	private:
-		static std::shared_ptr<spdlog::logger> s_CoreLogger;
-		static std::shared_ptr<spdlog::logger> s_ClientLogger;
+		Log();
+		~Log() = default;
+
+		std::shared_ptr<spdlog::logger> m_CoreLogger;
+		std::shared_ptr<spdlog::logger> m_ClientLogger;
 	};
 }
 
-// Core Log macros
-#define NGN_CORE_FATAL(...) ::NGN::Log::GetCoreLogger()->fatal(__VA_ARGS__)
-#define NGN_CORE_ERROR(...) ::NGN::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define NGN_CORE_WARN(...)  ::NGN::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define NGN_CORE_INFO(...)  ::NGN::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define NGN_CORE_TRACE(...) ::NGN::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define NGN_CORE_FATAL(...) ::NGN::Log::Get().GetCoreLogger()->fatal(__VA_ARGS__)
+#define NGN_CORE_ERROR(...) ::NGN::Log::Get().GetCoreLogger()->error(__VA_ARGS__)
+#define NGN_CORE_WARN(...)  ::NGN::Log::Get().GetCoreLogger()->warn(__VA_ARGS__)
+#define NGN_CORE_INFO(...)  ::NGN::Log::Get().GetCoreLogger()->info(__VA_ARGS__)
+#define NGN_CORE_TRACE(...) ::NGN::Log::Get().GetCoreLogger()->trace(__VA_ARGS__)
 
-// Client Log macros
-#define NGN_FATAL(...) ::NGN::Log::GetClientLogger()->fatal(__VA_ARGS__)
-#define NGN_ERROR(...) ::NGN::Log::GetClientLogger()->error(__VA_ARGS__)
-#define NGN_WARN(...)  ::NGN::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define NGN_INFO(...)  ::NGN::Log::GetClientLogger()->info(__VA_ARGS__)
-#define NGN_TRACE(...) ::NGN::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define NGN_FATAL(...) ::NGN::Log::Get().GetClientLogger()->fatal(__VA_ARGS__)
+#define NGN_ERROR(...) ::NGN::Log::Get().GetClientLogger()->error(__VA_ARGS__)
+#define NGN_WARN(...)  ::NGN::Log::Get().GetClientLogger()->warn(__VA_ARGS__)
+#define NGN_INFO(...)  ::NGN::Log::Get().GetClientLogger()->info(__VA_ARGS__)
+#define NGN_TRACE(...) ::NGN::Log::Get().GetClientLogger()->trace(__VA_ARGS__)
 
 //TODO: Strip out Macros in Dist build
