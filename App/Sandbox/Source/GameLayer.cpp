@@ -48,4 +48,11 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 void GameLayer::OnEvent(NGN::Event& e)
 {
 	m_CameraController.OnEvent(e);
+
+	if (e.GetEventType() == NGN::EventType::KeyPressed)
+	{
+		NGN::KeyPressedEvent& keyEvent = static_cast<NGN::KeyPressedEvent&>(e);
+		if (keyEvent.GetKeyCode() == NGN::Key::T)
+			NGN_INFO("T Key pressed");
+	}
 }
