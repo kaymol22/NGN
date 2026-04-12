@@ -34,3 +34,4 @@
 #include "Renderer/SubTexture.h"
 
 #include "Renderer/OrthographicCameraController.h"
+#include "Renderer/PerspCameraController.h"

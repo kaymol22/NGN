@@ -28,7 +28,7 @@ namespace NGN
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrthographicCamera& camera)
+	void Renderer::BeginScene(Camera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
 

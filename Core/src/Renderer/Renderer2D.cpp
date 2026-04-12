@@ -204,7 +204,7 @@ namespace NGN
 		delete[] s_Data.LineVertexBufferBase;
 	}
 
-	void Renderer2D::BeginScene(const OrthographicCamera& camera)
+	void Renderer2D::BeginScene(const Camera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
 
@@ -219,7 +219,7 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		s_Data.CamBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
+		s_Data.CamBuffer.ViewProjection = camera.GetViewProjectionMatrix() * transform;
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CamBuffer, sizeof(Renderer2DData::CameraData));
 
 		StartBatch();

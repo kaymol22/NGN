@@ -1,6 +1,7 @@
 #include "ngnpch.h"
 #include "PerspectiveCamera.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 
@@ -49,7 +50,15 @@ namespace NGN
 		m_Forward = glm::normalize(m_Forward);
 
 		// Update new right and up vectors
-		m_Right = glm::normalize(glm::cross(m_Forward, { 0.0f, 1.0f, 0.0f }));
+		m_Right = glm::normalize(glm::cross(m_Forward, glm::vec3(0.0f, 1.0f, 0.0f)));
 		m_Up = glm::normalize(glm::cross(m_Right, m_Forward));
+	}
+
+	void PerspectiveCamera::Rotate(float pitchDelta, float YawDelta)
+	{
+		m_Pitch += pitchDelta;
+		m_Pitch = glm::clamp(m_Pitch, m_MinPitch, m_MaxPitch);
+		m_Yaw += YawDelta;
+		RecalculateViewMatrix();
 	}
 }

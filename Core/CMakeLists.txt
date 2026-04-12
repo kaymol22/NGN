@@ -112,7 +112,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "src/Renderer/PerspCameraController.h" "src/Renderer/PerspCameraController.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

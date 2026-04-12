@@ -24,7 +24,9 @@ public:
 	
 private:
 	std::unique_ptr<NGN::Scene> m_Scene;
-	NGN::OrthographicCameraController m_CameraController;
+	/*NGN::OrthographicCameraController m_CameraController;*/
+	/*NGN::PerspectiveCameraController m_CameraController;*/
+	NGN::PerspectiveCamera m_Camera;
 
 	NGN::Ref<NGN::Texture2D> m_CheckerBoardTexture;
 	NGN::Ref<NGN::Texture2D> m_SpriteSheet;

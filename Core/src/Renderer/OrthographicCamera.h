@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Camera.h"
 #include <glm/glm.hpp>
 
 namespace NGN
 {
-	class OrthographicCamera
+	class OrthographicCamera : public Camera
 	{
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
