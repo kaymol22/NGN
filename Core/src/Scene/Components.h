@@ -1,7 +1,10 @@
 #pragma once
 
+#include "SceneCamera.h"
+
 #include "Core/UUID.h"
 #include "Renderer/Texture.h"
+#include "Renderer/SubTexture.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -53,16 +56,27 @@ namespace NGN
 		uint32_t TextureID = 0;
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
 		Ref<Texture2D> Texture;
+		Ref<SubTexture2D> SubTexture;
 		float TilingFactor = 1.0f;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
-		SpriteRendererComponent(const glm::vec4 color) : Color(color) {}
 
+		SpriteRendererComponent(const Ref<Texture2D>& texture) : Texture(texture) {}
+		SpriteRendererComponent(const Ref<SubTexture2D>& texture) : SubTexture(texture) {}
+		SpriteRendererComponent(const glm::vec4 color) : Color(color) {}
+		SpriteRendererComponent(const Ref<Texture2D>& texture, const glm::vec4 color) : Texture(texture), Color(color) {}
+		SpriteRendererComponent(const Ref<SubTexture2D>& texture, const glm::vec4 color) : SubTexture(texture), Color(color) {}
 	};
 
 	struct CameraComponent
 	{
+		SceneCamera Camera;
+
 		bool Primary = true;
+		bool FixedAspectRatio = false;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
 	};
 }

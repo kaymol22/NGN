@@ -8,14 +8,14 @@ namespace NGN
 	{
 	public:
 		Camera() = default;
-		Camera(const glm::mat4& projection) : m_Projection(projection) {}
+		Camera(const glm::mat4& projection) : m_ProjectionMatrix(projection) {}
 		virtual ~Camera() = default;
 
-		virtual const glm::mat4& GetProjectionMatrix() const { return m_Projection; }
+		virtual const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		virtual const glm::mat4& GetViewMatrix() const = 0;
 		virtual const glm::mat4& GetViewProjectionMatrix() const = 0;
 
 	protected:
-		glm::mat4 m_Projection = glm::mat4(1.0f);
+		glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
 	};
 }

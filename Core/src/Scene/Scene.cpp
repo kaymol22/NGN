@@ -1,13 +1,20 @@
 #include "ngnpch.h"
 #include "Scene.h"
-#include "Systems/System.h"
 #include "Components.h"
+
+#include "Renderer/PerspectiveCamera.h"
+#include "Renderer/OrthographicCamera.h"
+#include "SceneCamera.h"
+
+#include "Systems/SpriteRenderSystem.h"
 
 namespace NGN
 {
 	Scene::Scene()
 	{
 		NGN_CORE_INFO("Scene Created");
+
+		AddSystem<SpriteRenderSystem>();
 	}
 
 	Scene::~Scene()
@@ -57,15 +64,40 @@ namespace NGN
 		return m_EntityMap.find(id) != m_EntityMap.end();
 	}
 
+	Entity Scene::GetPrimaryCamera()
+	{
+		auto cameras = GetEntitiesWithComponents<CameraComponent>();
+		for (auto camera : cameras)
+		{
+			if (camera.GetComponent<CameraComponent>().Primary)
+				return camera;
+		}
+		if (!cameras.empty())
+			return cameras[0];
+
+		return Entity(); // Return invalid entity if no cameras found
+	}
+
 	void Scene::OnUpdate(Timestep ts)
 	{
 		for (auto& system : m_Systems)
 			system->OnUpdate(*this, ts);
 	}
 
-	void Scene::OnRender()
+	void Scene::RenderScene()
 	{
+		NGN_PROFILE_FUNCTION();
+
+		Entity cameraEntity = GetPrimaryCamera();
+		if (!cameraEntity.IsValid())
+			return;
+
+		auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
+		auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
+		
+		cameraComp.Camera.RecalculateViewMatrix(cameraTransform.Translation, cameraTransform.Rotation);
+
 		for (auto& system : m_Systems)
-			system->OnRender(*this);
+			system->OnRender(*this, cameraComp.Camera);
 	}
 }

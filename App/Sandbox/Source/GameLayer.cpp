@@ -1,13 +1,19 @@
 #include "GameLayer.h"
 
-GameLayer::GameLayer() : Layer("GameLayer"), 
-m_Camera()
+GameLayer::GameLayer() : Layer("GameLayer")
 {
 }
 
 void GameLayer::OnAttach()
 {
+	// Scene Loading + setup 
 	NGN_PROFILE_FUNCTION();
+
+	auto scene = NGN::CreateRef<NGN::Scene>();
+	NGN::Application::Get().GetSceneManager().RegisterScene("GameScene", scene);
+	NGN::Application::Get().GetSceneManager().SetActiveScene("GameScene");
+
+	// Texture + sprite setup
 
 	m_CheckerBoardTexture = NGN::Texture2D::Create("assets/Textures/Checkerboard.png");
 	m_SpriteSheet = NGN::Texture2D::Create("assets/Textures/spritesheet-1.png");
@@ -17,10 +23,39 @@ void GameLayer::OnAttach()
 	m_GrassSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 1, 11 }, { 1, 1 }, cellSize);
 	m_TreeSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 0, 1 }, { 1, 2 }, cellSize);
 
-	// Look down at textures for now
-	m_Camera.SetPosition({ -5.0f, 5.0f, 15.0f });
-	m_Camera.SetPitch(15.0f);
-	m_Camera.SetYaw(10.0f);
+	// Entity Creation
+
+	auto cameraEntity = scene->CreateEntity("MainCamera");
+	auto& cameraTrans = cameraEntity.GetComponent<NGN::TransformComponent>();
+	cameraTrans.Translation = { 0.0f, 0.0f, 10.0f };
+
+	cameraEntity.AddComponent<NGN::CameraComponent>();
+	auto& cameraComp = cameraEntity.GetComponent<NGN::CameraComponent>();
+	cameraComp.Camera.SetViewportSize(
+		NGN::Application::Get().GetWindow().GetWidth(),
+		NGN::Application::Get().GetWindow().GetHeight()
+	);
+
+	auto bgEntity = scene->CreateEntity("Background");
+	bgEntity.AddComponent<NGN::SpriteRendererComponent>(m_CheckerBoardTexture);
+	bgEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, -2.0f };
+	bgEntity.GetComponent<NGN::TransformComponent>().Scale = { 10.0f, 10.0f, 1.0f };
+	bgEntity.GetComponent<NGN::SpriteRendererComponent>().TilingFactor = 5.0f;
+
+	auto grassEntity = scene->CreateEntity("Grass");
+	grassEntity.AddComponent<NGN::SpriteRendererComponent>(m_GrassSprite);
+	grassEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, -0.1f };
+	grassEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 1.0f, 1.0f };
+
+	auto treeEntity = scene->CreateEntity("Tree");
+	treeEntity.AddComponent<NGN::SpriteRendererComponent>(m_TreeSprite);
+	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -1.0f, 0.0f, -0.1f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 2.0f, 1.0f };
+
+	auto waterEntity = scene->CreateEntity("Water");
+	waterEntity.AddComponent<NGN::SpriteRendererComponent>(m_WaterSprite);
+	waterEntity.GetComponent<NGN::TransformComponent>().Translation = { 1.0f, 0.0f, -0.1f };
+	waterEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 1.0f, 1.0f };
 }
 
 void GameLayer::OnDetach()
@@ -31,23 +66,18 @@ void GameLayer::OnDetach()
 void GameLayer::OnUpdate(NGN::Timestep ts)
 {
 	/*m_CameraController.OnUpdate(ts);*/
+	auto scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
+	if (!scene)
+		return;
+
+	scene->OnUpdate(ts);
 
 	// Render
 	NGN::Renderer2D::ResetStats();
 	NGN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 	NGN::RenderCommand::Clear();
 
-	static float rotation = 0.0f;
-	rotation += ts * 20.0f;
-
-	NGN::Renderer2D::BeginScene(m_Camera);
-	NGN::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerBoardTexture, 10.0f);
-	NGN::Renderer2D::DrawQuad({ -3.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, m_GrassSprite);
-	NGN::Renderer2D::DrawQuad({ -1.0f, 0.0f, -0.1f }, { 1.0f, 2.0f }, m_TreeSprite);
-	NGN::Renderer2D::DrawQuad({ 1.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, m_WaterSprite);
-	NGN::Renderer2D::DrawRotatedQuad({ 5.0f, 0.0f, -0.1f }, { 1.0f, 1.0f }, rotation, m_WaterSprite, 1.0f, { 1.0f, 1.0f, 1.0f, 1.0f });
-	NGN::Renderer2D::DrawRotatedQuad({ 0.0f, 3.0f, -0.1f }, { 3.0f, 3.0f }, { 0.0f, 0.5f, 0.5f, 1.0f }, rotation);
-	NGN::Renderer2D::EndScene();
+	scene->RenderScene();
 }
 
 void GameLayer::OnEvent(NGN::Event& e)

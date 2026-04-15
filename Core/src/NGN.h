@@ -20,6 +20,8 @@
 #include "Scene/Scene.h"
 #include "Scene/Entity.h"
 #include "Scene/Components.h"
+#include "Scene/Systems/SpriteRenderSystem.h"
+#include "Scene/SceneCamera.h"
 
 /* Renderer */
 #include "Renderer/Renderer.h"

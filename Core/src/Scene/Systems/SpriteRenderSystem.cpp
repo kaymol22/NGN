@@ -22,25 +22,64 @@ namespace NGN
 
 	// void OnEntityAdded(Event& event) {}
 
-	void SpriteRenderSystem::OnRender(Scene& scene, const OrthographicCamera& camera)
+	void SpriteRenderSystem::OnRender(Scene& scene, const SceneCamera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
 
 		// Use over GetEntitiesWithComponents to avoid creating temporary vector of entities
-		/*auto& registry = scene.GetRegistry();
+		auto& registry = scene.GetRegistry();
 
-		Renderer2D::BeginScene(scene.GetViewProjection());
+		Renderer2D::BeginScene(camera);
 
+		// Basic sort by Z value for corrrect layering
+		// Painters Algorithm
+		// TODO: Implement proper sorting with spatial partitioning + camera distance for better performance (only sort visible sprites)
+		
+		std::vector<std::pair<entt::entity, float>> spriteEntities;
 		auto view = registry.view<TransformComponent, SpriteRendererComponent>();
+		
 		for (auto entity : view)
 		{
-			auto& id = registry.get<IDComponent>(entity);
 			auto& transform = registry.get<TransformComponent>(entity);
-			auto& sprite = registry.get<SpriteRendererComponent>(entity);
-
-			Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color, id.ID);
+			spriteEntities.push_back({ entity, transform.Translation.z });
 		}
-		Renderer2D::EndScene();*/
+
+		std::sort(spriteEntities.begin(), spriteEntities.end(),
+			[](const auto& a, const auto& b){
+				return a.second < b.second; // Sort by Z value
+			});
+
+		for (const auto& [entity, depth] : spriteEntities)
+		{
+			auto& transform = registry.get<TransformComponent>(entity);
+			auto sprite = registry.get<SpriteRendererComponent>(entity);
+			auto id = registry.get<IDComponent>(entity);
+
+			if (sprite.SubTexture)
+			{
+				Renderer2D::DrawQuad(
+					transform.Translation,
+					transform.Scale,
+					sprite.SubTexture,
+					sprite.TilingFactor,
+					sprite.Color,
+					id.ID
+				);
+			}
+
+			else if (sprite.Texture)
+			{
+				Renderer2D::DrawQuad(
+					transform.Translation,
+					transform.Scale,
+					sprite.Texture,
+					sprite.TilingFactor,
+					sprite.Color,
+					id.ID
+				);
+			}
+		}
+		Renderer2D::EndScene();
 	}
 
 	void SpriteRenderSystem::OnUpdate(Scene& scene, Timestep ts)

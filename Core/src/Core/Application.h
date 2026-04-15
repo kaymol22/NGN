@@ -7,6 +7,7 @@
 #include "Timestep.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/RendererAPI.h"
+#include "Scene/SceneManager.h"
 
 #include <glm/glm.hpp>
 
@@ -72,6 +73,9 @@ namespace NGN {
 
 		Window& GetWindow() { return *m_Window; }
 
+		SceneManager& GetSceneManager() { return m_SceneManager; }
+		const SceneManager& GetSceneManager() const { return m_SceneManager; }
+
 		static Application& Get();
 
 	private:
@@ -92,6 +96,8 @@ namespace NGN {
 		Scope<Window> m_Window;
 		
 		Ref<ImGuiLayer> m_ImGuiLayer;
+
+		SceneManager m_SceneManager;
 
 		float m_LastFrameTime = 0.0f;
 		Timestep m_Timestep;

@@ -32,7 +32,8 @@ namespace NGN
 		bool EntityExists(UUID id) const;
 
 		void OnUpdate(Timestep ts);
-		void OnRender();
+		/*void OnRender();*/
+		void RenderScene();
 
 		// Return all entities with specific components - variadic for multiple 
 		template <typename... Components>
@@ -43,7 +44,7 @@ namespace NGN
 			std::vector<Entity> results;
 			for (auto entity : view)
 			{
-				results.emplace_back(entity, this);
+				results.push_back(Entity(entity, this));
 			}
 			return results;
 		}
@@ -69,6 +70,8 @@ namespace NGN
 
 		// ============ Camera ============ //
 		void SetActiveCamera(const OrthographicCamera& camera) { m_ViewProjection = camera.GetViewProjectionMatrix(); }
+
+		Entity GetPrimaryCamera();
 
 		const glm::mat4& GetViewProjection() const
 		{
