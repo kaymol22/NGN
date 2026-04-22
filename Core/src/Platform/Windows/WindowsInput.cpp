@@ -1,5 +1,5 @@
 #include "ngnpch.h"
-#include "Core/Input.h"
+#include "Input/Input.h"
 #include "WindowsInput.h"
 #include "WinWindow.h"
 #include "Core/Application.h"
@@ -28,6 +28,8 @@ namespace NGN::WindowsInput
 
 	bool IsKeyPressedImpl(const KeyCode key)
 	{
+		if (key == Key::None)
+			return false;
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		int state = glfwGetKey(window, static_cast<int>(key));
 		return state == GLFW_PRESS || state == GLFW_REPEAT;

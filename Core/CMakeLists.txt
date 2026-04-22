@@ -15,8 +15,8 @@ src/Core/Base.h
 src/Core/EntryPoint.h
 src/Core/Instrumentor.cpp
 src/Core/Instrumentor.h
-src/Core/Input.cpp
-src/Core/Input.h
+"src/Input/Input.cpp"
+"src/Input/Input.h"
 src/Core/KeyCodes.h
 src/Core/Layer.h
 src/Core/Layer.cpp
@@ -56,6 +56,8 @@ src/Renderer/OrthographicCamera.cpp
 src/Renderer/OrthographicCamera.h
 src/Renderer/OrthographicCameraController.cpp
 src/Renderer/OrthographicCameraController.h
+src/Renderer/PerspCameraController.cpp
+src/Renderer/PerspCameraController.h
 src/Renderer/PerspectiveCamera.cpp
 src/Renderer/PerspectiveCamera.h
 src/Renderer/RenderCommand.cpp
@@ -80,8 +82,14 @@ src/Scene/Entity.cpp
 src/Scene/Entity.h
 src/Scene/Scene.cpp
 src/Scene/Scene.h
+src/Scene/SceneCamera.cpp
+src/Scene/SceneCamera.h
+src/Scene/SceneManager.cpp
+src/Scene/SceneManager.h
 src/Scene/Systems/SpriteRenderSystem.cpp
 src/Scene/Systems/SpriteRenderSystem.h
+src/Scene/Systems/PlayerControllerSystem.cpp
+src/Scene/Systems/PlayerControllerSystem.h
 src/Scene/Systems/System.h
 
 
@@ -112,7 +120,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Renderer/PerspCameraController.h" "src/Renderer/PerspCameraController.cpp" "src/Scene/SceneManager.h" "src/Scene/SceneManager.cpp" "src/Scene/SceneCamera.h" "src/Scene/SceneCamera.cpp")
+target_sources(Core PRIVATE ${SOURCES} "src/Input/InputState.h" "src/Input/InputMapper.h" "src/Input/InputMapper.cpp" "src/Input/InputBindings.h" "src/Input/InputBindings.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

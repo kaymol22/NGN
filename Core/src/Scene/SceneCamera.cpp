@@ -38,22 +38,43 @@ namespace NGN
 		RecalculateProjection();
 	}
 
-	void SceneCamera::RecalculateViewMatrix(const glm::vec3& position, const glm::vec3& rotation)
+	void SceneCamera::RecalculateViewMatrix(const glm::vec3& position, const glm::quat& rotation)
 	{
-		// Convert euler angles to radians 
-		float pitch = glm::radians(rotation.x);
-		float yaw = glm::radians(rotation.y);
+		// Pull from transform component
+		m_Position = position;
+		m_Rotation = rotation;
 
-		glm::vec3 forward;
-		forward.x = sin(yaw) * cos(pitch);
-		forward.y = -sin(pitch);
-		forward.z = -cos(yaw) * cos(pitch);
+		UpdateDirectionVectors();
 
-		glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
-		glm::vec3 up = glm::normalize(glm::cross(right, forward));
+		// For orthographic projection, use simpler view matrix calculation
+		// This avoids the up-vector flip issue with complex rotations
+		if (m_ProjectionType == ProjectionType::Orthographic)
+		{
+			// Simple look-at: camera at position looking down -Z
+			m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+		else
+		{
+			// Perspective: use standard transform inverse
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) * glm::toMat4(m_Rotation);
+			m_ViewMatrix = glm::inverse(transform);
+		}
 
-		m_ViewMatrix = glm::lookAt(position, position + forward, up);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
+	void SceneCamera::UpdateDirectionVectors()
+	{
+		// Calc new forward by applying rotation to world forward 
+		constexpr glm::vec3 worldForward = { 0.0f, 0.0f, -1.0f };
+		m_Forward = glm::normalize(glm::rotate(m_Rotation, worldForward));
+
+		// Derive right and up vectors using cross product
+		// Right = forward cross up (world up is 0,1,0)
+		m_Right = glm::normalize(glm::cross(m_Forward, glm::vec3(0.0f, 1.0f, 0.0f)));
+
+		// Up = right cross forward (maintains orthogonal basis)
+		m_Up = glm::normalize(glm::cross(m_Right, m_Forward));
 	}
 	
 	void SceneCamera::RecalculateProjection()

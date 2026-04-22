@@ -64,7 +64,11 @@ namespace NGN
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* data = nullptr;
-		data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
+
+		{
+			NGN_PROFILE_SCOPE("stbi load - OpenGLTexture2D");
+			data = stbi_load(filePath.c_str(), &width, &height, &channels, 0);
+		}		
 
 		if (data)
 		{

@@ -8,6 +8,7 @@ namespace NGN
 	{
 		enum : MouseCode
 		{
+			ButtonNone = 0xFF, //Inavlid mouse button code
 			// From glfw3.h
 			Button0 = 0,
 			Button1 = 1,

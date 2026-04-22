@@ -17,6 +17,7 @@ void GameLayer::OnAttach()
 
 	m_CheckerBoardTexture = NGN::Texture2D::Create("assets/Textures/Checkerboard.png");
 	m_SpriteSheet = NGN::Texture2D::Create("assets/Textures/spritesheet-1.png");
+	
 
 	constexpr glm::vec2 cellSize = { 64.0f, 64.0f };
 	m_WaterSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet,   { 11, 11 }, { 1, 1 }, cellSize);
@@ -25,7 +26,7 @@ void GameLayer::OnAttach()
 
 	// Entity Creation
 
-	auto cameraEntity = scene->CreateEntity("MainCamera");
+	auto cameraEntity = scene->CreateEntity("Player");
 	auto& cameraTrans = cameraEntity.GetComponent<NGN::TransformComponent>();
 	cameraTrans.Translation = { 0.0f, 0.0f, 10.0f };
 
@@ -35,6 +36,8 @@ void GameLayer::OnAttach()
 		NGN::Application::Get().GetWindow().GetWidth(),
 		NGN::Application::Get().GetWindow().GetHeight()
 	);
+	cameraComp.Camera.SetProjectionType(NGN::ProjectionType::Orthographic);
+	/*cameraEntity.AddComponent<NGN::PlayerControllerComponent>();*/
 
 	auto bgEntity = scene->CreateEntity("Background");
 	bgEntity.AddComponent<NGN::SpriteRendererComponent>(m_CheckerBoardTexture);
@@ -49,7 +52,7 @@ void GameLayer::OnAttach()
 
 	auto treeEntity = scene->CreateEntity("Tree");
 	treeEntity.AddComponent<NGN::SpriteRendererComponent>(m_TreeSprite);
-	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -1.0f, 0.0f, -0.1f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -3.0f, 0.0f, -0.1f };
 	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 2.0f, 1.0f };
 
 	auto waterEntity = scene->CreateEntity("Water");
@@ -72,7 +75,7 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 
 	scene->OnUpdate(ts);
 
-	// Render
+	// Render - temp until renderer integrated into scene + render system
 	NGN::Renderer2D::ResetStats();
 	NGN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 	NGN::RenderCommand::Clear();

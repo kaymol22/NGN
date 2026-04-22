@@ -34,7 +34,7 @@ namespace NGN
 
 	struct TransformComponent {
 		glm::vec3 Translation{ 0.0f, 0.0f, 0.0f };
-		glm::vec3 Rotation{ 0.0f, 0.0f, 0.0f };
+		glm::quat Rotation{ 0.0f, 0.0f, 0.0f, 1.0f };
 		glm::vec3 Scale{ 1.0f, 1.0f, 1.0f };
 
 		TransformComponent() = default;
@@ -78,5 +78,24 @@ namespace NGN
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+	};
+
+	struct PlayerControllerComponent
+	{
+		float MouseSensitivity = 0.1f;
+		float TranslateSpeed = 5.0f;
+		float SprintMultiplier = 2.0f;
+		float MinPitch = -89.0f;
+		float MaxPitch = 89.0f;
+		bool InvertPitch = false;
+
+		// Runtime state
+		float pitchDeg = 0.0f;
+		float yawDeg = 0.0f;
+		bool IsActive = true;
+		bool IsGrounded = false; // Will keep jump disabled for now - need phys implementation first
+
+		PlayerControllerComponent() = default;
+		PlayerControllerComponent(const PlayerControllerComponent&) = default;
 	};
 }

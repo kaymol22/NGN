@@ -26,30 +26,13 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		// Use over GetEntitiesWithComponents to avoid creating temporary vector of entities
 		auto& registry = scene.GetRegistry();
 
 		Renderer2D::BeginScene(camera);
-
-		// Basic sort by Z value for corrrect layering
-		// Painters Algorithm
-		// TODO: Implement proper sorting with spatial partitioning + camera distance for better performance (only sort visible sprites)
 		
-		std::vector<std::pair<entt::entity, float>> spriteEntities;
 		auto view = registry.view<TransformComponent, SpriteRendererComponent>();
-		
+
 		for (auto entity : view)
-		{
-			auto& transform = registry.get<TransformComponent>(entity);
-			spriteEntities.push_back({ entity, transform.Translation.z });
-		}
-
-		std::sort(spriteEntities.begin(), spriteEntities.end(),
-			[](const auto& a, const auto& b){
-				return a.second < b.second; // Sort by Z value
-			});
-
-		for (const auto& [entity, depth] : spriteEntities)
 		{
 			auto& transform = registry.get<TransformComponent>(entity);
 			auto sprite = registry.get<SpriteRendererComponent>(entity);

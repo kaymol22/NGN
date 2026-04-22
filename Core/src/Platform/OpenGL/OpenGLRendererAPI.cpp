@@ -15,9 +15,8 @@ namespace NGN
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Temp: disable depth test for quad render
-		glDisable(GL_DEPTH_TEST);
-		glDisable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_LINE_SMOOTH);
 	}
 

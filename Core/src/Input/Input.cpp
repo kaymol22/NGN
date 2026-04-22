@@ -1,6 +1,6 @@
 #include "ngnpch.h"
 #include "Input.h"
-#include "Application.h"
+#include "Core/Application.h"
 
 #ifdef NGN_PLATFORM_WINDOWS
 	#include "Platform/Windows/WindowsInput.h"
@@ -52,5 +52,11 @@ namespace NGN
 	std::pair<float, float> Input::GetMousePosition()
 	{
 		return s_GetMousePosition ? s_GetMousePosition() : std::make_pair(0.0f, 0.0f);
+	}
+
+	glm::vec2 Input::GetMousePositionVec2()
+	{
+		auto [x, y] = GetMousePosition();
+		return { x, y };
 	}
 }

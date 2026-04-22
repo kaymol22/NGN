@@ -9,9 +9,11 @@
 #include "Core/Log.h"
 #include "Core/Assert.h"
 #include "Core/Timestep.h"
-#include "Core/Input.h"
 #include "Core/KeyCodes.h"
 #include "Core/MouseCodes.h"
+
+/* Input */
+#include "Input/Input.h"
 
 /* ImGui */
 #include "ImGui/ImGuiLayer.h"
@@ -21,6 +23,7 @@
 #include "Scene/Entity.h"
 #include "Scene/Components.h"
 #include "Scene/Systems/SpriteRenderSystem.h"
+#include "Scene/Systems/PlayerControllerSystem.h"
 #include "Scene/SceneCamera.h"
 
 /* Renderer */

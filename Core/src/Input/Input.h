@@ -1,7 +1,8 @@
 #pragma once
 
-#include "KeyCodes.h"
-#include "MouseCodes.h"
+#include "Core/KeyCodes.h"
+#include "Core/MouseCodes.h"
+#include <glm/glm.hpp>
 
 namespace NGN
 {
@@ -20,6 +21,7 @@ namespace NGN
 		float GetMouseX();
 		float GetMouseY();
 		static std::pair<float, float> GetMousePosition();
+		static glm::vec2 GetMousePositionVec2();
 
 	private:
 		// Platform-specific implementation set at runtime

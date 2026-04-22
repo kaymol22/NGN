@@ -3,7 +3,7 @@
 */
 #include "ngnpch.h"
 #include "Core/Profile.h"
-#include "Core/Input.h"
+#include "Input/Input.h"
 
 #include "Application.h"
 #include "Renderer/RenderCommand.h"

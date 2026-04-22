@@ -47,11 +47,20 @@ namespace NGN
 		}
 
 		{
+			NGN_PROFILE_SCOPE("glfwWindowHint");
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_RESIZABLE, spec.IsResizeable ? GLFW_TRUE : GLFW_FALSE);
+			glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+			#if defined(NGN_DEBUG)
+				if (Renderer::GetAPI() == RendererAPIType::OpenGL)
+					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			#endif
+		}
+
+		{
 			NGN_PROFILE_SCOPE("glfwCreateWindow");
-		#if defined(NGN_DEBUG)
-			if (Renderer::GetAPI() == RendererAPIType::OpenGL)
-				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-		#endif
 			m_Window = glfwCreateWindow((int)spec.Width, (int)spec.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			NGN_CORE_ASSERT(m_Window, "Failed to create GLFW window");
 			s_GLFWWindowCount++;
@@ -63,8 +72,7 @@ namespace NGN
 		m_Context->Init();
 
 		// Apply VSync setting after context is initialized
-		SetVSync(m_Data.VSync);
-
+		/*SetVSync(m_Data.VSync);*/
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
 		// Set Callbacks
