@@ -7,6 +7,7 @@ namespace NGN
 {
 	SceneCamera::SceneCamera()
 	{
+		SetProjectionType(m_ProjectionType);
 		RecalculateProjection();
 	}
 
@@ -46,19 +47,8 @@ namespace NGN
 
 		UpdateDirectionVectors();
 
-		// For orthographic projection, use simpler view matrix calculation
-		// This avoids the up-vector flip issue with complex rotations
-		if (m_ProjectionType == ProjectionType::Orthographic)
-		{
-			// Simple look-at: camera at position looking down -Z
-			m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, glm::vec3(0.0f, 1.0f, 0.0f));
-		}
-		else
-		{
-			// Perspective: use standard transform inverse
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) * glm::toMat4(m_Rotation);
-			m_ViewMatrix = glm::inverse(transform);
-		}
+		// Use lookAt for both orthographic and perspective
+		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, m_Up);
 
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
@@ -70,11 +60,12 @@ namespace NGN
 		m_Forward = glm::normalize(glm::rotate(m_Rotation, worldForward));
 
 		// Derive right and up vectors using cross product
-		// Right = forward cross up (world up is 0,1,0)
-		m_Right = glm::normalize(glm::cross(m_Forward, glm::vec3(0.0f, 1.0f, 0.0f)));
+		// Right-handed coordinate system with Y-up**
+		constexpr glm::vec3 worldUp = { 0.0f, 1.0f, 0.0f };
+		m_Right = glm::normalize(glm::cross(worldUp, m_Forward));
 
-		// Up = right cross forward (maintains orthogonal basis)
-		m_Up = glm::normalize(glm::cross(m_Right, m_Forward));
+		// Up = Forward × Right (recalculate based on rotated forward and computed right)
+		m_Up = glm::normalize(glm::cross(m_Forward, m_Right));
 	}
 	
 	void SceneCamera::RecalculateProjection()

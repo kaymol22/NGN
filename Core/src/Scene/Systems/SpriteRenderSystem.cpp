@@ -29,7 +29,7 @@ namespace NGN
 		auto& registry = scene.GetRegistry();
 
 		Renderer2D::BeginScene(camera);
-		
+
 		auto view = registry.view<TransformComponent, SpriteRendererComponent>();
 
 		for (auto entity : view)

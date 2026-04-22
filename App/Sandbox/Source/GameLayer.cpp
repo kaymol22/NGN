@@ -36,23 +36,22 @@ void GameLayer::OnAttach()
 		NGN::Application::Get().GetWindow().GetWidth(),
 		NGN::Application::Get().GetWindow().GetHeight()
 	);
-	cameraComp.Camera.SetProjectionType(NGN::ProjectionType::Orthographic);
 	/*cameraEntity.AddComponent<NGN::PlayerControllerComponent>();*/
 
 	auto bgEntity = scene->CreateEntity("Background");
 	bgEntity.AddComponent<NGN::SpriteRendererComponent>(m_CheckerBoardTexture);
-	bgEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, -2.0f };
+	bgEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, -5.0f };
 	bgEntity.GetComponent<NGN::TransformComponent>().Scale = { 10.0f, 10.0f, 1.0f };
 	bgEntity.GetComponent<NGN::SpriteRendererComponent>().TilingFactor = 5.0f;
 
 	auto grassEntity = scene->CreateEntity("Grass");
 	grassEntity.AddComponent<NGN::SpriteRendererComponent>(m_GrassSprite);
-	grassEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, -0.1f };
+	grassEntity.GetComponent<NGN::TransformComponent>().Translation = { 0.0f, 0.0f, 2.0f };
 	grassEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 1.0f, 1.0f };
 
 	auto treeEntity = scene->CreateEntity("Tree");
 	treeEntity.AddComponent<NGN::SpriteRendererComponent>(m_TreeSprite);
-	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -3.0f, 0.0f, -0.1f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -3.0f, 0.0f, 5.0f };
 	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 2.0f, 1.0f };
 
 	auto waterEntity = scene->CreateEntity("Water");
@@ -86,11 +85,30 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 void GameLayer::OnEvent(NGN::Event& e)
 {
 	/*m_CameraController.OnEvent(e);*/
+	auto scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
+	auto cameraEntity = scene->GetPrimaryCamera();
+	auto& camComp = cameraEntity.GetComponent<NGN::CameraComponent>();
 
 	if (e.GetEventType() == NGN::EventType::KeyPressed)
 	{
 		NGN::KeyPressedEvent& keyEvent = static_cast<NGN::KeyPressedEvent&>(e);
-		if (keyEvent.GetKeyCode() == NGN::Key::T)
-			NGN_INFO("T Key pressed");
+		if (keyEvent.GetKeyCode() == NGN::Key::O)
+		{
+			NGN_INFO("Switching to Orthographic");
+			camComp.Camera.SetOrthographic(
+				camComp.Camera.GetOrthographicSize(),
+				camComp.Camera.GetOrthographicNear(),
+				camComp.Camera.GetOrthographicFar());
+		}
+
+		if (keyEvent.GetKeyCode() == NGN::Key::P)
+		{
+			NGN_INFO("Switching to Perspective");
+			camComp.Camera.SetPerspective(
+				camComp.Camera.GetPerspectiveFOV(),
+				16.0f / 9.0f,
+				camComp.Camera.GetPerspectiveNear(),
+				camComp.Camera.GetPerspectiveFar());
+		}
 	}
 }

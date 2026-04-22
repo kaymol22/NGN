@@ -76,7 +76,7 @@ namespace NGN
 		bool Primary = true;
 		bool FixedAspectRatio = false;
 
-		CameraComponent() = default;
+		CameraComponent() : Camera() {}  // Explicitly initialize
 		CameraComponent(const CameraComponent&) = default;
 	};
 

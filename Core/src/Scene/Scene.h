@@ -69,20 +69,12 @@ namespace NGN
 		}
 
 		// ============ Camera ============ //
-		void SetActiveCamera(const OrthographicCamera& camera) { m_ViewProjection = camera.GetViewProjectionMatrix(); }
-
 		Entity GetPrimaryCamera();
-
-		const glm::mat4& GetViewProjection() const
-		{
-			return m_ViewProjection;
-		}
 
 	private:
 		entt::registry m_Registry;
 		std::vector<std::unique_ptr<System>> m_Systems;
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
-		glm::mat4 m_ViewProjection;
 
 		friend class Entity;
 	};
