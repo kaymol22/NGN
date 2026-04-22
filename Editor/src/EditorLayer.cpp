@@ -3,7 +3,7 @@
 namespace NGN
 {
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer", NGN::LayerFlags::UsesImGui)
+		: Layer("EditorLayer")
 	{
 
 	}

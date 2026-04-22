@@ -11,10 +11,8 @@ namespace NGN
 	class ImGuiLayer : public Layer
 	{
 	public:
-		ImGuiLayer() : Layer(
-							"ImGui",
-							LayerFlags::UsesImGui | LayerFlags::ScreenSpace | LayerFlags::Debug) {}
-		
+		ImGuiLayer() : Layer("ImGui") {}
+
 		virtual ~ImGuiLayer() override = default;
 
 		virtual void OnAttach() override;

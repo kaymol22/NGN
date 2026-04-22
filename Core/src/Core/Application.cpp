@@ -3,6 +3,7 @@
 */
 #include "ngnpch.h"
 #include "Core/Profile.h"
+#include "Core/Timestep.h"
 #include "Input/Input.h"
 
 #include "Application.h"
@@ -80,46 +81,30 @@ namespace NGN {
 			glm::vec2 framebufferSize = Application::GetFramebufferSize();
 
 			/*========== Updates =============*/
-			// TODO: Look into fixed vs variable update - future expansion for suspending/pausing layers
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-				layer->OnUpdate(m_Timestep);
+			{
+				NGN_PROFILE_SCOPE("LayerStack OnUpdate");
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+					layer->OnUpdate(m_Timestep);
+			}
 
 			/*========== Rendering =============*/
 			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-			
+			Renderer::BeginFrame();
 
-			// World Space Render
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-			{
-				if (layer->HasFlag(LayerFlags::WorldSpace))
-					layer->OnRender();
-			}
-
-			// ScreenSpace/Overlay Render
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-			{
-				if (layer->HasFlag(LayerFlags::ScreenSpace))
-					layer->OnRender();
-			}
-
-			// Debug/Profiling Render
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-			{
-				if (layer->HasFlag(LayerFlags::Debug))
-					layer->OnRender();
-			}
+			// scene->RenderScene() called in layer OnUpdate,
+			// Data submitted to renderer - allows for batching and sorting of draw calls, etc. in 2D renderer
+			Renderer::Flush();
 
 			/*========== ImGuiRendering =============*/
 			m_ImGuiLayer->Begin();
-
-			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 			{
-				if (layer->HasFlag(LayerFlags::UsesImGui))
+				NGN_PROFILE_SCOPE("LayerStack OnImGuiRender");
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 					layer->OnImGuiRender();
 			}
-
 			m_ImGuiLayer->End();
 
+			Renderer::EndFrame();
 			m_Window->OnUpdate();
 
 			for (auto& transition : m_PendingTransitions)

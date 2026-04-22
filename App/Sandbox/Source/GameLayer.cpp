@@ -67,14 +67,13 @@ void GameLayer::OnDetach()
 
 void GameLayer::OnUpdate(NGN::Timestep ts)
 {
-	/*m_CameraController.OnUpdate(ts);*/
 	auto scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
 	if (!scene)
 		return;
 
 	scene->OnUpdate(ts);
 
-	// Render - temp until renderer integrated into scene + render system
+	// Clear and render scene
 	NGN::Renderer2D::ResetStats();
 	NGN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 	NGN::RenderCommand::Clear();
@@ -84,7 +83,6 @@ void GameLayer::OnUpdate(NGN::Timestep ts)
 
 void GameLayer::OnEvent(NGN::Event& e)
 {
-	/*m_CameraController.OnEvent(e);*/
 	auto scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
 	auto cameraEntity = scene->GetPrimaryCamera();
 	auto& camComp = cameraEntity.GetComponent<NGN::CameraComponent>();

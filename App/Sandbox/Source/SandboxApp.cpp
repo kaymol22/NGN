@@ -11,7 +11,7 @@ public:
 	{
 		NGN_INFO("Creating Sandbox Application");
 		PushLayer<GameLayer>();
-		/*PushLayer<DebugLayer>();*/
+		PushLayer<DebugLayer>();
 	}
 
 	~Sandbox()

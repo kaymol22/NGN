@@ -13,7 +13,7 @@ class GameLayer : public NGN::Layer
 {
 public:
 	GameLayer();
-	
+
 	virtual void OnAttach() override;
 
 	virtual void OnDetach() override;
@@ -21,12 +21,8 @@ public:
 	virtual void OnUpdate(NGN::Timestep ts) override;
 
 	virtual void OnEvent(NGN::Event& e) override;
-	
-private:
-	std::unique_ptr<NGN::Scene> m_Scene;
-	/*NGN::OrthographicCameraController m_CameraController;*/
-	/*NGN::PerspectiveCameraController m_CameraController;*/
 
+private:
 	NGN::Ref<NGN::Texture2D> m_CheckerBoardTexture;
 	NGN::Ref<NGN::Texture2D> m_SpriteSheet;
 

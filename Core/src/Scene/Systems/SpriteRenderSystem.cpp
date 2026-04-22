@@ -1,14 +1,11 @@
 #include "SpriteRenderSystem.h"
 
+#include "SpriteRenderSystem.h"
 #include "Scene/Components.h"
 #include "Scene/Scene.h"
-#include "Renderer/Renderer2D.h"
+#include "Renderer/Renderer.h"
 
 #include <iostream>
-
-//TEMP: Debugging
-//#define GLM_ENABLE_EXPERIMENTAL
-//#include <glm/gtx/string_cast.hpp>
 
 namespace NGN
 {
@@ -17,18 +14,11 @@ namespace NGN
 		NGN_PROFILE_FUNCTION();
 	}
 
-	// TODO: Should implement EventListener for when new entity added to scene - 
-	// call to cache entities with SpriteRendererComponent for faster iteration (avoid registry view each frame)
-
-	// void OnEntityAdded(Event& event) {}
-
 	void SpriteRenderSystem::OnRender(Scene& scene, const SceneCamera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
 
 		auto& registry = scene.GetRegistry();
-
-		Renderer2D::BeginScene(camera);
 
 		auto view = registry.view<TransformComponent, SpriteRendererComponent>();
 
@@ -40,29 +30,33 @@ namespace NGN
 
 			if (sprite.SubTexture)
 			{
-				Renderer2D::DrawQuad(
-					transform.Translation,
-					transform.Scale,
+				Renderer::Submit2D(
+					transform.GetTransform(),
 					sprite.SubTexture,
 					sprite.TilingFactor,
 					sprite.Color,
 					id.ID
 				);
 			}
-
 			else if (sprite.Texture)
 			{
-				Renderer2D::DrawQuad(
-					transform.Translation,
-					transform.Scale,
+				Renderer::Submit2D(
+					transform.GetTransform(),
 					sprite.Texture,
 					sprite.TilingFactor,
 					sprite.Color,
 					id.ID
 				);
 			}
+			else
+			{
+				Renderer::Submit2D(
+					transform.GetTransform(),
+					sprite.Color,
+					id.ID
+				);
+			}
 		}
-		Renderer2D::EndScene();
 	}
 
 	void SpriteRenderSystem::OnUpdate(Scene& scene, Timestep ts)

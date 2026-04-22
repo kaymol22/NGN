@@ -4,6 +4,7 @@
 
 #include "Renderer/PerspectiveCamera.h"
 #include "Renderer/OrthographicCamera.h"
+#include "Renderer/Renderer.h"
 #include "SceneCamera.h"
 
 #include "Systems/SpriteRenderSystem.h"
@@ -96,9 +97,13 @@ namespace NGN
 
 		auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
 		auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
-		
+
 		cameraComp.Camera.RecalculateViewMatrix(cameraTransform.Translation, cameraTransform.Rotation);
 
+		// Set camera globally for the frame
+		Renderer::SetCamera(cameraComp.Camera);
+
+		// All systems submit their data
 		for (auto& system : m_Systems)
 			system->OnRender(*this, cameraComp.Camera);
 	}

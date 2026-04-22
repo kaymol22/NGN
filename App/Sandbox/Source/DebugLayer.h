@@ -11,10 +11,7 @@ class DebugLayer : public NGN::Layer
 {
 public:
 	DebugLayer()
-		: Layer(
-			"Debug",
-			NGN::LayerFlags::UsesImGui | NGN::LayerFlags::Debug
-		)
+		: Layer("Debug")
 	{}
 
 	void OnImGuiRender() override
