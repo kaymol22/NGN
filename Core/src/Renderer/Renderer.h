@@ -2,10 +2,13 @@
 #pragma once
 
 #include "RenderCommand.h"
-#include "OrthographicCamera.h"
+#include "RenderPass.h"
+
 #include "Shader.h"
 #include "Texture.h"
 #include "SubTexture.h"
+#include "Camera.h"
+#include "Frustum.h"
 
 namespace NGN
 {
@@ -22,8 +25,17 @@ namespace NGN
 		static void Flush();  // Execute all rendering passes
 		static void EndFrame();
 
-		// Set once per frame**
+		// Camera management - provides render data to systems
 		static void SetCamera(const SceneCamera& camera);
+
+		// Access render data for culling in systems
+		struct SceneRenderData
+		{
+			const Frustum& frustum;
+			const glm::vec3& cameraPosition;
+		};
+
+		static SceneRenderData GetSceneData();
 
 		// 2D Submission
 		static void Submit2D(
@@ -58,10 +70,12 @@ namespace NGN
 	private:
 		struct SceneData
 		{
-			glm::mat4 ViewProjectionMatrix;
+			Frustum frustum;
+			glm::vec3 camPosition;
+			glm::vec3 camForward;
 		};
 
-		static Scope<SceneData> s_SceneData;
+		static Scope<SceneData> s_SceneData; // Needs to be shared for renderpasses to access
 		static class SceneCamera* s_CurrentCamera;
 	};
 }

@@ -169,6 +169,10 @@ namespace NGN
 	void WinWindow::Shutdown()
 	{
 		NGN_PROFILE_FUNCTION();
+
+		// Destroy graphics context before window destruction**
+		m_Context = nullptr;
+
 		glfwDestroyWindow(m_Window);
 		s_GLFWWindowCount--;
 

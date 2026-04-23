@@ -51,8 +51,8 @@ void GameLayer::OnAttach()
 
 	auto treeEntity = scene->CreateEntity("Tree");
 	treeEntity.AddComponent<NGN::SpriteRendererComponent>(m_TreeSprite);
-	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -3.0f, 0.0f, 5.0f };
-	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 2.0f, 1.0f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -8.0f, 0.0f, 5.0f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 3.0f, 1.0f };
 
 	auto waterEntity = scene->CreateEntity("Water");
 	waterEntity.AddComponent<NGN::SpriteRendererComponent>(m_WaterSprite);

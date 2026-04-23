@@ -9,7 +9,7 @@ set(SOURCES
     Source/SandboxApp.cpp
 )
 
-target_sources(Sandbox PRIVATE ${SOURCES} "Source/GameLayer3D.h")
+target_sources(Sandbox PRIVATE ${SOURCES} "Source/GameLayer3D.h" "Source/GameLayer3D.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Sandbox)

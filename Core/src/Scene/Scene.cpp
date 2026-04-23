@@ -103,8 +103,11 @@ namespace NGN
 		// Set camera globally for the frame
 		Renderer::SetCamera(cameraComp.Camera);
 
-		// All systems submit their data
+		// Get render data for passing to systems
+		const Renderer::SceneRenderData renderData = Renderer::GetSceneData();
+
+		// Systems submit culled renderable scene back to renderer
 		for (auto& system : m_Systems)
-			system->OnRender(*this, cameraComp.Camera);
+			system->OnRender(*this, cameraComp.Camera, (const void*)&renderData);
 	}
 }

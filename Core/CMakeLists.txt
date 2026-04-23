@@ -120,7 +120,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Input/InputState.h" "src/Input/InputMapper.h" "src/Input/InputMapper.cpp" "src/Input/InputBindings.h" "src/Input/InputBindings.cpp")
+target_sources(Core PRIVATE ${SOURCES} "src/Input/InputState.h" "src/Input/InputMapper.h" "src/Input/InputMapper.cpp" "src/Input/InputBindings.h" "src/Input/InputBindings.cpp" "src/Renderer/RenderPass.h" "src/Renderer/Frustum.h" "src/Renderer/Frustum.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

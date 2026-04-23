@@ -33,8 +33,22 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 		s_CurrentCamera = const_cast<SceneCamera*>(&camera);
+
+		// Update render data
+		s_SceneData->frustum.Update(camera.GetViewProjectionMatrix());
+		s_SceneData->camPosition = camera.GetPosition();
+
 		// Initialize Renderer2D when camera is set
 		Renderer2D::BeginScene(camera);
+	}
+
+	Renderer::SceneRenderData Renderer::GetSceneData()
+	{
+		NGN_CORE_ASSERT(s_SceneData, "Scene data not initialized!");
+		return SceneRenderData{
+			s_SceneData->frustum,
+			s_SceneData->camPosition
+		};
 	}
 
 	void Renderer::Submit2D(
@@ -103,8 +117,6 @@ namespace NGN
 	void Renderer::BeginScene(Camera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
-
-		s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}
 
 	void Renderer::EndScene()
@@ -122,7 +134,7 @@ namespace NGN
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->Bind();
-		shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+		shader->SetMat4("u_ViewProjection", s_CurrentCamera->GetViewProjectionMatrix());
 		shader->SetMat4("u_Transform", transform);
 
 		vertexArray->Bind();

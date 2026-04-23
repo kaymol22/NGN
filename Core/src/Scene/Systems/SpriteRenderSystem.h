@@ -12,6 +12,6 @@ namespace NGN
 	public:
 		void OnCreate(Scene& scene) override;
 		void OnUpdate(Scene& scene, Timestep ts) override;
-		void OnRender(Scene& scene, const SceneCamera& camera) override;
+		void OnRender(Scene& scene, const SceneCamera& camera, const void* renderData) override;
 	};
 }

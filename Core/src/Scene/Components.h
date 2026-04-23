@@ -59,6 +59,10 @@ namespace NGN
 		Ref<SubTexture2D> SubTexture;
 		float TilingFactor = 1.0f;
 
+		// Bounding box for culling (in world space)
+		glm::vec3 boundsMin{ -0.5f, -0.5f, 0.0f };
+		glm::vec3 boundsMax{ 0.5f, 0.5f, 0.0f };
+
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 
@@ -67,6 +71,18 @@ namespace NGN
 		SpriteRendererComponent(const glm::vec4 color) : Color(color) {}
 		SpriteRendererComponent(const Ref<Texture2D>& texture, const glm::vec4 color) : Texture(texture), Color(color) {}
 		SpriteRendererComponent(const Ref<SubTexture2D>& texture, const glm::vec4 color) : SubTexture(texture), Color(color) {}
+
+		// Update bounding box based on transform and sprite size
+		void UpdateBounds(const TransformComponent& transform, const glm::vec2& spriteSize = glm::vec2(1.0f, 1.0f))
+		{
+			glm::vec3 halfSize = glm::vec3(
+				spriteSize.x * transform.Scale.x * 0.5f,
+				spriteSize.y * transform.Scale.y * 0.5f,
+				0.01f  // Small z for 2D sprites
+			);
+			boundsMin = transform.Translation - halfSize;
+			boundsMax = transform.Translation + halfSize;
+		}
 	};
 
 	struct CameraComponent

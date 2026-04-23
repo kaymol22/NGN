@@ -9,13 +9,16 @@ namespace NGN
 	enum class FramebufferTextureFormat
 	{
 		None = 0,
-		// Color
-		RGBA8,
-		RED_INTEGER,
-		// Depth/Stencil
-		DEPTH24STENCIL8,
-		// Defaults 
-		Depth = DEPTH24STENCIL8
+		RGBA8, // Base Color
+		RED_INTEGER, // Handy for ID picking
+		DEPTH24STENCIL8,// Depth/Stencil
+		Depth = DEPTH24STENCIL8,
+
+		// G-buffer attachments
+		RGB16F, // World space positions
+		RGB10A2, // Packed normals
+		SRGB8, // Albedo
+		RG16F, // Material params - metal, roughness, ao
 	};
 
 	struct FramebufferTextureSpecification

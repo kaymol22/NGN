@@ -23,6 +23,7 @@ namespace NGN {
 
 	Application::Application(const ApplicationSpecification& specification) : m_Specification(specification)
 	{
+		NGN_PROFILE_FUNCTION();
 		NGN_CORE_ASSERT(!s_Application, "Application already exists!");
 		s_Application = this;
 
@@ -30,11 +31,17 @@ namespace NGN {
 			m_Specification.WindowSpec.Title = m_Specification.Name;
 
 		// Select renderer API from app spec
-		RendererAPI::SetAPI(m_Specification.RendererAPI);
-		
-		// Window Creation + Graphics Context initialization
-		m_Window = Window::Create(m_Specification.WindowSpec);
-		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
+		{
+			NGN_PROFILE_SCOPE("RendererAPI Init");
+			RendererAPI::SetAPI(m_Specification.RendererAPI);
+		}
+
+		{
+			NGN_PROFILE_SCOPE("Window Init");
+			// Window Creation + Graphics Context initialization
+			m_Window = Window::Create(m_Specification.WindowSpec);
+			m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
+		}
 
 		// Initialise renderer (backend + rendercommand)
 		Renderer::Init();
