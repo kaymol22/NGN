@@ -15,8 +15,6 @@ src/Core/Base.h
 src/Core/EntryPoint.h
 src/Core/Instrumentor.cpp
 src/Core/Instrumentor.h
-"src/Input/Input.cpp"
-"src/Input/Input.h"
 src/Core/KeyCodes.h
 src/Core/Layer.h
 src/Core/Layer.cpp
@@ -41,6 +39,14 @@ src/Events/MouseEvent.h
 src/ImGui/ImGuiLayer.h
 src/ImGui/ImGuiLayer.cpp
 
+src/Input/Input.cpp
+src/Input/Input.h
+src/Input/InputBindings.cpp
+src/Input/InputBindings.h
+src/Input/InputMapper.cpp
+src/Input/InputMapper.h
+src/Input/InputState.h
+
 src/Math/Math.h
 src/Math/Math.cpp
 
@@ -50,8 +56,12 @@ src/Renderer/Font.cpp
 src/Renderer/Font.h
 src/Renderer/Framebuffer.cpp
 src/Renderer/Framebuffer.h
+src/Renderer/Frustum.cpp
+src/Renderer/Frustum.h
 src/Renderer/GraphicsContext.h
 src/Renderer/GraphicsContext.cpp
+src/Renderer/Mesh.cpp
+src/Renderer/Mesh.h
 src/Renderer/OrthographicCamera.cpp
 src/Renderer/OrthographicCamera.h
 src/Renderer/OrthographicCameraController.cpp
@@ -68,6 +78,7 @@ src/Renderer/RendererAPI.h
 src/Renderer/Renderer2D.cpp
 src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
+src/Renderer/RenderPass.h
 src/Renderer/Shader.h
 src/Renderer/Shader.cpp
 src/Renderer/SubTexture.cpp
@@ -86,6 +97,8 @@ src/Scene/SceneCamera.cpp
 src/Scene/SceneCamera.h
 src/Scene/SceneManager.cpp
 src/Scene/SceneManager.h
+src/Scene/Systems/MeshRenderSystem.cpp
+src/Scene/Systems/MeshRenderSystem.h
 src/Scene/Systems/SpriteRenderSystem.cpp
 src/Scene/Systems/SpriteRenderSystem.h
 src/Scene/Systems/PlayerControllerSystem.cpp
@@ -120,7 +133,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Input/InputState.h" "src/Input/InputMapper.h" "src/Input/InputMapper.cpp" "src/Input/InputBindings.h" "src/Input/InputBindings.cpp" "src/Renderer/RenderPass.h" "src/Renderer/Frustum.h" "src/Renderer/Frustum.cpp")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

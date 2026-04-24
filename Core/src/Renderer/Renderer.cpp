@@ -1,6 +1,7 @@
 #include "ngnpch.h"
 #include "Renderer.h"
 #include "Renderer2D.h"
+#include "Mesh.h"
 #include "Scene/SceneCamera.h"
 
 namespace NGN
@@ -105,6 +106,34 @@ namespace NGN
 
 		// EndScene calls Flush internally, which batches and renders all queued data
 		Renderer2D::EndScene();
+	}
+
+	void Renderer::Submit3D(
+		const glm::mat4& transform,
+		const Ref<Mesh>& mesh,
+		const Ref<Shader>& shader,
+		const glm::vec4& color,
+		int entityID)
+	{
+		NGN_CORE_ASSERT(s_CurrentCamera, "Camera not set! Call Renderer::SetCamera before submitting");
+		NGN_CORE_ASSERT(mesh, "Mesh is null");
+		NGN_CORE_ASSERT(shader, "Shader is null");
+
+		// Bind mesh and shader
+		mesh->Bind();
+		shader->Bind();
+
+		// Pre-compute normal matrix (CPU-side to avoid per-vertex computation)
+		glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(transform)));
+
+		// Set shader uniforms
+		shader->SetMat4("u_ViewProjection", s_CurrentCamera->GetViewProjectionMatrix());
+		shader->SetMat4("u_Transform", transform);
+		shader->SetMat3("u_NormalMatrix", normalMatrix);
+		shader->SetFloat4("u_Color", color);
+
+		// Draw
+		RenderCommand::DrawIndexed(mesh->GetVertexArray(), mesh->GetIndexCount());
 	}
 
 	void Renderer::EndFrame()

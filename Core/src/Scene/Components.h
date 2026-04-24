@@ -5,6 +5,8 @@
 #include "Core/UUID.h"
 #include "Renderer/Texture.h"
 #include "Renderer/SubTexture.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Shader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -113,5 +115,45 @@ namespace NGN
 
 		PlayerControllerComponent() = default;
 		PlayerControllerComponent(const PlayerControllerComponent&) = default;
+	};
+
+	struct MeshComponent
+	{
+		Ref<NGN::Mesh> MeshRef;
+		Ref<Shader> ShaderRef;
+		glm::vec4 Color = glm::vec4(1.0f);
+
+		// Bounding box for culling (in world space)
+		glm::vec3 boundsMin = glm::vec3(-0.5f);
+		glm::vec3 boundsMax = glm::vec3(0.5f);
+
+		MeshComponent() = default;
+		MeshComponent(const MeshComponent&) = default;
+
+		MeshComponent(const Ref<NGN::Mesh>& mesh, const Ref<Shader>& shader = nullptr, const glm::vec4& color = glm::vec4(1.0f))
+			: MeshRef(mesh), ShaderRef(shader), Color(color)
+		{
+			if (mesh)
+			{
+				boundsMin = mesh->GetBoundsMin();
+				boundsMax = mesh->GetBoundsMax();
+			}
+		}
+
+		// Update bounding box based on transform
+		void UpdateBounds(const TransformComponent& transform)
+		{
+			if (!MeshRef)
+				return;
+
+			glm::vec3 meshMin = MeshRef->GetBoundsMin();
+			glm::vec3 meshMax = MeshRef->GetBoundsMax();
+
+			glm::vec3 scaledMin = meshMin * transform.Scale;
+			glm::vec3 scaledMax = meshMax * transform.Scale;
+
+			boundsMin = transform.Translation + glm::min(scaledMin, scaledMax);
+			boundsMax = transform.Translation + glm::max(scaledMin, scaledMax);
+		}
 	};
 }

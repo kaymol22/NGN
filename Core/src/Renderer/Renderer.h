@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "SubTexture.h"
+#include "Mesh.h"
 #include "Camera.h"
 #include "Frustum.h"
 
@@ -57,6 +58,15 @@ namespace NGN
 			const Ref<SubTexture2D>& subtexture,
 			float tilingFactor = 1.0f,
 			const glm::vec4& tintColor = glm::vec4(1.0f),
+			int entityID = -1
+		);
+
+		// 3D Submission
+		static void Submit3D(
+			const glm::mat4& transform,
+			const Ref<Mesh>& mesh,
+			const Ref<Shader>& shader,
+			const glm::vec4& color = glm::vec4(1.0f),
 			int entityID = -1
 		);
 

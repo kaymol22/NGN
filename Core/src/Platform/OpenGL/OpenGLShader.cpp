@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace NGN
 {
@@ -186,36 +187,41 @@ namespace NGN
 
 	void OpenGLShader::SetInt(const std::string& name, int value)
 	{
-
+		glUniform1i(GetUniformLocation(name), value);
 	}
 
 	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
 	{
-
+		glUniform1iv(GetUniformLocation(name), count, values);
 	}
 
 	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
-
+		glUniform1f(GetUniformLocation(name), value);
 	}
 
 	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
 	{
-
+		glUniform2f(GetUniformLocation(name), value.x, value.y);
 	}
 
 	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
 	{
-
+		glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
 	}
 
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
 	{
+		glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
+	}
 
+	void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& value)
+	{
+		glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 	}
 
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
-
+		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 	}
 }

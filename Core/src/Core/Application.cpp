@@ -63,7 +63,7 @@ namespace NGN {
 	{
 		NGN_PROFILE_FUNCTION();
 
-		/*m_Window::Shutdown();*/
+		/*m_Window->Shutdown();*/
 		Renderer::Shutdown();
 		Input::Shutdown();
 

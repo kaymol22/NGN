@@ -1,15 +1,12 @@
 #pragma once
 #include "NGN.h"
 
-namespace NGN
+class GameLayer3D : public NGN::Layer
 {
-	class GameLayer3D : public Layer
-	{
-	public:
-		GameLayer3D();
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
-		virtual void OnUpdate(Timestep ts) override;
-		virtual void OnEvent(Event& event) override;
-	};
-}
+public:
+	GameLayer3D();
+	virtual void OnAttach() override;
+	virtual void OnDetach() override;
+	virtual void OnUpdate(NGN::Timestep ts) override;
+	virtual void OnEvent(NGN::Event& event) override;
+};

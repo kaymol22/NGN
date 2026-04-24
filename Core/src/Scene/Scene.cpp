@@ -8,6 +8,7 @@
 #include "SceneCamera.h"
 
 #include "Systems/SpriteRenderSystem.h"
+#include "Systems/MeshRenderSystem.h"
 #include "Systems/PlayerControllerSystem.h"
 
 namespace NGN
@@ -17,6 +18,7 @@ namespace NGN
 		NGN_CORE_INFO("Scene Created");
 
 		AddSystem<SpriteRenderSystem>();
+		AddSystem<MeshRenderSystem>();
 		/*AddSystem<PlayerControllerSystem>();*/
 	}
 
