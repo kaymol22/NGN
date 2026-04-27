@@ -174,4 +174,14 @@ namespace NGN {
 		NGN_CORE_ASSERT(s_Application);
 		return *s_Application;
 	}
+
+	Scene* Application::CreateScene(const std::string& name, bool setActive)
+	{
+		auto scene = NGN::CreateScope<Scene>();
+		Scene* scenePtr = scene.get();
+		GetSceneManager().RegisterScene(name, std::move(scene));
+		if (setActive)
+			GetSceneManager().SetActiveScene(name);
+		return scenePtr;
+	}
 }

@@ -10,10 +10,7 @@ void GameLayer3D::OnAttach()
 {
 	NGN_PROFILE_FUNCTION();
 
-	auto scene = NGN::CreateRef<NGN::Scene>();
-	NGN::Application::Get().GetSceneManager().RegisterScene("3DGameScene", scene);
-	NGN::Application::Get().GetSceneManager().SetActiveScene("3DGameScene");
-	NGN_INFO("GameLayer3D: Scene created");
+	auto scene = NGN::Application::Get().CreateScene("GameScene3D");
 
 	// Create 3D shader
 	auto meshShader = NGN::Shader::Create("assets/Shaders/Mesh3D.glsl");
@@ -40,8 +37,8 @@ void GameLayer3D::OnAttach()
 	auto meshEntity = scene->CreateEntity("Cube");
 	meshEntity.AddComponent<NGN::MeshComponent>(cubeMesh, meshShader, glm::vec4(1.0f, 0.5f, 0.2f, 1.0f));
 	auto& meshTransform = meshEntity.GetComponent<NGN::TransformComponent>();
-	meshTransform.Translation = { -2.0f, 2.0f, 0.0f };
-	meshTransform.Rotation = glm::quat(glm::vec3(glm::radians(45.0f), glm::radians(30.0f), 0.0f));
+	meshTransform.Translation = { -3.0f, -2.0f, 0.0f };
+	meshTransform.Rotation = glm::quat(glm::vec3(0.0f, glm::radians(30.0f), 0.0f));
 	NGN_INFO("GameLayer3D: Mesh entity created with component");
 }
 

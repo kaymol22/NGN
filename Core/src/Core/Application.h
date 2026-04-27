@@ -76,6 +76,8 @@ namespace NGN {
 		SceneManager& GetSceneManager() { return m_SceneManager; }
 		const SceneManager& GetSceneManager() const { return m_SceneManager; }
 
+		Scene* CreateScene(const std::string& name = "Scene", bool setActive = true);
+
 		static Application& Get();
 
 	private:

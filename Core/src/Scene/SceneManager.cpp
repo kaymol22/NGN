@@ -3,20 +3,21 @@
 
 namespace NGN
 {
-	void SceneManager::RegisterScene(const std::string& name, Ref<Scene> scene)
+	// Create scene on client side - transfer to scene manager using std::move
+	void SceneManager::RegisterScene(const std::string& name, Scope<Scene> scene)
 	{
 		NGN_CORE_ASSERT(!HasScene(name), "Scene '{}' already registered", name);
 		NGN_CORE_ASSERT(scene, "Cannot register null scene");
 
-		m_Scenes[name] = scene;
+		m_Scenes[name] = std::move(scene);
 		NGN_CORE_INFO("Scene '{}' registered", name);
 	}
 
-	Ref<Scene> SceneManager::GetScene(const std::string& name)
+	Scene* SceneManager::GetScene(const std::string& name)
 	{
 		auto target = m_Scenes.find(name);
 		if (target != m_Scenes.end())
-			return target->second;
+			return target->second.get();
 		NGN_CORE_WARN("Scene '{}' not found", name);
 		return nullptr;
 	}
@@ -29,7 +30,7 @@ namespace NGN
 			return;
 		}
 
-		m_ActiveScene = m_Scenes[name];
+		m_ActiveScene = m_Scenes[name].get();
 		m_ActiveSceneName = name;
 		NGN_CORE_INFO("Active scene set to '{}'", name);
 	}

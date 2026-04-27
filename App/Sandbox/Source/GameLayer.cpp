@@ -9,15 +9,13 @@ void GameLayer::OnAttach()
 	// Scene Loading + setup 
 	NGN_PROFILE_FUNCTION();
 
-	auto scene = NGN::CreateRef<NGN::Scene>();
-	NGN::Application::Get().GetSceneManager().RegisterScene("GameScene", scene);
-	NGN::Application::Get().GetSceneManager().SetActiveScene("GameScene");
+	auto scene = NGN::Application::Get().CreateScene("GameScene");
 
 	// Texture + sprite setup
 
 	m_CheckerBoardTexture = NGN::Texture2D::Create("assets/Textures/Checkerboard.png");
 	m_SpriteSheet = NGN::Texture2D::Create("assets/Textures/spritesheet-1.png");
-	
+
 
 	constexpr glm::vec2 cellSize = { 64.0f, 64.0f };
 	m_WaterSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet,   { 11, 11 }, { 1, 1 }, cellSize);
