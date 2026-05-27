@@ -12,9 +12,12 @@ void GameLayer3D::OnAttach()
 
 	auto scene = NGN::Application::Get().CreateScene("GameScene3D");
 
-	// Create 3D shader
-	auto meshShader = NGN::Shader::Create("assets/Shaders/Mesh3D.glsl");
-	NGN_INFO("GameLayer3D: Shader loaded");
+	// Use AssetManager for shader and mesh loading
+	// Assets are automatically cached and reused across the application
+	auto& assetMgr = NGN::Application::Get().GetAssetManager();
+
+	// Load shader (cached - subsequent calls return the same instance)
+	auto meshShader = assetMgr.GetShader("assets/Shaders/Mesh3D.glsl");
 
 	// Player Entity
 	auto cameraEntity = scene->CreateEntity("Player");
@@ -28,18 +31,16 @@ void GameLayer3D::OnAttach()
 		NGN::Application::Get().GetWindow().GetHeight()
 	);
 	cameraComp.Camera.SetPerspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f);
-	NGN_INFO("GameLayer3D: Camera created at (0, 0, 10)");
 
 	// Mesh Entity - Cube
-	auto cubeMesh = NGN::Mesh::CreateCube(2.0f);
-	NGN_INFO("GameLayer3D: Cube mesh created");
+	// Using AssetManager for mesh caching as well
+	auto cubeMesh = assetMgr.GetCube(2.0f);
 
 	auto meshEntity = scene->CreateEntity("Cube");
 	meshEntity.AddComponent<NGN::MeshComponent>(cubeMesh, meshShader, glm::vec4(1.0f, 0.5f, 0.2f, 1.0f));
 	auto& meshTransform = meshEntity.GetComponent<NGN::TransformComponent>();
 	meshTransform.Translation = { -3.0f, -2.0f, 0.0f };
 	meshTransform.Rotation = glm::quat(glm::vec3(0.0f, glm::radians(30.0f), 0.0f));
-	NGN_INFO("GameLayer3D: Mesh entity created with component");
 }
 
 void GameLayer3D::OnDetach()

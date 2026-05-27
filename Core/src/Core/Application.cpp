@@ -54,15 +54,22 @@ namespace NGN {
 			static_cast<uint32_t>(size.x),
 			static_cast<uint32_t>(size.y)
 		);
-		
+
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
+
+		// Initialize asset manager
+		{
+			NGN_PROFILE_SCOPE("AssetManager Init");
+			m_AssetManager.Init();
+		}
 	}
 
 	Application::~Application()
 	{
 		NGN_PROFILE_FUNCTION();
 
+		m_AssetManager.Shutdown();
 		/*m_Window->Shutdown();*/
 		Renderer::Shutdown();
 		Input::Shutdown();
@@ -92,6 +99,12 @@ namespace NGN {
 				NGN_PROFILE_SCOPE("LayerStack OnUpdate");
 				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 					layer->OnUpdate(m_Timestep);
+			}
+
+			// Check for asset changes (hot-reload shaders, etc.)
+			{
+				NGN_PROFILE_SCOPE("AssetManager OnUpdate");
+				m_AssetManager.OnUpdate();
 			}
 
 			/*========== Rendering =============*/

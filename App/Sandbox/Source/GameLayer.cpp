@@ -11,16 +11,17 @@ void GameLayer::OnAttach()
 
 	auto scene = NGN::Application::Get().CreateScene("GameScene");
 
-	// Texture + sprite setup
+	// Texture + sprite setup - Now using AssetManager for caching
+	// Assets are cached automatically - subsequent calls return cached instances
+	auto& assetMgr = NGN::Application::Get().GetAssetManager();
 
-	m_CheckerBoardTexture = NGN::Texture2D::Create("assets/Textures/Checkerboard.png");
-	m_SpriteSheet = NGN::Texture2D::Create("assets/Textures/spritesheet-1.png");
-
+	m_CheckerBoardTexture = assetMgr.GetTexture("assets/Textures/Checkerboard.png");
+	m_SpriteSheet = assetMgr.GetTexture("assets/Textures/spritesheet-1.png");
 
 	constexpr glm::vec2 cellSize = { 64.0f, 64.0f };
-	m_WaterSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet,   { 11, 11 }, { 1, 1 }, cellSize);
-	m_GrassSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 1, 11 }, { 1, 1 }, cellSize);
-	m_TreeSprite = NGN::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 0, 1 }, { 1, 2 }, cellSize);
+	m_WaterSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 11, 11 }, cellSize);
+	m_GrassSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 1, 11 }, cellSize);
+	m_TreeSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 0, 1 }, cellSize);
 
 	// Entity Creation
 

@@ -12,8 +12,9 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		// Load & create textures for editor resources here
-		m_CheckerboardTexture = Texture2D::Create("assets/Textures/Checkerboard.png");
+		// Use AssetManager to load editor resources
+		// Assets are cached and reused - no duplicate loads
+		m_CheckerboardTexture = NGN::Application::Get().GetAssetManager().GetTexture("assets/Textures/Checkerboard.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Attachments = {
@@ -25,7 +26,7 @@ namespace NGN
 		fbSpec.Height = 600;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
 
-		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene = NGN::Application::Get().CreateScene("Test Scene");
 	}
 
 	void EditorLayer::OnDetach()

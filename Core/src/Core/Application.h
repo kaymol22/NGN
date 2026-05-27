@@ -8,6 +8,7 @@
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/RendererAPI.h"
 #include "Scene/SceneManager.h"
+#include "AssetManager.h"
 
 #include <glm/glm.hpp>
 
@@ -76,6 +77,9 @@ namespace NGN {
 		SceneManager& GetSceneManager() { return m_SceneManager; }
 		const SceneManager& GetSceneManager() const { return m_SceneManager; }
 
+		AssetManager& GetAssetManager() { return m_AssetManager; }
+		const AssetManager& GetAssetManager() const { return m_AssetManager; }
+
 		Scene* CreateScene(const std::string& name = "Scene", bool setActive = true);
 
 		static Application& Get();
@@ -96,10 +100,11 @@ namespace NGN {
 		ApplicationSpecification m_Specification;
 		
 		Scope<Window> m_Window;
-		
+
 		Ref<ImGuiLayer> m_ImGuiLayer;
 
 		SceneManager m_SceneManager;
+		AssetManager m_AssetManager;
 
 		float m_LastFrameTime = 0.0f;
 		Timestep m_Timestep;

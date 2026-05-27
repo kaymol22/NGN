@@ -11,6 +11,7 @@
 #include "Core/Timestep.h"
 #include "Core/KeyCodes.h"
 #include "Core/MouseCodes.h"
+#include "Core/AssetManager.h"
 
 /* Input */
 #include "Input/Input.h"

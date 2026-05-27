@@ -1,3 +1,4 @@
+#include "ngnpch.h"
 #include "Mesh.h"
 #include "VertexArray.h"
 

@@ -11,6 +11,8 @@ src/NGN.h
 src/Core/Assert.h
 src/Core/Application.h
 src/Core/Application.cpp
+src/Core/AssetManager.h
+src/Core/AssetManager.cpp
 src/Core/Base.h
 src/Core/EntryPoint.h
 src/Core/Instrumentor.cpp
