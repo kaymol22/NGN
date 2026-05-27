@@ -6,7 +6,7 @@
 #include "Core/Timestep.h"
 #include "Core/UUID.h"
 #include "Components.h"
-#include "Renderer/OrthographicCamera.h"
+#include "Renderer/Resources/OrthographicCamera.h"
 
 #include <glm/glm.hpp>
 

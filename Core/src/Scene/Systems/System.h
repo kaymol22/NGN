@@ -2,8 +2,8 @@
 
 #include "Core/Timestep.h"
 #include "Renderer/Renderer2D.h"
-#include "Renderer/Camera.h"
-#include "Renderer/OrthographicCamera.h"
+#include "Renderer/Resources/Camera.h"
+#include "Renderer/Resources/OrthographicCamera.h"
 #include "Scene/SceneCamera.h"
 
 namespace NGN

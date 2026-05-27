@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 #include "Platform/OpenGL/OpenGLVertexArray.h"
-#include "Renderer.h"
+#include "Renderer/Renderer.h"
 
 namespace NGN
 {

@@ -3,7 +3,7 @@
 //#include "GLUtils.h"
 
 // TODO: Abstract to interact with Renderer instead
-#include "RendererAPI.h"
+#include "Renderer/Backend/RendererAPI.h"
 
 namespace NGN
 {

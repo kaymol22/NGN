@@ -1,9 +1,9 @@
 #include "ngnpch.h"
 #include "Renderer2D.h"
-#include "RenderCommand.h"
-#include "Shader.h"
-#include "Buffer.h"
-#include "VertexArray.h"
+#include "Backend/RenderCommand.h"
+#include "Resources/Shader.h"
+#include "Resources/Buffer.h"
+#include "Resources/VertexArray.h"
 #include "Scene/Entity.h"
 
 //TEMP: Debugging

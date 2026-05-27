@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Buffer.h"
+#include "Renderer/Resources/Buffer.h"
 
 namespace NGN
 {

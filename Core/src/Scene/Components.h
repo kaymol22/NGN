@@ -3,10 +3,10 @@
 #include "SceneCamera.h"
 
 #include "Core/UUID.h"
-#include "Renderer/Texture.h"
-#include "Renderer/SubTexture.h"
-#include "Renderer/Mesh.h"
-#include "Renderer/Shader.h"
+#include "Renderer/Resources/Texture.h"
+#include "Renderer/Resources/SubTexture.h"
+#include "Renderer/Resources/Mesh.h"
+#include "Renderer/Resources/Shader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

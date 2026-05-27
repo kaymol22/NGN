@@ -1,9 +1,9 @@
 #pragma once
 
-#include "OrthographicCamera.h"
-#include "Camera.h"
-#include "Texture.h"
-#include "SubTexture.h"
+#include "Resources/OrthographicCamera.h"
+#include "Resources/Camera.h"
+#include "Resources/Texture.h"
+#include "Resources/SubTexture.h"
 
 #include "Scene/Components.h"
 

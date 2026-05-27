@@ -1,6 +1,6 @@
 #pragma once
 #include "ngnpch.h"
-#include "VertexArray.h"
+#include "Renderer/Resources/VertexArray.h"
 
 #include <glm/glm.hpp>
 

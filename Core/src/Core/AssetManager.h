@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Base.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Texture.h"
-#include "Renderer/Mesh.h"
-#include "Renderer/SubTexture.h"
+#include "Renderer/Resources/Shader.h"
+#include "Renderer/Resources/Texture.h"
+#include "Renderer/Resources/Mesh.h"
+#include "Renderer/Resources/SubTexture.h"
 
 #include <filesystem>
 #include <unordered_map>

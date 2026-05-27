@@ -1,7 +1,7 @@
 #include "ngnpch.h"
 #include "Renderer.h"
 #include "Renderer2D.h"
-#include "Mesh.h"
+#include "Resources/Mesh.h"
 #include "Scene/SceneCamera.h"
 
 namespace NGN

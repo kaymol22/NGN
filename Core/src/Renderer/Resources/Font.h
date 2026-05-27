@@ -13,7 +13,7 @@ namespace NGN
 	{
 	public:
 		Font(const std::filesystem::path& fontPath);
-		~Font();
+		~Font() = default;
 
 		const MSDFData* GetMSDFData() const { return m_Data; }
 		Ref<Texture2D> GetTexture() const { return m_Texture; }

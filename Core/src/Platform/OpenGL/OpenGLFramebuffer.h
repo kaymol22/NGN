@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer/Framebuffer.h"
+#include "Renderer/Resources/Framebuffer.h"
 
 namespace NGN
 {

@@ -31,14 +31,14 @@
 /* Renderer */
 #include "Renderer/Renderer.h"
 #include "Renderer/Renderer2D.h"
-#include "Renderer/RenderCommand.h"
+#include "Renderer/Backend/RenderCommand.h"
 
-#include "Renderer/Buffer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Framebuffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/Texture.h"
-#include "Renderer/SubTexture.h"
+#include "Renderer/Resources/Buffer.h"
+#include "Renderer/Resources/Shader.h"
+#include "Renderer/Resources/Framebuffer.h"
+#include "Renderer/Resources/VertexArray.h"
+#include "Renderer/Resources/Texture.h"
+#include "Renderer/Resources/SubTexture.h"
 
-#include "Renderer/OrthographicCameraController.h"
-#include "Renderer/PerspCameraController.h"
+#include "Renderer/Resources/OrthographicCameraController.h"
+#include "Renderer/Resources/PerspCameraController.h"

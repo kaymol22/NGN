@@ -1,15 +1,15 @@
 #pragma once
 #pragma once
 
-#include "RenderCommand.h"
+#include "Backend/RenderCommand.h"
 #include "RenderPass.h"
 
-#include "Shader.h"
-#include "Texture.h"
-#include "SubTexture.h"
-#include "Mesh.h"
-#include "Camera.h"
-#include "Frustum.h"
+#include "Resources/Shader.h"
+#include "Resources/Texture.h"
+#include "Resources/SubTexture.h"
+#include "Resources/Mesh.h"
+#include "Resources/Camera.h"
+#include "Resources/Frustum.h"
 
 namespace NGN
 {

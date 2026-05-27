@@ -1,6 +1,6 @@
 #include "Buffer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
-#include "Renderer.h"
+#include "Renderer/Renderer.h"
 
 namespace NGN
 {

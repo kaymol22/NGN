@@ -2,8 +2,8 @@
 #include "Scene.h"
 #include "Components.h"
 
-#include "Renderer/PerspectiveCamera.h"
-#include "Renderer/OrthographicCamera.h"
+#include "Renderer/Resources/PerspectiveCamera.h"
+#include "Renderer/Resources/OrthographicCamera.h"
 #include "Renderer/Renderer.h"
 #include "SceneCamera.h"
 
