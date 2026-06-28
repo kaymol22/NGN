@@ -5,10 +5,12 @@
 #include "Core/Base.h"
 
 #include "Core/Application.h"
+#include "Core/Enums.h"
 #include "Core/Layer.h"
 #include "Core/Log.h"
 #include "Core/Assert.h"
 #include "Core/Timestep.h"
+#include "Core/Types.h"
 #include "Core/KeyCodes.h"
 #include "Core/MouseCodes.h"
 #include "Core/AssetManager.h"

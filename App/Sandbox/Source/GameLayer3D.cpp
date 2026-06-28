@@ -1,5 +1,6 @@
 #include "NGN.h"
 #include "GameLayer3D.h"
+#include "GameLayer.h"
 
 GameLayer3D::GameLayer3D()
 	: NGN::Layer("GameLayer3D")
@@ -45,7 +46,8 @@ void GameLayer3D::OnAttach()
 
 void GameLayer3D::OnDetach()
 {
-
+	auto& app = NGN::Application::Get();
+	app.PushLayer<GameLayer>();
 }
 
 void GameLayer3D::OnEvent(NGN::Event& e)
@@ -74,6 +76,16 @@ void GameLayer3D::OnEvent(NGN::Event& e)
 				16.0f / 9.0f,
 				camComp.Camera.GetPerspectiveNear(),
 				camComp.Camera.GetPerspectiveFar());
+		}
+	}
+
+	if (e.GetEventType() == NGN::EventType::KeyPressed)
+	{
+		NGN::KeyPressedEvent& keyEvent = static_cast<NGN::KeyPressedEvent&>(e);
+		if (keyEvent.GetKeyCode() == NGN::Key::D2)
+		{
+			NGN_INFO("Switching to GameLayer");
+
 		}
 	}
 }

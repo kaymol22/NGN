@@ -4,16 +4,16 @@
 
 namespace NGN
 { 	
-	RendererAPIType RendererAPI::s_API = RendererAPIType::OpenGL;
+	RendererAPIType RendererAPI::s_API = RendererAPIType::OPENGL;
 	Scope<RendererAPI> RendererAPI::Create()
 	{
 		switch (s_API)
 		{
-		case RendererAPIType::None:
-			NGN_CORE_ASSERT(false, "RendererAPI::None not supported");
+		case RendererAPIType::UNDEFINED:
+			NGN_CORE_ASSERT(false, "RendererAPI::UNDEFINED not supported");
 			return nullptr;
 
-		case RendererAPIType::OpenGL:
+		case RendererAPIType::OPENGL:
 			return CreateScope<OpenGLRendererAPI>();
 		}
 

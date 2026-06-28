@@ -6,13 +6,6 @@
 
 namespace NGN
 {
-	enum class RendererAPIType
-	{
-		None	= 0,
-		OpenGL	= 1
-		// Flexibility for additional API's
-	};
-
 	class RendererAPI
 	{
 	public:

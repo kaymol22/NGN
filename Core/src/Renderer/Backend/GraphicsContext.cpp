@@ -8,8 +8,8 @@ namespace NGN
 	{
 		switch (RendererAPI::GetAPI())
 		{
-			case RendererAPIType::None:				NGN_CORE_ASSERT(false, "RendererAPI::None not supported"); return nullptr;
-			case RendererAPIType::OpenGL:			return CreateScope<OpenGLContext>(static_cast<GLFWwindow*>(window));
+			case RendererAPIType::UNDEFINED:				NGN_CORE_ASSERT(false, "RendererAPI::None not supported"); return nullptr;
+			case RendererAPIType::OPENGL:			return CreateScope<OpenGLContext>(static_cast<GLFWwindow*>(window));
 		}
 
 		NGN_CORE_ASSERT(false, "Unknown RendererAPI");

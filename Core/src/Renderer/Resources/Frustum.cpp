@@ -1,6 +1,5 @@
 #include "Frustum.h"
 
-#include "Frustum.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace NGN

@@ -18,6 +18,8 @@
 
 
 #include "Core/Base.h"
+#include "Core/Types.h"
+#include "Core/Enums.h"
 
 #include "Core/Profile.h"
 

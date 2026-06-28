@@ -137,7 +137,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "src/Renderer/RenderContext.h" "src/Core/Types.h" "src/Renderer/RenderPass.cpp" "src/Renderer/RenderContext.cpp" "src/Core/Enums.h")
 
 # enable precompile headers
 ngn_enable_pch(Core)

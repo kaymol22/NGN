@@ -32,7 +32,7 @@ namespace NGN {
 	{
 		std::string Name = "Application";
 		WindowSpecification WindowSpec;
-		RendererAPIType RendererAPI = RendererAPIType::OpenGL;
+		RendererAPIType RendererAPI = RendererAPIType::OPENGL;
 		ApplicationCmdLineArgs CommandLineArgs;
 	};
 

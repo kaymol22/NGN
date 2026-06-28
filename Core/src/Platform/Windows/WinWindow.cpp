@@ -55,7 +55,7 @@ namespace NGN
 			glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 			glfwWindowHint(GLFW_SAMPLES, 4); // 4x MSAA
 			#if defined(NGN_DEBUG)
-				if (Renderer::GetAPI() == RendererAPIType::OpenGL)
+				if (Renderer::GetAPI() == RendererAPIType::OPENGL)
 					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 			#endif
 		}

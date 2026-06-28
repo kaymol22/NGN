@@ -100,10 +100,11 @@ namespace NGN
 		auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
 		auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
 
+		// Update camera then pass to renderer
 		cameraComp.Camera.RecalculateViewMatrix(cameraTransform.Translation, cameraTransform.Rotation);
-
-		// Set camera globally for the frame
 		Renderer::SetCamera(cameraComp.Camera);
+
+		const Frustum& frustum = Renderer::GetSceneData().frustum;
 
 		// Get render data for passing to systems
 		const Renderer::SceneRenderData renderData = Renderer::GetSceneData();

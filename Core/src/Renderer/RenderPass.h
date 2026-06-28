@@ -1,23 +1,22 @@
 #pragma once
 
 #include "Resources/Framebuffer.h"
+#include "Core/Types.h"
 
 namespace NGN
 {
-	enum class PassType
+	class RenderPass
 	{
-		Geometry3D, // Pass into g-buffer
-		Lighting, // Deferred lighting
-		Sprite2D,
-		UI,
-		Compose, // Final
-		Debug
-	};
+	public:
+		
+		void SetTarget(const Ref<Framebuffer>& target) { m_Target = target; }
+		const Ref<Framebuffer>& GetTarget() const { return m_Target; }
 
-	struct RenderPass
-	{
-		PassType type;
-		Ref<Framebuffer> targetFramebuffer;
-		std::function<void()> executeFunction; // Keep what to execute flexible
+		void Submit(const RenderItem& item);
+		void Clear();
+		void Execute();
+	private:
+		Ref<Framebuffer> m_Target;
+		std::vector<RenderItem> m_Items;
 	};
 }

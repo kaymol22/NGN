@@ -19,9 +19,10 @@ void GameLayer::OnAttach()
 	m_SpriteSheet = assetMgr.GetTexture("assets/Textures/spritesheet-1.png");
 
 	constexpr glm::vec2 cellSize = { 64.0f, 64.0f };
+	constexpr glm::vec2 treeCellSize = { 128.0f, 128.0f };
 	m_WaterSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 11, 11 }, cellSize);
 	m_GrassSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 1, 11 }, cellSize);
-	m_TreeSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 0, 1 }, cellSize);
+	m_TreeSprite = assetMgr.GetSubTexture(m_SpriteSheet, { 0, 1 }, treeCellSize);
 
 	// Entity Creation
 
@@ -51,7 +52,7 @@ void GameLayer::OnAttach()
 	auto treeEntity = scene->CreateEntity("Tree");
 	treeEntity.AddComponent<NGN::SpriteRendererComponent>(m_TreeSprite);
 	treeEntity.GetComponent<NGN::TransformComponent>().Translation = { -8.0f, 0.0f, 5.0f };
-	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 3.0f, 1.0f };
+	treeEntity.GetComponent<NGN::TransformComponent>().Scale = { 1.0f, 2.0f, 1.0f };
 
 	auto waterEntity = scene->CreateEntity("Water");
 	waterEntity.AddComponent<NGN::SpriteRendererComponent>(m_WaterSprite);
