@@ -117,6 +117,7 @@ namespace NGN
 		PlayerControllerComponent(const PlayerControllerComponent&) = default;
 	};
 
+	// TODO: REMOVE SHADER REF NO LONGER NEEDED
 	struct MeshComponent
 	{
 		Ref<NGN::Mesh> MeshRef;

@@ -25,9 +25,7 @@
 #include "Scene/Scene.h"
 #include "Scene/Entity.h"
 #include "Scene/Components.h"
-#include "Scene/Systems/SpriteRenderSystem.h"
 #include "Scene/Systems/PlayerControllerSystem.h"
-#include "Scene/Systems/MeshRenderSystem.h"
 #include "Scene/SceneCamera.h"
 
 /* Renderer */

@@ -1,6 +1,6 @@
 #include "RendererAPI.h"
 
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/GL_RendererAPI.h"
 
 namespace NGN
 { 	
@@ -15,6 +15,10 @@ namespace NGN
 
 		case RendererAPIType::OPENGL:
 			return CreateScope<OpenGLRendererAPI>();
+
+		case RendererAPIType::VULKAN:
+			NGN_CORE_ERROR("Vulkan API not supported yet");
+			return nullptr;
 		}
 
 		NGN_CORE_ASSERT(false, "Unknown RendererAPI");

@@ -1,5 +1,5 @@
-#include "OpenGLRendererAPI.h"
-#include "GLUtils.h"
+#include "GL_RendererAPI.h"
+#include "GL_Utils.h"
 
 #include <glad/gl.h>
 

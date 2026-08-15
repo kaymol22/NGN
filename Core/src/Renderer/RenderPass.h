@@ -8,15 +8,16 @@ namespace NGN
 	class RenderPass
 	{
 	public:
+		virtual ~RenderPass() = default;
 		
-		void SetTarget(const Ref<Framebuffer>& target) { m_Target = target; }
-		const Ref<Framebuffer>& GetTarget() const { return m_Target; }
+		void Submit(const RenderItem& item) { m_Items.push_back(item); }
+		void Clear() { m_Items.clear(); }
+		void Execute(Ref<Framebuffer> target);
 
-		void Submit(const RenderItem& item);
-		void Clear();
-		void Execute();
-	private:
-		Ref<Framebuffer> m_Target;
+		int GetItemCount() const { return static_cast<int>(m_Items.size()); }
+
+	protected:
+		virtual void Render(Ref<Framebuffer> target) = 0;
 		std::vector<RenderItem> m_Items;
 	};
 }

@@ -1,5 +1,5 @@
 #include "Texture.h"
-#include "Platform/OpenGL/OpenGLTexture.h"
+#include "Platform/OpenGL/Resources/GL_Texture.h"
 //#include "GLUtils.h"
 
 // TODO: Abstract to interact with Renderer instead

@@ -1,7 +1,7 @@
 #include "ngnpch.h"
 #include "Shader.h"
 #include "Renderer/Renderer.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/Resources/GL_Shader.h"
 
 namespace NGN
 {

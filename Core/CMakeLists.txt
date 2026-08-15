@@ -15,6 +15,7 @@ src/Core/AssetManager.h
 src/Core/AssetManager.cpp
 src/Core/Base.h
 src/Core/EntryPoint.h
+src/Core/Enums.h
 src/Core/Instrumentor.cpp
 src/Core/Instrumentor.h
 src/Core/KeyCodes.h
@@ -26,6 +27,7 @@ src/Core/MouseCodes.h
 src/Core/PlatformDetection.h
 src/Core/Profile.h
 src/Core/Timestep.h
+src/Core/Types.h
 src/Core/UUID.cpp
 src/Core/UUID.h
 src/Core/Window.h
@@ -55,8 +57,13 @@ src/Math/Math.cpp
 src/Renderer/Renderer2D.cpp
 src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
-src/Renderer/RenderPass.h
 src/Renderer/Renderer.h
+src/Renderer/RenderGraph.cpp
+src/Renderer/RenderGraph.h
+src/Renderer/PassManager.cpp
+src/Renderer/PassManager.h
+src/Renderer/RenderPass.cpp
+src/Renderer/RenderPass.h
 
 src/Renderer/Backend/GraphicsContext.cpp
 src/Renderer/Backend/GraphicsContext.h
@@ -64,6 +71,9 @@ src/Renderer/Backend/RenderCommand.cpp
 src/Renderer/Backend/RenderCommand.h
 src/Renderer/Backend/RendererAPI.cpp
 src/Renderer/Backend/RendererAPI.h
+
+src/Renderer/Passes/GeometryPass.cpp
+src/Renderer/Passes/GeometryPass.h
 
 src/Renderer/Resources/Buffer.cpp
 src/Renderer/Resources/Buffer.h
@@ -97,35 +107,37 @@ src/Scene/Entity.cpp
 src/Scene/Entity.h
 src/Scene/Scene.cpp
 src/Scene/Scene.h
+src/Scene/Scenebvh.cpp
+src/Scene/Scenebvh.h
 src/Scene/SceneCamera.cpp
 src/Scene/SceneCamera.h
 src/Scene/SceneManager.cpp
 src/Scene/SceneManager.h
-src/Scene/Systems/MeshRenderSystem.cpp
-src/Scene/Systems/MeshRenderSystem.h
-src/Scene/Systems/SpriteRenderSystem.cpp
-src/Scene/Systems/SpriteRenderSystem.h
+
+src/Scene/Systems/System.h
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
-src/Scene/Systems/System.h
 
-
-src/Platform/OpenGL/OpenGLBuffer.cpp
-src/Platform/OpenGL/OpenGLBuffer.h
-src/Platform/OpenGL/OpenGLContext.cpp
-src/Platform/OpenGL/OpenGLContext.h
-src/Platform/OpenGL/OpenGLFramebuffer.h
-src/Platform/OpenGL/OpenGLFramebuffer.cpp
-src/Platform/OpenGL/OpenGLRendererAPI.cpp
-src/Platform/OpenGL/OpenGLRendererAPI.h
-src/Platform/OpenGL/OpenGLShader.cpp
-src/Platform/OpenGL/OpenGLShader.h
-src/Platform/OpenGL/OpenGLTexture.h
-src/Platform/OpenGL/OpenGLTexture.cpp
-src/Platform/OpenGL/OpenGLVertexArray.cpp
-src/Platform/OpenGL/OpenGLVertexArray.h
-src/Platform/OpenGL/GLUtils.h
-src/Platform/OpenGL/GLUtils.cpp
+src/Platform/OpenGL/Resources/GL_Buffer.cpp
+src/Platform/OpenGL/Resources/GL_Buffer.h
+src/Platform/OpenGL/GL_Context.cpp
+src/Platform/OpenGL/GL_Context.h
+src/Platform/OpenGL/Resources/GL_Framebuffer.h
+src/Platform/OpenGL/Resources/GL_Framebuffer.cpp
+src/Platform/OpenGL/GL_RasterizerState.cpp
+src/Platform/OpenGL/GL_RasterizerState.h
+src/Platform/OpenGL/GL_RendererAPI.cpp
+src/Platform/OpenGL/GL_RendererAPI.h
+src/Platform/OpenGL/Resources/GL_Shader.cpp
+src/Platform/OpenGL/Resources/GL_Shader.h
+src/Platform/OpenGL/Resources/GL_Texture.h
+src/Platform/OpenGL/Resources/GL_Texture.cpp
+src/Platform/OpenGL/Resources/GL_VertexArray.cpp
+src/Platform/OpenGL/Resources/GL_VertexArray.h
+src/Platform/OpenGL/GL_Utils.h
+src/Platform/OpenGL/GL_Utils.cpp
+src/Platform/OpenGL/Passes/GL_GeometryPass.cpp
+src/Platform/OpenGL/Passes/GL_GeometryPass.h
 src/Platform/Windows/WindowsInput.cpp
 src/Platform/Windows/WindowsInput.h
 src/Platform/Windows/WindowsPlatformUtils.cpp
@@ -137,7 +149,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Renderer/RenderContext.h" "src/Core/Types.h" "src/Renderer/RenderPass.cpp" "src/Renderer/RenderContext.cpp" "src/Core/Enums.h")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

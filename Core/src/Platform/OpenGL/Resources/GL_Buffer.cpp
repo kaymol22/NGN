@@ -1,4 +1,4 @@
-#include "OpenGLBuffer.h"
+#include "GL_Buffer.h"
 
 #include "ngnpch.h"
 

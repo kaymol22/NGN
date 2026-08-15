@@ -1,8 +1,8 @@
 #pragma once
-#pragma once
 
 #include "Backend/RenderCommand.h"
 #include "RenderPass.h"
+#include "RenderGraph.h"
 
 #include "Resources/Shader.h"
 #include "Resources/Texture.h"
@@ -23,13 +23,13 @@ namespace NGN
 
 		// Frame lifecycle
 		static void BeginFrame();
-		static void Flush();  // Execute all rendering passes
+		static void Flush();  // Execute all render passes
 		static void EndFrame();
 
-		// Camera management - provides render data to systems
+		// Camera (scene culling) - set before renderitem submission
 		static void SetCamera(const SceneCamera& camera);
 
-		// Access render data for culling in systems
+		// Access render data for culling in systems - could store more useful info here
 		struct SceneRenderData
 		{
 			const Frustum& frustum;
@@ -38,45 +38,29 @@ namespace NGN
 
 		static SceneRenderData GetSceneData();
 
-		// 2D Submission
-		static void Submit2D(
-			const glm::mat4& transform,
-			const glm::vec4& color,
-			int entityID = -1
-		);
+		// Primary Submission API - delegates to R2D or R3D based on input
+		static void Submit(const RenderItem& item);
 
-		static void Submit2D(
-			const glm::mat4& transform,
-			const Ref<Texture2D>& texture,
-			float tilingFactor = 1.0f,
-			const glm::vec4& tintColor = glm::vec4(1.0f),
-			int entityID = -1
-		);
+		static void SetFramebuffer(std::string_view name, Ref<Framebuffer> framebuffer);
+		static Ref<Framebuffer> GetFramebuffer(std::string_view name);
 
-		static void Submit2D(
-			const glm::mat4& transform,
-			const Ref<SubTexture2D>& subtexture,
-			float tilingFactor = 1.0f,
-			const glm::vec4& tintColor = glm::vec4(1.0f),
-			int entityID = -1
-		);
-
-		// 3D Submission
-		static void Submit3D(
-			const glm::mat4& transform,
-			const Ref<Mesh>& mesh,
-			const Ref<Shader>& shader,
-			const glm::vec4& color = glm::vec4(1.0f),
-			int entityID = -1
-		);
-
-		// Legacy 3D interface (for now)
-		static void BeginScene(Camera& camera);
-		static void EndScene();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 		static RendererAPIType GetAPI() { return RendererAPI::GetAPI(); }
-		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
+		static RenderGraph& GetRenderGraph()
+		{
+			NGN_CORE_ASSERT(s_RenderGraph, "RenderGraph not intialised");
+			return *s_RenderGraph;
+		}
+
+		/*template <typename TPass>
+			requires std::derived_from<TPass, RenderPass>
+		static TPass* GetPass(PassType type)
+		{
+			NGN_CORE_ASSERT(s_Context, "RenderContext not initialised, could not get Pass");
+			return s_Context->GetPass<TPass>(type);
+		}*/
+		
 	private:
 		struct SceneData
 		{
@@ -85,6 +69,8 @@ namespace NGN
 			glm::vec3 camForward;
 		};
 
+		static Scope<RenderGraph> s_RenderGraph;
+		/*static Scope<RenderContext> s_Context;*/
 		static Scope<SceneData> s_SceneData; // Needs to be shared for renderpasses to access
 		static class SceneCamera* s_CurrentCamera;
 	};

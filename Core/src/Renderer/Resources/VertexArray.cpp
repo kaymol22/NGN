@@ -1,5 +1,5 @@
 #include "VertexArray.h"
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/Resources/GL_VertexArray.h"
 #include "Renderer/Renderer.h"
 
 namespace NGN

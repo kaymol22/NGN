@@ -2,18 +2,9 @@
 
 namespace NGN
 {
-	void RenderPass::Submit(const RenderItem& item)
+	void RenderPass::Execute(Ref<Framebuffer> target)
 	{
-
-	}
-
-	void RenderPass::Clear()
-	{
-
-	}
-
-	void RenderPass::Execute()
-	{
+		NGN_PROFILE_FUNCTION();
 
 	}
 }

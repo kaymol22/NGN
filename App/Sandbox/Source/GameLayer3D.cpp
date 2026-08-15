@@ -103,5 +103,5 @@ void GameLayer3D::OnUpdate(NGN::Timestep ts)
 	NGN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 	NGN::RenderCommand::Clear();
 
-	scene->RenderScene();
+	scene->SubmitData();
 }

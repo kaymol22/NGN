@@ -1,5 +1,5 @@
 #include "Framebuffer.h"
-#include "Platform/OpenGL/OpenGLFramebuffer.h"
+#include "Platform/OpenGL/Resources/GL_Framebuffer.h"
 
 // TODO: Abstract to interact with Renderer instead
 #include "Renderer/Backend/RendererAPI.h"

@@ -7,7 +7,7 @@
 
 #include "Renderer/Renderer.h"
 
-#include "Platform/OpenGL/OpenGLContext.h"
+#include "Platform/OpenGL/GL_Context.h"
 
 namespace NGN
 {

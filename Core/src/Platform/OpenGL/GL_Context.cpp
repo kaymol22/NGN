@@ -1,7 +1,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include "OpenGLContext.h"
+#include "GL_Context.h"
 #include "ngnpch.h"
 
 namespace NGN

@@ -1,4 +1,4 @@
-#include "OpenGLFramebuffer.h"
+#include "GL_Framebuffer.h"
 #include <glad/gl.h>
 #include "Core/Log.h"
 
@@ -24,7 +24,7 @@ namespace NGN
 			glBindTexture(TextureTarget(multisampled), id);
 		}
 
-		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, GLenum dataType, uint32_t width, uint32_t height, int index)
 		{
 			bool multisampled = samples > 1;
 			if (multisampled)
@@ -33,7 +33,7 @@ namespace NGN
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, dataType, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -83,6 +83,10 @@ namespace NGN
 			{
 				case FramebufferTextureFormat::RGBA8:			return GL_RGBA8;
 				case FramebufferTextureFormat::RED_INTEGER:		return GL_R32I;
+				case FramebufferTextureFormat::RGB16F:			return GL_RGB16F;
+				case FramebufferTextureFormat::RGB10A2:			return GL_RGB10_A2;
+				case FramebufferTextureFormat::SRGB8:			return GL_SRGB8;
+				case FramebufferTextureFormat::RG16F:			return GL_RG16F;
 			}
 
 			NGN_CORE_ASSERT(false, "NGN Framebuffer format conversion to GL internal format failed");
@@ -94,12 +98,29 @@ namespace NGN
 		{
 			switch (format)
 			{
-			case FramebufferTextureFormat::RGBA8:		return GL_RGBA;
-			case FramebufferTextureFormat::RED_INTEGER:	return GL_RED_INTEGER;
+				case FramebufferTextureFormat::RGBA8:		return GL_RGBA;
+				case FramebufferTextureFormat::RED_INTEGER:	return GL_RED_INTEGER;
+				case FramebufferTextureFormat::RGB16F:		return GL_RGB;
+				case FramebufferTextureFormat::RGB10A2:		return GL_RGBA;
+				case FramebufferTextureFormat::SRGB8:		return GL_RGB;
+				case FramebufferTextureFormat::RG16F:		return GL_RG;
 			}
 
 			NGN_CORE_ASSERT(false, "NGN Framebuffer format conversion to GL pixel format failed");
 			return 0;
+		}
+
+		static GLenum NGNFBTextureFormatToGLDataType(FramebufferTextureFormat format)
+		{
+			switch (format)
+			{
+				case FramebufferTextureFormat::RED_INTEGER: return GL_INT;
+				case FramebufferTextureFormat::RGB10A2: return GL_UNSIGNED_INT_2_10_10_10_REV;
+				case FramebufferTextureFormat::RGBA8: 
+				case FramebufferTextureFormat::SRGB8: return GL_UNSIGNED_BYTE;
+				case FramebufferTextureFormat::RGB16F:
+				case FramebufferTextureFormat::RG16F: return GL_FLOAT;
+			}
 		}
 	}
 
@@ -156,8 +177,9 @@ namespace NGN
 
 				GLenum internalFormat = Utils::NGNFBTextureFormatToGLInternalFormat(spec.TextureFormat);
 				GLenum pixelFormat = Utils::NGNFBTextureFormatToGLPixelFormat(spec.TextureFormat);
+				GLenum dataType = Utils::NGNFBTextureFormatToGLDataType(spec.TextureFormat);
 
-				Utils::AttachColorTexture(m_ColorAttachments[i], m_Spec.Samples, internalFormat, pixelFormat, m_Spec.Width, m_Spec.Height, i);
+				Utils::AttachColorTexture(m_ColorAttachments[i], m_Spec.Samples, internalFormat, pixelFormat, dataType, m_Spec.Width, m_Spec.Height, i);
 			}
 		}
 

@@ -25,7 +25,7 @@ namespace NGN
         AssetManager();
         ~AssetManager();
 
-        // Initialize the asset manager (sets up file watchers)
+        // Sets up file watchers*
         void Init();
         void Shutdown();
 

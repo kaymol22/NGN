@@ -7,8 +7,6 @@
 #include "Renderer/Renderer.h"
 #include "SceneCamera.h"
 
-#include "Systems/SpriteRenderSystem.h"
-#include "Systems/MeshRenderSystem.h"
 #include "Systems/PlayerControllerSystem.h"
 
 namespace NGN
@@ -17,8 +15,6 @@ namespace NGN
 	{
 		NGN_CORE_INFO("Scene Created");
 
-		AddSystem<SpriteRenderSystem>();
-		AddSystem<MeshRenderSystem>();
 		/*AddSystem<PlayerControllerSystem>();*/
 	}
 
@@ -72,7 +68,7 @@ namespace NGN
 	Entity Scene::GetPrimaryCamera()
 	{
 		auto cameras = GetEntitiesWithComponents<CameraComponent>();
-		for (auto camera : cameras)
+		for (auto& camera : cameras)
 		{
 			if (camera.GetComponent<CameraComponent>().Primary)
 				return camera;
@@ -89,7 +85,7 @@ namespace NGN
 			system->OnUpdate(*this, ts);
 	}
 
-	void Scene::RenderScene()
+	void Scene::SubmitData()
 	{
 		NGN_PROFILE_FUNCTION();
 
@@ -100,17 +96,13 @@ namespace NGN
 		auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
 		auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
 
-		// Update camera then pass to renderer
-		cameraComp.Camera.RecalculateViewMatrix(cameraTransform.Translation, cameraTransform.Rotation);
+		// Update camera then pass it's info to renderer - store in scenedata for system access
+		cameraComp.Camera.RecalculateViewMatrix(
+			cameraTransform.Translation, cameraTransform.Rotation);
 		Renderer::SetCamera(cameraComp.Camera);
 
 		const Frustum& frustum = Renderer::GetSceneData().frustum;
+		m_BVH.QueryFrustum(frustum, m_VisibleEntities);
 
-		// Get render data for passing to systems
-		const Renderer::SceneRenderData renderData = Renderer::GetSceneData();
-
-		// Systems submit culled renderable scene back to renderer
-		for (auto& system : m_Systems)
-			system->OnRender(*this, cameraComp.Camera, (const void*)&renderData);
 	}
 }

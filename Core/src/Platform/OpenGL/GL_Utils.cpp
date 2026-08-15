@@ -1,6 +1,6 @@
 #include "ngnpch.h"
 
-#include "GLUtils.h"
+#include "GL_Utils.h"
 
 #include <format>
 

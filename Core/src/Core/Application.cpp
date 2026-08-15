@@ -111,8 +111,6 @@ namespace NGN {
 			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
 			Renderer::BeginFrame();
 
-			// scene->RenderScene() called in layer OnUpdate,
-			// Data submitted to renderer - allows for batching and sorting of draw calls, etc. in 2D renderer
 			Renderer::Flush();
 
 			/*========== ImGuiRendering =============*/
