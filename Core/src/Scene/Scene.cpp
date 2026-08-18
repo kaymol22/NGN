@@ -7,6 +7,7 @@
 #include "Renderer/Renderer.h"
 #include "SceneCamera.h"
 
+#include "Systems/RenderSystem.h"
 #include "Systems/PlayerControllerSystem.h"
 
 namespace NGN
@@ -15,6 +16,7 @@ namespace NGN
 	{
 		NGN_CORE_INFO("Scene Created");
 
+		AddSystem<RenderSystem>();
 		/*AddSystem<PlayerControllerSystem>();*/
 	}
 
@@ -85,24 +87,24 @@ namespace NGN
 			system->OnUpdate(*this, ts);
 	}
 
-	void Scene::SubmitData()
-	{
-		NGN_PROFILE_FUNCTION();
+	//void Scene::SubmitData()
+	//{
+	//	NGN_PROFILE_FUNCTION();
 
-		Entity cameraEntity = GetPrimaryCamera();
-		if (!cameraEntity.IsValid())
-			return;
+	//	Entity cameraEntity = GetPrimaryCamera();
+	//	if (!cameraEntity.IsValid())
+	//		return;
 
-		auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
-		auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
+	//	auto& cameraComp = cameraEntity.GetComponent<CameraComponent>();
+	//	auto& cameraTransform = cameraEntity.GetComponent<TransformComponent>();
 
-		// Update camera then pass it's info to renderer - store in scenedata for system access
-		cameraComp.Camera.RecalculateViewMatrix(
-			cameraTransform.Translation, cameraTransform.Rotation);
-		Renderer::SetCamera(cameraComp.Camera);
+	//	// Update camera then pass it's info to renderer - store in scenedata for system access
+	//	cameraComp.Camera.RecalculateViewMatrix(
+	//		cameraTransform.Translation, cameraTransform.Rotation);
+	//	Renderer::SetCamera(cameraComp.Camera);
 
-		const Frustum& frustum = Renderer::GetSceneData().frustum;
-		m_BVH.QueryFrustum(frustum, m_VisibleEntities);
+	//	const Frustum& frustum = Renderer::GetSceneData().frustum;
+	//	m_BVH.QueryFrustum(frustum, m_VisibleEntities);
 
-	}
+	//}
 }

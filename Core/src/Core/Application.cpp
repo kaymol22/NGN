@@ -94,6 +94,10 @@ namespace NGN {
 
 			glm::vec2 framebufferSize = Application::GetFramebufferSize();
 
+			/*========== Rendering =============*/
+			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
+			Renderer::BeginFrame();
+
 			/*========== Updates =============*/
 			{
 				NGN_PROFILE_SCOPE("LayerStack OnUpdate");
@@ -106,10 +110,6 @@ namespace NGN {
 				NGN_PROFILE_SCOPE("AssetManager OnUpdate");
 				m_AssetManager.OnUpdate();
 			}
-
-			/*========== Rendering =============*/
-			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-			Renderer::BeginFrame();
 
 			Renderer::Flush();
 

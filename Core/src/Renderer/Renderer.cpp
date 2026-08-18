@@ -62,11 +62,11 @@ namespace NGN
 		};
 	}
 
-	void Renderer::Submit(const RenderItem& item)
+	void Renderer::Submit(RenderItem&& item)
 	{
 		NGN_PROFILE_FUNCTION();
 		NGN_CORE_ASSERT(s_RenderGraph, "RenderGraph not initialised");
-		s_RenderGraph->Submit(item);
+		s_RenderGraph->Submit(std::move(item));
 	}
 
 	void Renderer::Flush()

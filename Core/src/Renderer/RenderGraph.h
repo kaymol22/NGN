@@ -16,7 +16,7 @@ namespace NGN
 
 		void Build();
 		void BeginFrame();
-		void Submit(const RenderItem& item);
+		void Submit(RenderItem&& item);
 		void Execute();
 
 		PassManager& GetPassManager() { return m_PassManager; }

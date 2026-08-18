@@ -10,7 +10,7 @@ namespace NGN
 	public:
 		virtual ~RenderPass() = default;
 		
-		void Submit(const RenderItem& item) { m_Items.push_back(item); }
+		void Submit(RenderItem&& item) { m_Items.push_back(std::move(item)); }
 		void Clear() { m_Items.clear(); }
 		void Execute(Ref<Framebuffer> target);
 

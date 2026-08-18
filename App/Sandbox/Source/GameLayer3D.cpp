@@ -94,14 +94,15 @@ void GameLayer3D::OnUpdate(NGN::Timestep ts)
 {
 	auto scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
 	if (!scene)
+	{
+		NGN_INFO("No active scene found in GameLayer3D::OnUpdate"); 
 		return;
-
-	scene->OnUpdate(ts);
+	}
 
 	// Clear and render scene
 	NGN::Renderer2D::ResetStats();
 	NGN::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 	NGN::RenderCommand::Clear();
 
-	scene->SubmitData();
+	scene->OnUpdate(ts);
 }

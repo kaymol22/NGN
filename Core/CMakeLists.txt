@@ -124,8 +124,8 @@ src/Platform/OpenGL/GL_Context.cpp
 src/Platform/OpenGL/GL_Context.h
 src/Platform/OpenGL/Resources/GL_Framebuffer.h
 src/Platform/OpenGL/Resources/GL_Framebuffer.cpp
-src/Platform/OpenGL/GL_RasterizerState.cpp
-src/Platform/OpenGL/GL_RasterizerState.h
+"src/Platform/OpenGL/Passes/GL_RasterizerState.cpp"
+"src/Platform/OpenGL/Passes/GL_RasterizerState.h"
 src/Platform/OpenGL/GL_RendererAPI.cpp
 src/Platform/OpenGL/GL_RendererAPI.h
 src/Platform/OpenGL/Resources/GL_Shader.cpp
@@ -149,7 +149,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "src/Scene/Systems/RenderSystem.h" "src/Scene/Systems/RenderSystem.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

@@ -38,13 +38,13 @@ namespace NGN
 		m_PassManager.ClearAll();
 	}
 
-	void RenderGraph::Submit(const RenderItem& item)
+	void RenderGraph::Submit(RenderItem&& item)
 	{
 		std::string_view passName = ResolvePassName(item);
 		if (passName.empty()) return;
 
 		if (RenderPass* pass = m_PassManager.GetPass<RenderPass>(passName))
-			pass->Submit(item);
+			pass->Submit(std::move(item));
 	}
 
 	void RenderGraph::Execute()
@@ -57,7 +57,12 @@ namespace NGN
 		switch (static_cast<ObjectType>(item.objectType))
 		{
 			case ObjectType::STATIC_MESH:
+			case ObjectType::SKELETAL_MESH:
 				return PassNames::Geometry;
+			case ObjectType::NO_TYPE:
+			case ObjectType::UNDEFINED:
+				NGN_CORE_WARN("RenderGraph::ResolvePassName - ObjectType is NO_TYPE or UNDEFINED, cannot resolve pass name");
+				return {};
 			default:
 				return {};
 		}

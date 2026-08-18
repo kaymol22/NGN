@@ -34,7 +34,7 @@ namespace NGN
 
 		void OnUpdate(Timestep ts);
 		/*void OnRender();*/
-		void SubmitData();
+		/*void SubmitData();*/
 
 		// Return all entities with specific components - variadic for multiple 
 		template <typename... Components>
@@ -76,10 +76,6 @@ namespace NGN
 		entt::registry m_Registry;
 		std::vector<std::unique_ptr<System>> m_Systems;
 		std::unordered_map<UUID, entt::entity> m_EntityMap;
-
-		SceneBVH m_BVH;
-		bool m_BVHDirty = true;
-		std::vector<entt::entity> m_VisibleEntities;
 
 		friend class Entity;
 	};

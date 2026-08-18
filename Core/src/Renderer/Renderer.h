@@ -38,8 +38,7 @@ namespace NGN
 
 		static SceneRenderData GetSceneData();
 
-		// Primary Submission API - delegates to R2D or R3D based on input
-		static void Submit(const RenderItem& item);
+		static void Submit(RenderItem&& item);
 
 		static void SetFramebuffer(std::string_view name, Ref<Framebuffer> framebuffer);
 		static Ref<Framebuffer> GetFramebuffer(std::string_view name);

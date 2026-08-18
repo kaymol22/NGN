@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer/Passes/GeometryPass.h"
-#include "Platform/OpenGL/GL_RasterizerState.h"
+#include "GL_RasterizerState.h"
 
 namespace NGN
 {
