@@ -43,7 +43,7 @@ namespace NGN
 	void Renderer::SetCamera(const SceneCamera& camera)
 	{
 		NGN_PROFILE_FUNCTION();
-		NGN_CORE_ASSERT(s_SceneData, "Scene data not initialised");
+		/*NGN_CORE_ASSERT(s_SceneData, "Scene data not initialised");*/
 
 		s_CurrentCamera = const_cast<SceneCamera*>(&camera);
 

@@ -8,6 +8,8 @@ src/ngnpch.h
 src/ngnpch.cpp
 src/NGN.h
 
+src/Containers/SlotMap.h
+
 src/Core/Assert.h
 src/Core/Application.h
 src/Core/Application.cpp
@@ -16,6 +18,8 @@ src/Core/AssetManager.cpp
 src/Core/Base.h
 src/Core/EntryPoint.h
 src/Core/Enums.h
+src/Core/GraphicsContext.h
+src/Core/GraphicsContext.cpp
 src/Core/Instrumentor.cpp
 src/Core/Instrumentor.h
 src/Core/KeyCodes.h
@@ -24,6 +28,7 @@ src/Core/Layer.cpp
 src/Core/Log.h
 src/Core/Log.cpp
 src/Core/MouseCodes.h
+src/Core/String.h
 src/Core/PlatformDetection.h
 src/Core/Profile.h
 src/Core/Timestep.h
@@ -54,6 +59,31 @@ src/Input/InputState.h
 src/Math/Math.h
 src/Math/Math.cpp
 
+src/Render/RenderBackend.h
+src/Render/TextureTypes.h
+
+src/Render/API/OpenGL/GL_Backend.cpp
+src/Render/API/OpenGL/GL_Backend.h
+src/Render/API/OpenGL/GL_Commands.cpp
+src/Render/API/OpenGL/GL_Commands.h
+src/Render/API/OpenGL/GL_ResourceManager.h
+src/Render/API/OpenGL/GL_ResourceManager.cpp
+src/Render/API/OpenGL/GL_Renderer.h
+src/Render/API/OpenGL/GL_Utils.cpp 
+src/Render/API/OpenGL/GL_Utils.h
+
+
+ 
+
+
+
+src/Render/API/OpenGL/Types/GL_Texture.cpp
+src/Render/API/OpenGL/Types/GL_Texture.h
+src/Render/API/OpenGL/GL_TextureUploader.cpp
+src/Render/API/OpenGL/GL_TextureUploader.h
+
+
+
 src/Renderer/Renderer2D.cpp
 src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
@@ -83,6 +113,7 @@ src/Renderer/Resources/Framebuffer.cpp
 src/Renderer/Resources/Framebuffer.h
 src/Renderer/Resources/Frustum.cpp
 src/Renderer/Resources/Frustum.h
+src/Renderer/Resources/Material.h
 src/Renderer/Resources/Mesh.cpp
 src/Renderer/Resources/Mesh.h
 src/Renderer/Resources/OrthographicCamera.cpp
@@ -102,6 +133,13 @@ src/Renderer/Resources/Texture.h
 src/Renderer/Resources/VertexArray.cpp
 src/Renderer/Resources/VertexArray.h
 
+src/ResourceManagement/CPU/Types/Resource.h
+src/ResourceManagement/CPU/Types/Texture.cpp
+src/ResourceManagement/CPU/Types/Texture.h
+src/ResourceManagement/CPU/ResourceHandle.h
+src/ResourceManagement/CPU/ResourceManager.cpp
+src/ResourceManagement/CPU/ResourceManager.h
+
 src/Scene/Components.h
 src/Scene/Entity.cpp
 src/Scene/Entity.h
@@ -117,6 +155,8 @@ src/Scene/SceneManager.h
 src/Scene/Systems/System.h
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
+src/Scene/Systems/RenderSystem.cpp
+src/Scene/Systems/RenderSystem.h
 
 src/Platform/OpenGL/Resources/GL_Buffer.cpp
 src/Platform/OpenGL/Resources/GL_Buffer.h
@@ -124,8 +164,8 @@ src/Platform/OpenGL/GL_Context.cpp
 src/Platform/OpenGL/GL_Context.h
 src/Platform/OpenGL/Resources/GL_Framebuffer.h
 src/Platform/OpenGL/Resources/GL_Framebuffer.cpp
-"src/Platform/OpenGL/Passes/GL_RasterizerState.cpp"
-"src/Platform/OpenGL/Passes/GL_RasterizerState.h"
+src/Platform/OpenGL/Passes/GL_RasterizerState.cpp
+src/Platform/OpenGL/Passes/GL_RasterizerState.h
 src/Platform/OpenGL/GL_RendererAPI.cpp
 src/Platform/OpenGL/GL_RendererAPI.h
 src/Platform/OpenGL/Resources/GL_Shader.cpp
@@ -149,7 +189,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Scene/Systems/RenderSystem.h" "src/Scene/Systems/RenderSystem.cpp")
+target_sources(Core PRIVATE ${SOURCES} "src/ResourceManagement/CPU/ResourceId.h" "src/File/FileInfo.h" "src/File/File.h" "src/File/File.cpp" "src/Core/String.h" "src/Scene/Systems/SpriteRenderSystem.h" "src/Render/BVH/Types.h" "src/Render/BVH/BVH.h" "src/Render/BVH/Types/SceneBvh.h" "src/Scene/Systems/SpriteRenderSystem.cpp" "src/Render/ExtractedFrame.h" "src/Render/API/OpenGL/Types/GL_Texture_Array.h" "src/Render/Frustum.cpp" "src/Render/Frustum.h" "src/Scene/Components.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)
@@ -162,7 +202,7 @@ target_include_directories(Core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_include_directories(Core PUBLIC SYSTEM 
+target_include_directories(Core PUBLIC SYSTEM
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/entt/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include

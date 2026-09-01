@@ -2,13 +2,13 @@
 
 namespace NGN
 {
-	class GraphicsContext
+	class GraphicsContextOld
 	{
 	public:
-		virtual ~GraphicsContext() = default;
+		virtual ~GraphicsContextOld() = default;
 		virtual void Init() = 0;
 		virtual void SwapBuffers() = 0;
 
-		static Scope<GraphicsContext> CreateGraphicsContext(void* window);
+		static Scope<GraphicsContextOld> CreateGraphicsContext(void* window);
 	};
 }

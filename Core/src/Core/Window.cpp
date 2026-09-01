@@ -13,10 +13,10 @@
 
 namespace NGN {
 
-	Scope<Window> Window::Create(const WindowSpecification& specification)
+	Scope<Window> Window::Create(const API api, const WindowSpecification& specification)
 	{
 		#ifdef NGN_PLATFORM_WINDOWS
-			return CreateScope<WinWindow>(specification);
+			return CreateScope<WinWindow>(api, specification);
 		#else
 			NGN_CORE_ASSERT(false, "Unknown platform, cannot create window");
 			return nullptr;

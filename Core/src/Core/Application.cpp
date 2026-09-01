@@ -16,61 +16,41 @@
 // Need for reverse iteration of layer stack on event dispatch - may remove later
 #include <ranges>
 
-
 namespace NGN {
 
 	static Application* s_Application = nullptr;
 
-	Application::Application(const ApplicationSpecification& specification) : m_Specification(specification)
+	Application::Application(const ApplicationSpecification& spec) : m_Specification(spec)
 	{
 		NGN_PROFILE_FUNCTION();
 		NGN_CORE_ASSERT(!s_Application, "Application already exists!");
 		s_Application = this;
 
-		if (m_Specification.WindowSpec.Title.empty())
-			m_Specification.WindowSpec.Title = m_Specification.Name;
+		if (spec.WindowSpec.Title.empty())
+			m_Specification.WindowSpec.Title = spec.Name;
 
-		// Select renderer API from app spec
-		{
-			NGN_PROFILE_SCOPE("RendererAPI Init");
-			RendererAPI::SetAPI(m_Specification.RendererAPI);
-		}
+		m_GraphicsContext = CreateScope<GraphicsContext>();
+		m_GraphicsContext->SetAPI(spec.APIspec);
 
-		{
-			NGN_PROFILE_SCOPE("Window Init");
-			// Window Creation + Graphics Context initialization
-			m_Window = Window::Create(m_Specification.WindowSpec);
-			m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
-		}
+		m_Window = Window::Create(spec.APIspec, spec.WindowSpec);
+		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
 
-		// Initialise renderer (backend + rendercommand)
-		Renderer::Init();
-		// Initialise input system (platform specific)
+		m_GraphicsContext->Init(m_Window->GetNativeWindow());
+		m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());
+
+		m_ResourceManager = CreateScope<RS::ResourceManager>();
 		Input::Init();
-
-		// Call resize event once at startup
-		glm::vec2 size = glm::vec2(m_Window->GetWidth(), m_Window->GetHeight());
-		Renderer::OnWindowResize(
-			static_cast<uint32_t>(size.x),
-			static_cast<uint32_t>(size.y)
-		);
+		// Asset compiling & loading
 
 		m_ImGuiLayer = NGN::CreateRef<ImGuiLayer>();
 		m_ImGuiLayer->OnAttach();
-
-		// Initialize asset manager
-		{
-			NGN_PROFILE_SCOPE("AssetManager Init");
-			m_AssetManager.Init();
-		}
 	}
 
 	Application::~Application()
 	{
 		NGN_PROFILE_FUNCTION();
-
-		m_AssetManager.Shutdown();
-		/*m_Window->Shutdown();*/
+		m_GraphicsContext->Shutdown();
+		// Window::Shutdown() called in window destructor
 		Renderer::Shutdown();
 		Input::Shutdown();
 
@@ -92,28 +72,12 @@ namespace NGN {
 			m_Timestep = currentTime - m_LastFrameTime;
 			m_LastFrameTime = currentTime;
 
-			glm::vec2 framebufferSize = Application::GetFramebufferSize();
+			m_Window->BeginFrame();
+			m_GraphicsContext->BeginFrame(m_LastFrameTime);
 
-			/*========== Rendering =============*/
-			NGN::RenderCommand::SetViewport(0, 0, framebufferSize.x, framebufferSize.y);
-			Renderer::BeginFrame();
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+				layer->OnUpdate(m_Timestep);
 
-			/*========== Updates =============*/
-			{
-				NGN_PROFILE_SCOPE("LayerStack OnUpdate");
-				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-					layer->OnUpdate(m_Timestep);
-			}
-
-			// Check for asset changes (hot-reload shaders, etc.)
-			{
-				NGN_PROFILE_SCOPE("AssetManager OnUpdate");
-				m_AssetManager.OnUpdate();
-			}
-
-			Renderer::Flush();
-
-			/*========== ImGuiRendering =============*/
 			m_ImGuiLayer->Begin();
 			{
 				NGN_PROFILE_SCOPE("LayerStack OnImGuiRender");
@@ -122,8 +86,8 @@ namespace NGN {
 			}
 			m_ImGuiLayer->End();
 
-			Renderer::EndFrame();
-			m_Window->OnUpdate();
+			m_GraphicsContext->EndFrame();
+			m_Window->EndFrame(m_GraphicsContext->GetAPI());
 
 			for (auto& transition : m_PendingTransitions)
 				transition();

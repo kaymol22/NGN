@@ -1,6 +1,6 @@
 #pragma once
 
-enum class RendererAPIType
+enum class API
 {
 	OPENGL,
 	VULKAN,
@@ -34,4 +34,12 @@ enum class PassType : uint8_t
 	UI = 4,
 
 	Count = 5
+};
+
+enum class UploadState : uint8_t {
+	NOT_REQUESTED,
+	QUEUED,
+	UPLOADING,
+	UPLOADED,
+	FAILED
 };

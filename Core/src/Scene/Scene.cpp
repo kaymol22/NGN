@@ -16,7 +16,7 @@ namespace NGN
 	{
 		NGN_CORE_INFO("Scene Created");
 
-		AddSystem<RenderSystem>();
+		/*AddSystem<RenderSystem>();*/
 		/*AddSystem<PlayerControllerSystem>();*/
 	}
 

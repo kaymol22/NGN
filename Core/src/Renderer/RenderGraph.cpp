@@ -1,5 +1,6 @@
 #include "RenderGraph.h"
 #include "Passes/GeometryPass.h"
+#include "Renderer.h"
 
 namespace NGN
 {
@@ -7,7 +8,7 @@ namespace NGN
 
 	void RenderGraph::Build()
 	{
-		const uint32_t width = 1280, height = 720; // TODO: query viewport dimensions from app
+		const uint32_t width = 1280, height = 720; // TODO: query viewport dimensions from app or resolution spec*
 
 		// G-buffer spec creation
 		FramebufferSpecification gBufferSpec;
@@ -20,6 +21,9 @@ namespace NGN
 			FramebufferTextureFormat::RG16F, // Metallic/Roughness/AO
 			FramebufferTextureFormat::Depth
 		};
+
+		// Create and bind at 0 - shared across all passes
+		m_FrameUBO = UniformBuffer::Create(sizeof(FrameUniforms), 0);
 
 		// Register Passes + set targets
 		m_PassManager.AddPass(PassNames::Geometry, GeometryPass::Create());
@@ -49,6 +53,17 @@ namespace NGN
 
 	void RenderGraph::Execute()
 	{
+		// Upload uniforms - all passes read from binding 0
+		/*if (const SceneCamera* cam = Renderer::GetCurrentCamera())
+		{
+			FrameUniforms uniforms;
+			uniforms.viewProjection = cam->GetViewProjectionMatrix();
+			uniforms.view = cam->GetViewMatrix();
+			uniforms.projection = cam->GetProjectionMatrix();
+			uniforms.camPosition = cam->GetPosition();
+			m_FrameUBO->SetData(&uniforms, sizeof(FrameUniforms));
+		}*/
+
 		m_PassManager.ExecuteAll();
 	}
 

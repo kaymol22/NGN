@@ -8,10 +8,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPIType::UNDEFINED:
+			case API::UNDEFINED:
 				NGN_CORE_ASSERT(false, "RendererAPI::None not supported");
 				return nullptr;
-			case RendererAPIType::OPENGL:
+			case API::OPENGL:
 				return CreateRef<OpenGLVertexBuffer>(size);
 		}
 
@@ -23,10 +23,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPIType::UNDEFINED:
+		case API::UNDEFINED:
 			NGN_CORE_ASSERT(false, "RendererAPI::None not supported");
 			return nullptr;
-		case RendererAPIType::OPENGL:
+		case API::OPENGL:
 			return CreateRef<OpenGLIndexBuffer>(indices, count);
 		}
 
@@ -38,10 +38,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPIType::UNDEFINED:
+		case API::UNDEFINED:
 			NGN_CORE_ASSERT(false, "RendererAPI::None not supported");
 			return nullptr;
-		case RendererAPIType::OPENGL:
+		case API::OPENGL:
 			return CreateRef<OpenGLUniformBuffer>(size, binding);
 		}
 

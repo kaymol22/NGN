@@ -1,7 +1,7 @@
 #include "GL_GeometryPass.h"
 #include <glad/gl.h>
 
-#include "Scene/Scenebvh.h"
+#include "Renderer/Resources/Shader.h"
 
 namespace NGN
 {
@@ -11,6 +11,8 @@ namespace NGN
 		m_RasterizerState.blendEnable = GL_FALSE;
 		m_RasterizerState.depthMask = GL_TRUE;
 		m_RasterizerState.cullFaceEnable = GL_TRUE;
+
+		/*m_Shader = Shader::Create("")*/
 	}
 
 	void OpenGLGeometryPass::Render(Ref<Framebuffer> target)
@@ -24,6 +26,9 @@ namespace NGN
 		{
 			NGN_CORE_INFO("Rendering item with mesh index: {0}, object type: {1}", item.meshIndex, item.objectType);
 			// bind mesh, shader, draw using item data
+			if (!item.mesh) continue;
+
+
 		}
 
 		target->Unbind();

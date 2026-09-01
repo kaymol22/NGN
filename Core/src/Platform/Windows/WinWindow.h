@@ -10,10 +10,11 @@ namespace NGN
 	class WinWindow : public Window
 	{
 	public:
-		WinWindow(const WindowSpecification& spec);
+		WinWindow(const API api, const WindowSpecification& spec);
 		virtual ~WinWindow();
 
-		void OnUpdate() override;
+		void BeginFrame() override;
+		void EndFrame(API api) override;
 
 		unsigned int GetWidth() const { return m_Data.Width; }
 		unsigned int GetHeight() const { return m_Data.Height; }
@@ -30,14 +31,15 @@ namespace NGN
 
 	private:
 		GLFWwindow* m_Window;
-		Scope<GraphicsContext> m_Context;
+		/*Scope<GraphicsContext> m_Context;*/
+		API m_API = API::UNDEFINED;
 
 		struct WindowData
 		{
 			std::string Title;
-			uint32_t Width;
-			uint32_t Height;
-			bool VSync;
+			uint32_t Width = 0;
+			uint32_t Height = 0;
+			bool VSync = true;
 
 			EventCallbackFn EventCallback;
 		};

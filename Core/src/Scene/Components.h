@@ -3,7 +3,11 @@
 #include "SceneCamera.h"
 
 #include "Core/UUID.h"
-#include "Renderer/Resources/Texture.h"
+
+#include "ResourceManagement/CPU/ResourceManager.h"
+#include "ResourceManagement/CPU/ResourceHandle.h"
+#include "ResourceManagement/CPU/Types/Texture.h"
+
 #include "Renderer/Resources/SubTexture.h"
 #include "Renderer/Resources/Mesh.h"
 #include "Renderer/Resources/Shader.h"
@@ -53,34 +57,30 @@ namespace NGN
 		}
 	};
 
-	struct SpriteRendererComponent
+	struct SpriteComponent
 	{
-		uint32_t TextureID = 0;
+		friend class Application;
+
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
-		Ref<Texture2D> Texture;
-		Ref<SubTexture2D> SubTexture;
+		RS::ResourceHandle<RS::Texture> Texture;
 		float TilingFactor = 1.0f;
 
-		// Bounding box for culling (in world space)
 		glm::vec3 boundsMin{ -0.5f, -0.5f, 0.0f };
 		glm::vec3 boundsMax{ 0.5f, 0.5f, 0.0f };
 
-		SpriteRendererComponent() = default;
-		SpriteRendererComponent(const SpriteRendererComponent&) = default;
+		SpriteComponent() = default;
+		SpriteComponent(const SpriteComponent&) = default;
 
-		SpriteRendererComponent(const Ref<Texture2D>& texture) : Texture(texture) {}
-		SpriteRendererComponent(const Ref<SubTexture2D>& texture) : SubTexture(texture) {}
-		SpriteRendererComponent(const glm::vec4 color) : Color(color) {}
-		SpriteRendererComponent(const Ref<Texture2D>& texture, const glm::vec4 color) : Texture(texture), Color(color) {}
-		SpriteRendererComponent(const Ref<SubTexture2D>& texture, const glm::vec4 color) : SubTexture(texture), Color(color) {}
+		explicit SpriteComponent(const glm::vec4& color);
+		explicit SpriteComponent(const std::string& id);
 
-		// Update bounding box based on transform and sprite size
-		void UpdateBounds(const TransformComponent& transform, const glm::vec2& spriteSize = glm::vec2(1.0f, 1.0f))
+		void UpdateBounds(const TransformComponent& transform, 
+			const glm::vec2& spriteSize = glm::vec2(1.0f, 1.0f))
 		{
 			glm::vec3 halfSize = glm::vec3(
 				spriteSize.x * transform.Scale.x * 0.5f,
 				spriteSize.y * transform.Scale.y * 0.5f,
-				0.01f  // Small z for 2D sprites
+				0.01f
 			);
 			boundsMin = transform.Translation - halfSize;
 			boundsMax = transform.Translation + halfSize;

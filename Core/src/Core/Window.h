@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Events/Event.h"
+#include "Enums.h"
 
 namespace NGN {
 
@@ -11,6 +12,7 @@ namespace NGN {
 		uint32_t Height;
 		bool IsResizeable = true;
 		bool VSync = true;
+		WindowedMode mode = WindowedMode::WINDOWED;
 
 		WindowSpecification(const std::string& title = "NGN Engine",
 			uint32_t width = 1600,
@@ -29,7 +31,8 @@ namespace NGN {
 
 		virtual ~Window() = default;
 
-		virtual void OnUpdate() = 0;
+		virtual void BeginFrame() = 0;
+		virtual void EndFrame(API api) = 0;
 
 		virtual uint32_t GetWidth() const = 0;
 		virtual uint32_t GetHeight() const = 0;
@@ -42,7 +45,7 @@ namespace NGN {
 		// Platform-specific window handle for graphics context, etc.
 		virtual void* GetNativeWindow() const = 0;
 
-		static Scope<Window> Create(const WindowSpecification& spec = WindowSpecification());
+		static Scope<Window> Create(const API api, const WindowSpecification& spec = WindowSpecification());
 	};
 
 }

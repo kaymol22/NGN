@@ -12,5 +12,6 @@ namespace NGN
 		void Render(Ref<Framebuffer> target) override;
 	private:
 		OpenGLRasterizerState m_RasterizerState;
+
 	};
 }

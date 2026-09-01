@@ -42,3 +42,6 @@
 
 #include "Renderer/Resources/OrthographicCameraController.h"
 #include "Renderer/Resources/PerspCameraController.h"
+
+/* Resources */
+#include "ResourceManagement/CPU/Types/Texture.h"

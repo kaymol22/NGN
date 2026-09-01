@@ -8,10 +8,10 @@ namespace NGN
 	{
 		switch (RendererAPI::GetAPI())
 		{
-			case RendererAPIType::OPENGL: 
+			case API::OPENGL:
 				return CreateScope<OpenGLGeometryPass>();
 
-			case RendererAPIType::UNDEFINED: 
+			case API::UNDEFINED:
 				NGN_CORE_ASSERT(false, "GRAPHICS API UNDEFINED - Cannot create geometry pass"); 
 				return nullptr;
 		}

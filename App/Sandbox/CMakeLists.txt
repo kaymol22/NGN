@@ -3,12 +3,10 @@
 add_executable(Sandbox)
 
 set(SOURCES
-    Source/DebugLayer.h
-    Source/GameLayer.cpp
-    Source/GameLayer.h
-    Source/GameLayer3D.cpp
-    Source/GameLayer3D.h
-    Source/SandboxApp.cpp
+    src/DebugLayer.h
+    src/BackendTestLayer.cpp
+    src/BackendTestLayer.h
+    src/SandboxApp.cpp
 )
 
 target_sources(Sandbox PRIVATE ${SOURCES})

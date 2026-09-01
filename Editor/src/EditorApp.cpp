@@ -21,7 +21,7 @@ namespace NGN
 	{
 		ApplicationSpecification spec;
 		spec.Name = "NGN Editor";
-		spec.RendererAPI = NGN::RendererAPIType::OpenGL;
+		spec.RendererAPI = API::OPENGL;
 		spec.CommandLineArgs = args;
 
 		return new EditorApp(spec);

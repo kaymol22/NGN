@@ -21,11 +21,11 @@ namespace NGN
 
 		virtual void SetLineWidth(float width) = 0;
 
-		static RendererAPIType GetAPI() { return s_API; }
-		static void SetAPI(RendererAPIType api) { s_API = api; }
+		static API GetAPI() { return s_API; }
+		static void SetAPI(API api) { s_API = api; }
 		static Scope<RendererAPI> Create();
 
 	private:
-		static RendererAPIType s_API;
+		static API s_API;
 	};
 }

@@ -5,7 +5,7 @@ struct GLFWwindow;
 
 namespace NGN
 {
-	class OpenGLContext : public GraphicsContext
+	class OpenGLContext : public GraphicsContextOld
 	{
 	public:
 		OpenGLContext(void* windowHandle);

@@ -28,6 +28,7 @@ namespace NGN
 
 		// Camera (scene culling) - set before renderitem submission
 		static void SetCamera(const SceneCamera& camera);
+		static SceneCamera* GetCurrentCamera() { return s_CurrentCamera; }
 
 		// Access render data for culling in systems - could store more useful info here
 		struct SceneRenderData
@@ -44,7 +45,7 @@ namespace NGN
 		static Ref<Framebuffer> GetFramebuffer(std::string_view name);
 
 		static void OnWindowResize(uint32_t width, uint32_t height);
-		static RendererAPIType GetAPI() { return RendererAPI::GetAPI(); }
+		static API GetAPI() { return RendererAPI::GetAPI(); }
 
 		static RenderGraph& GetRenderGraph()
 		{

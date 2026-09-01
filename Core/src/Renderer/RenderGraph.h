@@ -4,6 +4,13 @@
 
 namespace NGN
 {
+	struct alignas(16) FrameUniforms
+	{
+		glm::mat4 viewProjection = glm::mat4(1.0f);
+		glm::mat4 view = glm::mat4(1.0f);
+		glm::mat4 projection = glm::mat4(1.0f);
+		glm::vec4 camPosition = glm::vec4(0.0f);
+	};
 	// Describes Resources - track textures, buffers etc.
 	// Define operations
 	// Manage dependencies
@@ -25,6 +32,7 @@ namespace NGN
 		std::string_view ResolvePassName(const RenderItem& item) const;
 
 		PassManager m_PassManager;
+		Ref<UniformBuffer> m_FrameUBO;
 	};
 
 	namespace PassNames

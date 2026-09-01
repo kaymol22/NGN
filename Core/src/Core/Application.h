@@ -7,8 +7,10 @@
 #include "Timestep.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Backend/RendererAPI.h"
+#include "GraphicsContext.h"
 #include "Scene/SceneManager.h"
 #include "AssetManager.h"
+#include "ResourceManagement/CPU/ResourceManager.h"
 
 #include <glm/glm.hpp>
 
@@ -32,7 +34,8 @@ namespace NGN {
 	{
 		std::string Name = "Application";
 		WindowSpecification WindowSpec;
-		RendererAPIType RendererAPI = RendererAPIType::OPENGL;
+		API APIspec = API::OPENGL;
+		uint32_t maxCompressedTextureResolution = 2048;
 		ApplicationCmdLineArgs CommandLineArgs;
 	};
 
@@ -73,14 +76,17 @@ namespace NGN {
 		glm::vec2 GetFramebufferSize() const;
 
 		Window& GetWindow() { return *m_Window; }
+		ApplicationSpecification& GetSpecification() { return m_Specification; }
 
 		SceneManager& GetSceneManager() { return m_SceneManager; }
 		const SceneManager& GetSceneManager() const { return m_SceneManager; }
 
-		AssetManager& GetAssetManager() { return m_AssetManager; }
-		const AssetManager& GetAssetManager() const { return m_AssetManager; }
+		GraphicsContext& GetGraphicsContext() { return *m_GraphicsContext; }
+		RS::ResourceManager& GetResourceManager() { return *m_ResourceManager; }
 
 		Scene* CreateScene(const std::string& name = "Scene", bool setActive = true);
+
+		bool IsMinimized() { return m_Minimized; }
 
 		static Application& Get();
 
@@ -99,12 +105,13 @@ namespace NGN {
 	private:
 		ApplicationSpecification m_Specification;
 		
+		Scope<GraphicsContext> m_GraphicsContext;
 		Scope<Window> m_Window;
+		Scope<RS::ResourceManager> m_ResourceManager;
 
 		Ref<ImGuiLayer> m_ImGuiLayer;
 
 		SceneManager m_SceneManager;
-		AssetManager m_AssetManager;
 
 		float m_LastFrameTime = 0.0f;
 		Timestep m_Timestep;

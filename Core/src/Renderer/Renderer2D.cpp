@@ -607,13 +607,13 @@ namespace NGN
 		DrawLine(lineVerts[3], lineVerts[0], color, entityID);
 	}
 
-	void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteRendererComponent& src, int entityID)
+	/*void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteComponent& src, int entityID)
 	{
 		if (src.Texture)
 			DrawQuad(transform, src.Texture, src.TilingFactor, src.Color, entityID);
 		else
 			DrawQuad(transform, src.Color, entityID);
-	}
+	}*/
 
 	void Renderer2D::ResetStats()
 	{

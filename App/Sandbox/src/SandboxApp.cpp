@@ -1,8 +1,6 @@
 #include <Core/EntryPoint.h>
 
-#include "GameLayer.h"
-#include "GameLayer3D.h"
-#include "DebugLayer.h"
+#include "BackendTestLayer.h"
 
 class Sandbox : public NGN::Application
 {
@@ -11,9 +9,7 @@ public:
 	Sandbox(const NGN::ApplicationSpecification& spec) : NGN::Application(spec)
 	{
 		NGN_INFO("Creating Sandbox Application");
-		/*PushLayer<GameLayer>();*/
-		PushLayer<DebugLayer>();
-		PushLayer<GameLayer3D>();
+		PushLayer<BackendTestLayer>();
 	}
 
 	~Sandbox()
@@ -25,7 +21,7 @@ NGN::Application* NGN::CreateApplication(NGN::ApplicationCmdLineArgs args)
 {
 	ApplicationSpecification spec;
 	spec.Name = "NGN Sandbox";
-	spec.RendererAPI = RendererAPIType::OPENGL;
+	spec.APIspec = API::OPENGL;
 	spec.WindowSpec.Title = "NGN Sandbox";
 	spec.WindowSpec.Width = 1280;
 	spec.WindowSpec.Height = 720;

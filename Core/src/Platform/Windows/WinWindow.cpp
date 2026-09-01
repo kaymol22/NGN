@@ -18,10 +18,10 @@ namespace NGN
 		NGN_CORE_ERROR("GLFW Error: ({0}): {1}", error, description);
 	}
 
-	WinWindow::WinWindow(const WindowSpecification& spec)
+	WinWindow::WinWindow(const API api, const WindowSpecification& spec)
 	{
 		NGN_PROFILE_FUNCTION();
-
+		m_API = api;
 		Init(spec);
 	}
 
@@ -46,19 +46,17 @@ namespace NGN
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
+		if (m_API == API::VULKAN)
 		{
-			NGN_PROFILE_SCOPE("glfwWindowHint");
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		}
+		else if (m_API == API::OPENGL)
+		{
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			glfwWindowHint(GLFW_RESIZABLE, spec.IsResizeable ? GLFW_TRUE : GLFW_FALSE);
-			glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
-			glfwWindowHint(GLFW_SAMPLES, 4); // 4x MSAA
-			#if defined(NGN_DEBUG)
-				if (Renderer::GetAPI() == RendererAPIType::OPENGL)
-					glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-			#endif
 		}
+		glfwWindowHint(GLFW_RESIZABLE, spec.IsResizeable ? GLFW_TRUE : GLFW_FALSE);
 
 		{
 			NGN_PROFILE_SCOPE("glfwCreateWindow");
@@ -66,11 +64,6 @@ namespace NGN
 			NGN_CORE_ASSERT(m_Window, "Failed to create GLFW window");
 			s_GLFWWindowCount++;
 		}
-
-		// Create Context Object (platform specific)
-		m_Context = GraphicsContext::CreateGraphicsContext(m_Window);
-		NGN_CORE_ASSERT(m_Context, "Failed to create graphics context");
-		m_Context->Init();
 
 		// Apply VSync setting after context is initialized
 		/*SetVSync(m_Data.VSync);*/
@@ -171,9 +164,6 @@ namespace NGN
 	{
 		NGN_PROFILE_FUNCTION();
 
-		// Destroy graphics context before window destruction**
-		m_Context = nullptr;
-
 		glfwDestroyWindow(m_Window);
 		s_GLFWWindowCount--;
 
@@ -183,12 +173,15 @@ namespace NGN
 		}
 	}
 
-	void WinWindow::OnUpdate()
+	void WinWindow::BeginFrame()
 	{
-		NGN_PROFILE_FUNCTION();
-
 		glfwPollEvents();
-		m_Context->SwapBuffers();
+	}
+
+	void WinWindow::EndFrame(API api)
+	{
+		if (api == API::OPENGL)
+			glfwSwapBuffers(m_Window);
 	}
 
 	void WinWindow::SetVSync(bool enabled)

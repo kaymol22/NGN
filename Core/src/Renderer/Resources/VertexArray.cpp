@@ -8,10 +8,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPIType::UNDEFINED:
+			case API::UNDEFINED:
 				NGN_CORE_ASSERT(false, "RendererAPIType::None not supported");
 				return nullptr;
-			case RendererAPIType::OPENGL:
+			case API::OPENGL:
 				return CreateRef<OpenGLVertexArray>();
 		}
 

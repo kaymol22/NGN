@@ -12,10 +12,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPIType::UNDEFINED:
+			case API::UNDEFINED:
 				NGN_CORE_ASSERT(false, "Failed to create graphics shader using RendererAPIType::None");
 				return nullptr;
-			case RendererAPIType::OPENGL:
+			case API::OPENGL:
 				return CreateRef<OpenGLShader>(name, vertexSrc, fragmentSrc);
 		}
 
@@ -27,10 +27,10 @@ namespace NGN
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPIType::UNDEFINED:
+		case API::UNDEFINED:
 			NGN_CORE_ASSERT(false, "Failed to create compute shader using RendererAPIType::None");
 			return nullptr;
-		case RendererAPIType::OPENGL:
+		case API::OPENGL:
 			return CreateRef<OpenGLShader>(filePath);
 		}
 
