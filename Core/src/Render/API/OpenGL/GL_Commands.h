@@ -4,6 +4,7 @@
 
 namespace OpenGL::Commands
 {
+	void Clear();
 	// Shaders
 	void BindShader(const std::string& name);
 	void UnbindShader();
@@ -19,6 +20,9 @@ namespace OpenGL::Commands
 	// SSBO's
 
 	// Textures
+	void BindImageTexture(uint32_t bindingIndex, uint32_t textureHandle, uint32_t access, uint32_t format, bool layered = false);
+	void BindImageTextureArray(uint32_t bindingindex, uint32_t textureHandle, uint32_t access, uint32_t format);
+	void BindTextureUnit(uint32_t bindingIndex, uint32_t textureHandle);
 
 	// Blitting
 }

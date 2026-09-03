@@ -29,11 +29,15 @@ namespace OpenGL
 		glEnable(GL_MULTISAMPLE); // Easy when glfw handles FB - otherwise MSAA FBO setup needed
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_LINE_SMOOTH);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// TODO: Query support in here later
 	}
 
 	void OpenGLBackend::BeginFrame()
 	{
 		NGN_CORE_INFO("OpenGLBackend BeginFrame");
+		UpdateBindlessTextures();
 	}
 
 	void OpenGLBackend::EndFrame()
@@ -48,13 +52,17 @@ namespace OpenGL
 
 	void OpenGLBackend::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 	{
-
+		glViewport(x, y, width, height);
 	}
 
-	void AllocateTextureMemory(RS::Texture& texture)
+	void OpenGLBackend::AllocateTextureMemory(RS::Texture& texture)
 	{
 		uint64_t glId = texture.GetGLId();
-		/*OpenGLTexture& texture = OpenGL::OpenGLResourceManager::GetGLTexture(glId);*/
+		
+		if (glId != 0)
+		{
+			OpenGLTexture& texture = m_ResourceManager.GetTexture(glId);
+		}
 	}
 
 	void OpenGLBackend::UpdateBindlessTextures()

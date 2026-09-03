@@ -1,6 +1,7 @@
 #include <Core/EntryPoint.h>
 
 #include "BackendTestLayer.h"
+#include "DebugLayer.h"
 
 class Sandbox : public NGN::Application
 {
@@ -10,6 +11,7 @@ public:
 	{
 		NGN_INFO("Creating Sandbox Application");
 		PushLayer<BackendTestLayer>();
+		PushLayer<DebugLayer>();
 	}
 
 	~Sandbox()

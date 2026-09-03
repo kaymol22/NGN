@@ -1,7 +1,7 @@
 #pragma once
 #include "Render/RenderBackend.h"
 #include "GL_Commands.h"
-#include "ResourceManagement/CPU/ResourceManager.h"
+#include "GL_ResourceManager.h"
 #include "ResourceManagement/CPU/Types/Texture.h"
 
 #include <glad/gl.h>
@@ -21,9 +21,13 @@ namespace OpenGL
 		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
 
 		void AllocateTextureMemory(RS::Texture& texture);
-
 		void UpdateBindlessTextures();
+
+		OpenGLResourceManager& GetResourceManager() { return m_ResourceManager; }
 	private:
+		OpenGLResourceManager m_ResourceManager;
 		GLFWwindow* m_WindowHandle;
+
+		std::vector<uint64_t> m_BindlessTextureIds;
 	};
 }

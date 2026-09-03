@@ -1,5 +1,6 @@
 #include "GraphicsContext.h"
 #include "Render/API/OpenGL/GL_Backend.h"
+#include "Render/API/OpenGL/GL_Renderer.h"
 
 namespace NGN
 {
@@ -27,6 +28,19 @@ namespace NGN
 	void GraphicsContext::BeginFrame(float lastFrameTime)
 	{
 		m_Backend->BeginFrame();
+	}
+
+	void GraphicsContext::Flush()
+	{
+		if (m_API == API::OPENGL)
+		{
+			OpenGL::Commands::Clear();
+			OpenGL::Renderer::RenderScene();
+		}
+		else {
+			NGN_CORE_INFO("GraphicsContext::Flush - unsupported graphics API, cannot render scene");
+		}
+
 	}
 
 	void GraphicsContext::EndFrame()

@@ -83,7 +83,7 @@ namespace RS
 			if (it == typeIt->second.end()) return;
 
 			it->second.refCount--;
-			if (it.refCount <= 0)
+			if (it->second.refCount <= 0)
 			{
 				it->second.resource->Unload();
 				typeIt->second.erase(it);

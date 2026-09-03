@@ -8,11 +8,9 @@ namespace OpenGL
 	class OpenGLResourceManager
 	{
 	public:
-		uint64_t CreateTexture(RS::Texture& cpuTexture);
+		uint64_t GetOrCreateTexture(RS::Texture& cpuTexture);
 		OpenGLTexture& GetTexture(uint64_t id);
 		OpenGLTexture* GetTexturePtr(uint64_t id);
-
-
 		void ReleaseTexture(uint64_t id);
 		size_t GetAllocatedTextureCount() const;
 

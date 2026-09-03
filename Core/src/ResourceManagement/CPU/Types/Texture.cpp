@@ -29,6 +29,7 @@ namespace RS
 			NGN_CORE_ERROR("Texture: doLoad - failed to load image data for '{}'", m_FileInfo.path);
 			return false;
 		}
+
 		NGN_CORE_INFO("Texture::doLoad() successful for file: {}", m_FileInfo.path);
 		return true;
 	}
@@ -61,10 +62,10 @@ namespace RS
 		ImageFormat format = ImageFormat::UNDEFINED;
 		switch (channels)
 		{
-			case 1: format == ImageFormat::R8_UNORM; break;
-			case 2: format == ImageFormat::RG8_UNORM; break;
-			case 3: format == ImageFormat::RGB8_UNORM; break;
-			case 4: format == ImageFormat::RGBA8_UNORM; break;
+			case 1: format = ImageFormat::R8_UNORM; break;
+			case 2: format = ImageFormat::RG8_UNORM; break;
+			case 3: format = ImageFormat::RGB8_UNORM; break;
+			case 4: format = ImageFormat::RGBA8_UNORM; break;
 			default:
 				NGN_CORE_ERROR("Texture::LoadImageData - unsupported channel count ({}) for '{}'", channels, filePath);
 				stbi_image_free(data);

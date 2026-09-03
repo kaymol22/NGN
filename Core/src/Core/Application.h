@@ -82,6 +82,7 @@ namespace NGN {
 		const SceneManager& GetSceneManager() const { return m_SceneManager; }
 
 		GraphicsContext& GetGraphicsContext() { return *m_GraphicsContext; }
+		API GetAPI() { return m_GraphicsContext->GetAPI(); }
 		RS::ResourceManager& GetResourceManager() { return *m_ResourceManager; }
 
 		Scene* CreateScene(const std::string& name = "Scene", bool setActive = true);

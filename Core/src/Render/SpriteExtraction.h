@@ -5,20 +5,15 @@
 
 namespace NGN
 {
-	struct ExtractedSprite
+	class Scene;
+
+	struct SpriteRenderItem
 	{
-		glm::mat4 transform;
+		glm::mat4 transform{ 1.0f };
 		RS::ResourceHandle<RS::Texture> Texture;
 		glm::vec4 Color;
 		float TilingFactor;
-		glm::vec3 BoundsMin;
-		glm::vec3 BoundMax;
 	};
 
-	struct ExtractedFrame
-	{
-		std::vector<ExtractedSprite> Sprites;
-
-		void Clear() { Sprites.clear(); }
-	};
+	std::vector<SpriteRenderItem> ExtractVisibleSprites(Scene& scene);
 }

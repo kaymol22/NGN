@@ -1,5 +1,6 @@
 #pragma once
-#include "ResourceManager.h"
+
+#include <string>
 
 namespace RS
 {
@@ -10,8 +11,6 @@ namespace RS
 	{
 	public:
 		ResourceHandle() : resourceManager(nullptr) {}
-		// TODO: Implement handle resetting properly
-		~ResourceHandle() = default;
 
 		ResourceHandle(const std::string& id, ResourceManager* manager) :
 			resourceId(id), resourceManager(manager) {
@@ -22,10 +21,33 @@ namespace RS
 			resourceId(other.resourceId), resourceManager(other.resourceManager)
 		{
 			if (resourceManager && !resourceId.empty())
-				resourceManager->AddRef(resourceId);
+				resourceManager->template AddRef<T>(resourceId);
 		}
 
-		/*ResourceHandle& operator=(ResourceHandle&& other) noexcept
+		// Copy assignment - release current ref then share others
+		ResourceHandle& operator=(const ResourceHandle& other)
+		{
+			if (this == &other) return *this;
+			
+			if (other.resourceManager && !other.resourceId.empty())
+				other.resourceManager->template AddRef<T>(other.resourceId);
+
+			Reset();
+
+			resourceId = other.resourceId;
+			resourceManager = other.resourceManager;
+
+			return *this;
+		}
+
+		ResourceHandle(ResourceHandle&& other) noexcept :
+			resourceId(std::move(other.resourceId)), resourceManager(other.resourceManager)
+		{
+			other.resourceManager = nullptr;
+			other.resourceId.clear();
+		}
+
+		ResourceHandle& operator=(ResourceHandle&& other) noexcept
 		{
 			if (this == &other) return *this;
 			Reset();
@@ -37,20 +59,20 @@ namespace RS
 			other.resourceId.clear();
 
 			return *this;
-		}*/
+		}
 
-		/*~ResourceHandle()
+		~ResourceHandle()
 		{
 			Reset();
-		}*/
+		}
 
 		T* Get() const {
 			if (!resourceManager) return nullptr;
-			return resourceManager->GetResource(resourceId);
+			return resourceManager->template GetResource<T>(resourceId);
 		}
 
 		bool IsValid() const {
-			return resourceManager && resourceManager->HasResource(resourceId);
+			return resourceManager && resourceManager->template HasResource<T>(resourceId);
 		}
 
 		const std::string& GetId() const {
@@ -71,14 +93,14 @@ namespace RS
 		}
 	private:
 		// Releases currently held resources ref
-		/*void Reset()
+		void Reset()
 		{
 			if (resourceManager && !resourceId.empty())
-				resourceManager->Release(resourceId);
+				resourceManager->template Release<T>(resourceId);
 
 			resourceManager = nullptr;
 			resourceId.clear();
-		}*/
+		}
 	private:
 		std::string resourceId;
 		ResourceManager* resourceManager;

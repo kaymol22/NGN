@@ -7,12 +7,14 @@ namespace OpenGL
 {
 	struct OpenGLTexture {
 		OpenGLTexture() = default;
-		GLuint& GetHandle();
+		GLuint& GetHandle() { return m_Handle; }
 		GLuint64 GetBindlessId() { return m_BindlessId; }
 		void Create(int width, int height, int internalFormat, int mipmapLevelCount);
 		void ClearR(float value);
 		void UploadData(const float* data);
+		void UploadPixelData(const void* data, size_t dataSize, GLenum sourceType, int mipLevel = 0);
 		void UploadR16FData(const float* data, int width, int height, int xOffset, int yOffset, int mipLevel);
+		void GenerateMipMaps();
 		void Reset();
 		void SetBorderColor(float r, float g, float b, float a);
 		void SetBorderColor(glm::vec4 color);
@@ -27,7 +29,7 @@ namespace OpenGL
 		int GetHeight() { return m_Height; }
 		int GetChannelCount() { return m_ChannelCount; }
 		int GetDataSize() { return m_DataSize; }
-		size_t GetGPUAllocatedByteCount() const;
+		size_t GetAllocatedByteCount() const;
 		void* GetData() { return m_Data; }
 		GLint GetFormat() { return m_Format; }
 		GLint GetInternalFormat() { return m_InternalFormat; }
@@ -36,6 +38,7 @@ namespace OpenGL
 	private:
 		GLuint m_Handle = 0;
 		GLuint64 m_BindlessId = 0;
+		bool m_BindlessResident = false;
 		int m_Width = 0;
 		int m_Height = 0;
 		int m_ChannelCount = 0;

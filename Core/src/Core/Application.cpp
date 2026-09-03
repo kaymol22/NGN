@@ -22,7 +22,7 @@ namespace NGN {
 
 	Application::Application(const ApplicationSpecification& spec) : m_Specification(spec)
 	{
-		NGN_PROFILE_FUNCTION();
+		NGN_PROFILE_SCOPE("App Init");
 		NGN_CORE_ASSERT(!s_Application, "Application already exists!");
 		s_Application = this;
 
@@ -77,6 +77,8 @@ namespace NGN {
 
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(m_Timestep);
+
+			m_GraphicsContext->Flush();
 
 			m_ImGuiLayer->Begin();
 			{
@@ -133,7 +135,8 @@ namespace NGN {
 		}
 
 		m_Minimized = false;
-		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+		/*Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());*/
+		m_GraphicsContext->OnWindowResize(e.GetWidth(), e.GetHeight());
 
 		e.Handled = true;
 		return false;

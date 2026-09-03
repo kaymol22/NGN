@@ -11,7 +11,6 @@ namespace NGN
 
 	SpriteComponent::SpriteComponent(const std::string& id)
 	{
-		// TODO load texture from ID - using default for now
-		Texture = NGN::Application::Get().GetResourceManager().GetDefaultTexture();
+		Texture = NGN::Application::Get().GetResourceManager().Load<RS::Texture>(id);
 	}
 }

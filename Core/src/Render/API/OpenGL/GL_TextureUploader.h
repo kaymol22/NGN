@@ -7,5 +7,5 @@
 namespace OpenGL::TextureUploader
 {
 	bool ValidateTexture(RS::Texture& texture);
-	OpenGLTexture& CreatGPUTexture(RS::Texture& texture);
+	bool UploadToGPUTexture(RS::Texture& texture, OpenGLTexture& gpuTexture);
 }

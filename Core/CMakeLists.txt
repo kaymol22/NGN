@@ -61,6 +61,8 @@ src/Math/Math.cpp
 
 src/Render/RenderBackend.h
 src/Render/TextureTypes.h
+src/Render/Frustum.h
+src/Render/Frustum.cpp
 
 src/Render/API/OpenGL/GL_Backend.cpp
 src/Render/API/OpenGL/GL_Backend.h
@@ -111,8 +113,7 @@ src/Renderer/Resources/Font.cpp
 src/Renderer/Resources/Font.h
 src/Renderer/Resources/Framebuffer.cpp
 src/Renderer/Resources/Framebuffer.h
-src/Renderer/Resources/Frustum.cpp
-src/Renderer/Resources/Frustum.h
+
 src/Renderer/Resources/Material.h
 src/Renderer/Resources/Mesh.cpp
 src/Renderer/Resources/Mesh.h
@@ -189,7 +190,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/ResourceManagement/CPU/ResourceId.h" "src/File/FileInfo.h" "src/File/File.h" "src/File/File.cpp" "src/Core/String.h" "src/Scene/Systems/SpriteRenderSystem.h" "src/Render/BVH/Types.h" "src/Render/BVH/BVH.h" "src/Render/BVH/Types/SceneBvh.h" "src/Scene/Systems/SpriteRenderSystem.cpp" "src/Render/ExtractedFrame.h" "src/Render/API/OpenGL/Types/GL_Texture_Array.h" "src/Render/Frustum.cpp" "src/Render/Frustum.h" "src/Scene/Components.cpp")
+target_sources(Core PRIVATE ${SOURCES} "src/ResourceManagement/CPU/ResourceId.h" "src/File/FileInfo.h" "src/File/File.h" "src/File/File.cpp" "src/Core/String.h"  "src/Render/BVH/Types.h" "src/Render/BVH/BVH.h" "src/Render/BVH/Types/SceneBvh.h"  "src/Render/SpriteExtraction.h" "src/Render/API/OpenGL/Types/GL_Texture_Array.h"   "src/Scene/Components.cpp" "src/Render/Camera.h" "src/Render/SpriteExtraction.cpp" "src/Render/API/OpenGL/GL_Renderer.cpp" "src/Render/Renderer.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

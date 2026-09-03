@@ -2,7 +2,7 @@
 
 #include "Core/Layer.h"
 #include "Core/Log.h"
-//#include "Core/Application.h"
+#include "Core/Application.h"
 #include "Debug/ChromeProfiling.h"
 
 #include <imgui.h>
@@ -22,15 +22,15 @@ public:
 		ImGui::Text("FPS: %.1f", timeStep > 0.0f ? 1.0f / timeStep : 0.0f);
 
 		ImGui::Separator();
-		const auto& stats = NGN::Renderer2D::GetStats();
+		/*const auto& stats = NGN::Renderer2D::GetStats();*/
 
-		ImGui::Text("Renderer2D");
+		/*ImGui::Text("Renderer2D");
 		ImGui::Indent();
 		ImGui::Text("Draw Calls: %u", stats.DrawCalls);
 		ImGui::Text("Quads: %u", stats.QuadCount);
 		ImGui::Text("Vertices: %u", stats.GetTotalVertexCount());
 		ImGui::Text("Indeces: %u", stats.GetTotalIndexCount());
-		ImGui::Unindent();
+		ImGui::Unindent();*/
 
 		bool vsync = NGN::Application::Get().GetWindow().IsVSync();
 		if (ImGui::Checkbox("VSync", &vsync))

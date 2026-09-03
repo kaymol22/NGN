@@ -9,7 +9,7 @@
 #include "Resources/SubTexture.h"
 #include "Resources/Mesh.h"
 #include "Resources/Camera.h"
-#include "Resources/Frustum.h"
+#include "Render/Frustum.h"
 
 namespace NGN
 {

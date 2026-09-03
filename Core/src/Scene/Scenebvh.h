@@ -1,7 +1,7 @@
 #pragma once 
 
 #include "Core/Types.h"
-#include "Renderer/Resources/Frustum.h"
+#include "Render/Frustum.h"
 
 #include <entt.hpp>
 
