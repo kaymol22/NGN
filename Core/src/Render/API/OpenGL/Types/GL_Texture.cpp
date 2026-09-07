@@ -163,7 +163,7 @@ namespace OpenGL
 			m_BindlessId = glGetTextureHandleARB(m_Handle);
 		}
 
-		glMakeTextureHandleResidentARB(m_BindlessId);
+		glMakeTextureHandleResidentARB(m_BindlessId); // Upload to GPU memory
 		m_BindlessResident = true;
 	}
 

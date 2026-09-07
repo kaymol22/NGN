@@ -18,6 +18,10 @@ namespace OpenGL::Commands
 	void SetMat4(const std::string& name, const glm::mat4& value);
 
 	// SSBO's
+	void BindSSBO(uint32_t bindingIndex, const std::string& ssboName);
+	void BindSSBO(uint32_t bindingIndex, uint32_t ssboHandle);
+	void ClearSSBO(const std::string& name);
+
 
 	// Textures
 	void BindImageTexture(uint32_t bindingIndex, uint32_t textureHandle, uint32_t access, uint32_t format, bool layered = false);

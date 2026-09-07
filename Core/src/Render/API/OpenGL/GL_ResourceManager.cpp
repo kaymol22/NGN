@@ -55,4 +55,9 @@ namespace OpenGL
 	{
 		return m_Textures.size();
 	}
+
+	/*OpenGLSSBO& OpenGLResourceManager::CreateSSBO(const std::string& name)
+	{
+		
+	}*/
 }

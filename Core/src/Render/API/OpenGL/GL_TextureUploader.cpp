@@ -89,5 +89,6 @@ namespace OpenGL::TextureUploader
 		}
 
 		texture.SetUploadState(UploadState::UPLOADED);
+		return true;
 	}
 }

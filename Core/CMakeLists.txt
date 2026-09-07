@@ -56,6 +56,10 @@ src/Input/InputMapper.cpp
 src/Input/InputMapper.h
 src/Input/InputState.h
 
+src/File/FileInfo.h
+src/File/File.h
+src/File/File.cpp
+
 src/Math/Math.h
 src/Math/Math.cpp
 
@@ -63,6 +67,10 @@ src/Render/RenderBackend.h
 src/Render/TextureTypes.h
 src/Render/Frustum.h
 src/Render/Frustum.cpp
+src/Render/Camera.h
+src/Render/SpriteExtraction.cpp
+src/Render/Renderer.cpp
+src/Render/SpriteExtraction.h
 
 src/Render/API/OpenGL/GL_Backend.cpp
 src/Render/API/OpenGL/GL_Backend.h
@@ -71,21 +79,26 @@ src/Render/API/OpenGL/GL_Commands.h
 src/Render/API/OpenGL/GL_ResourceManager.h
 src/Render/API/OpenGL/GL_ResourceManager.cpp
 src/Render/API/OpenGL/GL_Renderer.h
+src/Render/API/OpenGL/Types/GL_ssbo.h
+src/Render/API/OpenGL/Types/GL_ssbo.cpp
+src/Render/API/OpenGL/Types/GL_Shader.h
+src/Render/API/OpenGL/Types/GL_Shader.cpp
+src/Render/API/OpenGL/Types/GL_Framebuffer.h
+src/Render/API/OpenGL/Types/GL_Attachments.h
 src/Render/API/OpenGL/GL_Utils.cpp 
 src/Render/API/OpenGL/GL_Utils.h
-
-
- 
-
-
-
+src/Render/API/OpenGL/GL_Renderer.cpp
 src/Render/API/OpenGL/Types/GL_Texture.cpp
 src/Render/API/OpenGL/Types/GL_Texture.h
 src/Render/API/OpenGL/GL_TextureUploader.cpp
 src/Render/API/OpenGL/GL_TextureUploader.h
+src/Render/API/OpenGL/Types/GL_Texture_Array.h
 
+src/Render/BVH/Types.h
+src/Render/BVH/BVH.h
+src/Render/BVH/Types/SceneBvh.h
 
-
+### =============================== LEGACY =============================== ###
 src/Renderer/Renderer2D.cpp
 src/Renderer/Renderer2D.h
 src/Renderer/Renderer.cpp
@@ -133,6 +146,7 @@ src/Renderer/Resources/Texture.cpp
 src/Renderer/Resources/Texture.h
 src/Renderer/Resources/VertexArray.cpp
 src/Renderer/Resources/VertexArray.h
+### =============================== LEGACY END =============================== ###
 
 src/ResourceManagement/CPU/Types/Resource.h
 src/ResourceManagement/CPU/Types/Texture.cpp
@@ -140,7 +154,9 @@ src/ResourceManagement/CPU/Types/Texture.h
 src/ResourceManagement/CPU/ResourceHandle.h
 src/ResourceManagement/CPU/ResourceManager.cpp
 src/ResourceManagement/CPU/ResourceManager.h
+src/ResourceManagement/CPU/ResourceId.h
 
+src/Scene/Components.cpp
 src/Scene/Components.h
 src/Scene/Entity.cpp
 src/Scene/Entity.h
@@ -159,6 +175,7 @@ src/Scene/Systems/PlayerControllerSystem.h
 src/Scene/Systems/RenderSystem.cpp
 src/Scene/Systems/RenderSystem.h
 
+### =============================== LEGACY =============================== ###
 src/Platform/OpenGL/Resources/GL_Buffer.cpp
 src/Platform/OpenGL/Resources/GL_Buffer.h
 src/Platform/OpenGL/GL_Context.cpp
@@ -179,6 +196,8 @@ src/Platform/OpenGL/GL_Utils.h
 src/Platform/OpenGL/GL_Utils.cpp
 src/Platform/OpenGL/Passes/GL_GeometryPass.cpp
 src/Platform/OpenGL/Passes/GL_GeometryPass.h
+### =============================== LEGACY END =============================== ###
+
 src/Platform/Windows/WindowsInput.cpp
 src/Platform/Windows/WindowsInput.h
 src/Platform/Windows/WindowsPlatformUtils.cpp
@@ -190,7 +209,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/ResourceManagement/CPU/ResourceId.h" "src/File/FileInfo.h" "src/File/File.h" "src/File/File.cpp" "src/Core/String.h"  "src/Render/BVH/Types.h" "src/Render/BVH/BVH.h" "src/Render/BVH/Types/SceneBvh.h"  "src/Render/SpriteExtraction.h" "src/Render/API/OpenGL/Types/GL_Texture_Array.h"   "src/Scene/Components.cpp" "src/Render/Camera.h" "src/Render/SpriteExtraction.cpp" "src/Render/API/OpenGL/GL_Renderer.cpp" "src/Render/Renderer.cpp")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)
