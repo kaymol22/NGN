@@ -7,7 +7,6 @@
 #include "Input/Input.h"
 
 #include "Application.h"
-#include "Renderer/Backend/RenderCommand.h"
 #include "Renderer/Renderer.h"
 #include "Utils/PlatformUtils.h"
 
@@ -49,6 +48,16 @@ namespace NGN {
 	Application::~Application()
 	{
 		NGN_PROFILE_FUNCTION();
+		for (auto& layer : m_LayerStack) {
+			layer->OnDetach();
+		}
+		m_LayerStack.clear();
+		m_ImGuiLayer->OnDetach();
+		m_ImGuiLayer = nullptr;
+
+		m_SceneManager.Shutdown();
+		m_ResourceManager->UnloadAll();
+		m_ResourceManager = nullptr;
 		m_GraphicsContext->Shutdown();
 		// Window::Shutdown() called in window destructor
 		Renderer::Shutdown();

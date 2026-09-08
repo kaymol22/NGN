@@ -54,4 +54,10 @@ namespace NGN
 	{
 		return m_Scenes.find(name) != m_Scenes.end();
 	}
+
+	void SceneManager::Shutdown()
+	{
+		m_ActiveScene = nullptr;
+		m_Scenes.clear();
+	}
 }

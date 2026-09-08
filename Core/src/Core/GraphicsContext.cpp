@@ -66,6 +66,13 @@ namespace NGN
 		// Destroy backend object
 		// Shutdown and clear out backend specific resource manager
 		NGN_CORE_INFO("Cleaning up graphics context");
+		if (m_API == API::OPENGL)
+		{
+			m_Backend->Shutdown();
+			OpenGL::ResourceManager::CleanUp();
+			OpenGL::Renderer::Shutdown();
+		}
+
 	}
 
 	void GraphicsContext::SwitchAPI(API newAPI)

@@ -7,7 +7,7 @@ namespace NGN
 	{
 	public:
 		SceneManager() = default;
-		~SceneManager() = default;
+		void Shutdown();
 
 		void RegisterScene(const std::string& name, Scope<Scene> scene);
 

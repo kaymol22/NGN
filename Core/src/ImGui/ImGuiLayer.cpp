@@ -94,7 +94,7 @@ namespace NGN
 		auto& colors = ImGui::GetStyle().Colors;
 
 		// Backgrounds
-		colors[ImGuiCol_WindowBg] = ImVec4{ 0.08f, 0.08f, 0.10f, 1.0f };
+		colors[ImGuiCol_WindowBg] = ImVec4{ 0.08f, 0.08f, 0.10f, 0.0f };
 		colors[ImGuiCol_ChildBg] = ImVec4{ 0.09f, 0.09f, 0.12f, 1.0f };
 		colors[ImGuiCol_PopupBg] = ImVec4{ 0.08f, 0.08f, 0.10f, 0.95f };
 
