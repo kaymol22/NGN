@@ -15,7 +15,7 @@ namespace OpenGL
 		GLenum minFilter = GL_LINEAR;
 		GLenum magFilter = GL_LINEAR;
 		GLenum wrapFilter = GL_CLAMP_TO_EDGE;
-		bool allocatedMips = false;
+		bool allocateMips = false;
 	};
 
 	struct DepthAttachment {

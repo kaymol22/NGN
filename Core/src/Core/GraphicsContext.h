@@ -16,7 +16,7 @@ namespace NGN
 		
 		// Create backend - GL Context / Vulkan device
 		// Build rendergraph, configure resource limits
-		void Init(void* nativeWindowHandle);
+		void Init(void* nativeWindowHandle, int width, int height);
 		void Shutdown();
 		
 		// TODO: Runtime swap of Graphics API's
@@ -32,11 +32,9 @@ namespace NGN
 		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 
 		RenderBackend& GetBackend() { return *m_Backend; }
-		RenderGraph& GetRenderGraph() { return *m_RenderGraph; }
 
 	private:
 		Scope<RenderBackend> m_Backend;
-		Scope<RenderGraph> m_RenderGraph;
 		API m_API = API::UNDEFINED;
 		uint32_t maxCompressedTextureResolution = 0;
 	};

@@ -2,23 +2,6 @@
 
 namespace RS
 {
-	/* Resource Types 
-		CUBEMAP_FRAME_BUFFER,
-		CUBEMAP_VIEW,
-		FRAME_BUFFER,
-		GENERIC_MESH,
-		MESH_BUFFER,
-		SHADER,
-		SHADOW_CUBE_MAP_ARRAY,
-		SHADOW_MAP,
-		SHADOW_MAP_ARRAY,
-		SSBO,
-		TEXTURE,
-		TEXTURE_3D,
-		TEXTURE_ARRAY,
-	VK-Specific:
-		ACCELERATION_STRUCTURE
-	*/
 	class Resource
 	{
 	public:

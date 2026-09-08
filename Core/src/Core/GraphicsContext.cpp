@@ -1,14 +1,20 @@
 #include "GraphicsContext.h"
 #include "Render/API/OpenGL/GL_Backend.h"
+#include "Render/API/OpenGL/GL_ResourceManager.h"
 #include "Render/API/OpenGL/GL_Renderer.h"
 
 namespace NGN
 {
-	void GraphicsContext::Init(void* nativeWindowHandle)
+	class Application;
+
+	void GraphicsContext::Init(void* nativeWindowHandle, int width, int height)
 	{
 		if (m_API == API::OPENGL)
 		{
 			m_Backend = CreateScope<OpenGL::OpenGLBackend>();
+			m_Backend->Init(nativeWindowHandle);
+			OpenGL::ResourceManager::Init();
+			OpenGL::Renderer::Init(width, height);
 		}
 		else if (m_API == API::VULKAN)
 		{
@@ -20,9 +26,6 @@ namespace NGN
 			NGN_CORE_INFO("API Undefined - could not initialize graphics backend");
 			return;
 		}
-		m_Backend->Init(nativeWindowHandle);
-		m_RenderGraph = CreateScope<RenderGraph>();
-		m_RenderGraph->Build(); // Default pass registration
 	}
 
 	void GraphicsContext::BeginFrame(float lastFrameTime)

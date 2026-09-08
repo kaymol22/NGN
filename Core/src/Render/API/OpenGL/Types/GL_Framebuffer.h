@@ -18,9 +18,9 @@ namespace OpenGL
 		void Create(const std::string& name, const glm::ivec2 resolution, uint32_t sampleCount = 1);
 		void CleanUp();
 		void CreateAttachment(const std::string& name, GLenum internalFormat, GLenum minFilter = GL_LINEAR,
-			GLenum magFilter = GL_LINEAR, GLenum wrapMode = GL_CLAMP_TO_EDGE, bool allocateMips = false);
-		void CreateAttachment(GLenum internalFormat, GLenum minFilter = GL_LINEAR,
-			GLenum magFilter = GL_LINEAR, GLenum wrapMode = GL_CLAMP_TO_EDGE, glm::vec4 borderColor = glm::vec4(1.0f));
+			GLenum magFilter = GL_LINEAR, GLenum wrapFilter = GL_CLAMP_TO_EDGE, bool allocateMips = false);
+		void CreateDepthAttachment(GLenum internalFormat, GLenum minFilter = GL_LINEAR,
+			GLenum magFilter = GL_LINEAR, GLenum wrapFilter = GL_CLAMP_TO_EDGE, glm::vec4 borderColor = glm::vec4(1.0f));
 		void BindDepthAttachmentFrom(const OpenGLFrameBuffer& srcFrameBuffer);
 		void Bind();
 		void SetViewport();
@@ -51,7 +51,7 @@ namespace OpenGL
 		size_t GetGPUAllocatedByteCount();
 
 	private:
-		std::string name = "Undefined";
+		std::string m_Name = "Undefined";
 		GLuint m_Handle = 0;
 		GLuint m_Width = 0;
 		GLuint m_Height = 0;

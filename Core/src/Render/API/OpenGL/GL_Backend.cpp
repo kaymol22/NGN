@@ -29,7 +29,6 @@ namespace OpenGL
 		glEnable(GL_MULTISAMPLE); // Easy when glfw handles FB - otherwise MSAA FBO setup needed
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_LINE_SMOOTH);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		// TODO: Query support in here later
 	}
@@ -59,10 +58,6 @@ namespace OpenGL
 	{
 		uint64_t glId = texture.GetGLId();
 		
-		if (glId != 0)
-		{
-			OpenGLTexture& texture = m_ResourceManager.GetTexture(glId);
-		}
 	}
 
 	void OpenGLBackend::UpdateBindlessTextures()

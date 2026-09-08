@@ -29,8 +29,7 @@ namespace OpenGL
 	struct OpenGLShader
 	{
 		OpenGLShader() = default;
-		OpenGLShader(std::vector<std::string> shaderPaths, const std::string subDirectory, std::vector<std::string>& defines);
-		~OpenGLShader();
+		OpenGLShader(std::vector<std::string> shaderPaths, const std::string subDirectory, const std::vector<std::string>& defines);
 		bool Load(std::vector<std::string> shaderPaths);
 		bool HotLoad();
 

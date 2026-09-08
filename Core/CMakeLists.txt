@@ -83,7 +83,8 @@ src/Render/API/OpenGL/Types/GL_ssbo.h
 src/Render/API/OpenGL/Types/GL_ssbo.cpp
 src/Render/API/OpenGL/Types/GL_Shader.h
 src/Render/API/OpenGL/Types/GL_Shader.cpp
-src/Render/API/OpenGL/Types/GL_Framebuffer.h
+src/Render/API/OpenGL/Types/GL_FrameBuffer.cpp
+src/Render/API/OpenGL/Types/GL_FrameBuffer.h
 src/Render/API/OpenGL/Types/GL_Attachments.h
 src/Render/API/OpenGL/GL_Utils.cpp 
 src/Render/API/OpenGL/GL_Utils.h
@@ -93,6 +94,10 @@ src/Render/API/OpenGL/Types/GL_Texture.h
 src/Render/API/OpenGL/GL_TextureUploader.cpp
 src/Render/API/OpenGL/GL_TextureUploader.h
 src/Render/API/OpenGL/Types/GL_Texture_Array.h
+
+src/Render/API/OpenGL/Create/GL_Create_FrameBuffers.cpp
+src/Render/API/OpenGL/Create/GL_Create_Shaders.cpp
+src/Render/API/OpenGL/Create/GL_Create_SSBOs.cpp
 
 src/Render/BVH/Types.h
 src/Render/BVH/BVH.h

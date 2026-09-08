@@ -6,4 +6,5 @@ namespace NGN::Renderer
 	void InitMain();
 	void CleanUp();
 	void RenderScene();
+	void ClearTargets();
 }

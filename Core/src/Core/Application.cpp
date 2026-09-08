@@ -35,8 +35,8 @@ namespace NGN {
 		m_Window = Window::Create(spec.APIspec, spec.WindowSpec);
 		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
 
-		m_GraphicsContext->Init(m_Window->GetNativeWindow());
-		m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());
+		m_GraphicsContext->Init(m_Window->GetNativeWindow(), m_Window->GetWidth(), m_Window->GetHeight());
+		/*m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());*/
 
 		m_ResourceManager = CreateScope<RS::ResourceManager>();
 		Input::Init();

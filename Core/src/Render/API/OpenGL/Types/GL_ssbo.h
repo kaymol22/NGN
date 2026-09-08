@@ -16,7 +16,7 @@ namespace OpenGL
 		void UpdateRange(size_t offset, size_t size, const void* data);
 		void UploadStatic(size_t size, const void* data);
 		void Bind(uint32_t index) const;
-		void Cleanup();
+		void CleanUp();
 		void CopyFrom(const void* hostPtr, size_t sizeInBytes) const;
 		void Clear() const;
 		void ClearRange(size_t offset, size_t size) const;

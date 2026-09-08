@@ -20,7 +20,7 @@ std::string GetShaderCompileErrors(uint32_t shader, const std::string& filename,
 
 namespace OpenGL
 {
-	OpenGLShader::OpenGLShader(std::vector<std::string> shaderPaths, const std::string subDirectory, std::vector<std::string>& defines)
+	OpenGLShader::OpenGLShader(std::vector<std::string> shaderPaths, const std::string subDirectory, const std::vector<std::string>& defines)
 	{
 		m_Defines = defines;
 		m_ShaderPaths = shaderPaths;
@@ -143,7 +143,7 @@ namespace OpenGL
 		std::vector<std::string> lineMap;
 		std::string parsedShaderSource = "";
 
-		ParseFile("res/shaders/OpenGL" + fileName, parsedShaderSource, lineMap, context, "res/shaders/OpenGL" + fileName);
+		ParseFile("res/shaders/OpenGL/" + fileName, parsedShaderSource, lineMap, context, "res/shaders/OpenGL/" + fileName);
 		InsertDefines(parsedShaderSource, defines);
 
 		// Get type based on ext

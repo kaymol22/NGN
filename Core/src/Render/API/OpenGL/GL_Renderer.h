@@ -2,6 +2,8 @@
 
 namespace OpenGL::Renderer
 {
-	void Init();
+	void Init(int width, int height);
 	void RenderScene();
+	void Shutdown();
+	void OnWindowResize();
 }

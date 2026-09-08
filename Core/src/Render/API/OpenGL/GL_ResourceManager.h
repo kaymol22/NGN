@@ -1,31 +1,69 @@
 #pragma once
 #include "Types/GL_Texture.h"
 #include "Types/GL_ssbo.h"
+#include "Types/GL_FrameBuffer.h"
+#include "Types/GL_Shader.h"
+
 #include "Containers/SlotMap.h"
-#include "ResourceManagement/CPU/Types/Texture.h"
 
-namespace OpenGL
+/* Resource Types
+		CUBEMAP_FRAME_BUFFER,
+		CUBEMAP_VIEW,
+		FRAME_BUFFER,
+		GENERIC_MESH,
+		MESH_BUFFER,
+		SHADER,
+		SHADOW_CUBE_MAP_ARRAY,
+		SHADOW_MAP,
+		SHADOW_MAP_ARRAY,
+		SSBO,
+		TEXTURE,
+		TEXTURE_3D,
+		TEXTURE_ARRAY,
+	VK-Specific:
+		ACCELERATION_STRUCTURE
+	*/
+namespace OpenGL::ResourceManager
 {
-	class OpenGLResourceManager
+	enum class ResourceType : uint16_t
 	{
-	public:
-		uint64_t GetOrCreateTexture(RS::Texture& cpuTexture);
-		OpenGLTexture& GetTexture(uint64_t id);
-		OpenGLTexture* GetTexturePtr(uint64_t id);
-		void ReleaseTexture(uint64_t id);
-		size_t GetAllocatedTextureCount() const;
-
-		/*OpenGLSSBO& CreateSSBO(const std::string& name);
-		OpenGLSSBO& GetSSBO(const std::string& name);
-		OpenGLSSBO* GetSSBOPtr(const std::string& name);
-		OpenGLSSBO* GetSSBOPtrById(uint64_t id);
-		void RemoveSSBOByName(const std::string& name);
-		void RemoveSSBO(uint64_t id);*/
-
-	private:
-		NGN::SlotMap<OpenGLTexture> m_Textures;
-		NGN::SlotMap<OpenGLTexture> m_SSBOs;
-		std::unordered_map<uint64_t, uint64_t> m_LastUsedFrame;
-		uint64_t m_CurrentFrame;
+		Shader = 0,
+		FrameBuffer = 1,
+		Texture = 2, 
+		SSBO = 3
 	};
+	void Init();
+	void CleanUp();
+
+	uint64_t CreateShader(const std::string& name);
+	OpenGLShader& LoadShader(const std::string& name, const std::vector<std::string>& paths, const std::vector<std::string>& defines = std::vector<std::string>());
+	OpenGLShader& LoadShader(const std::string& subDir, const std::string& name, const std::vector<std::string>& paths, const std::vector<std::string>& defines = std::vector<std::string>());
+	OpenGLShader& GetShader(const std::string& name);
+	OpenGLShader* GetShaderPtr(const std::string& name);
+	OpenGLShader& GetShaderById(uint64_t id);
+	OpenGLShader* GetShaderPtrById(uint64_t id);
+	void HotloadShaders();
+	void RemoveShader(uint64_t id);
+
+	OpenGLFrameBuffer& CreateFrameBuffer(const std::string& name);
+	OpenGLFrameBuffer& GetFrameBuffer(const std::string& name);
+	OpenGLFrameBuffer* GetFrameBufferPtr(const std::string& name);
+	OpenGLFrameBuffer& GetFrameBufferById(uint64_t id);
+	OpenGLFrameBuffer* GetFrameBufferPtrById(uint64_t id);
+	void RemoveFrameBuffer(uint64_t id);
+
+	OpenGLSSBO& CreateSSBO(const std::string& name);
+	OpenGLSSBO& GetSSBO(const std::string& name);
+	OpenGLSSBO* GetSSBOPtr(const std::string& name);
+	OpenGLSSBO& GetSSBOById(uint64_t id);
+	OpenGLSSBO* GetSSBOPtrById(uint64_t id);
+	void RemoveSSBO(uint64_t id);
+	void RemoveSSBOByName(const std::string& name);
+
+	uint64_t CreateTexture();
+	OpenGLTexture& GetTexture(uint64_t id);
+	OpenGLTexture* GetTexturePtr(uint64_t id);
+	void RemoveTexture(uint64_t id);
+
+	/*std::string GetResourceInfo();*/
 }

@@ -10,7 +10,7 @@ namespace OpenGL
 
 	void OpenGLSSBO::Create(size_t size, GLbitfield flags)
 	{
-		Cleanup();
+		CleanUp();
 		m_Flags = flags;
 		Reserve(size);
 	}
@@ -20,7 +20,7 @@ namespace OpenGL
 		if (m_Handle != 0 && m_Size >= size) {
 			return; // Already allocated enough space
 		}
-		Cleanup();
+		CleanUp();
 		glCreateBuffers(1, &m_Handle);
 		glNamedBufferStorage(m_Handle, (GLsizeiptr)size, nullptr, m_Flags);
 		m_Size = size;
@@ -50,7 +50,7 @@ namespace OpenGL
 	{
 		if (size == 0 || !data) return;
 
-		Cleanup();
+		CleanUp();
 		glCreateBuffers(1, &m_Handle);
 		glNamedBufferStorage(m_Handle, (GLsizeiptr)size, data, 0);
 
@@ -63,7 +63,7 @@ namespace OpenGL
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_Handle);
 	}
 
-	void OpenGLSSBO::Cleanup()
+	void OpenGLSSBO::CleanUp()
 	{
 		if (m_Handle != 0) {
 			glDeleteBuffers(1, &m_Handle);

@@ -23,9 +23,7 @@ namespace OpenGL
 		void AllocateTextureMemory(RS::Texture& texture);
 		void UpdateBindlessTextures();
 
-		OpenGLResourceManager& GetResourceManager() { return m_ResourceManager; }
 	private:
-		OpenGLResourceManager m_ResourceManager;
 		GLFWwindow* m_WindowHandle;
 
 		std::vector<uint64_t> m_BindlessTextureIds;

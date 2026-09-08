@@ -6,6 +6,7 @@
 #include "Render/API/OpenGL/GL_ResourceManager.h"
 
 #include <stb_image.h>
+#include <string>
 
 namespace RS
 {
@@ -31,6 +32,13 @@ namespace RS
 		}
 
 		NGN_CORE_INFO("Texture::doLoad() successful for file: {}", m_FileInfo.path);
+
+		if (NGN::Application::Get().GetAPI() == API::OPENGL) {
+			uint64_t id = OpenGL::ResourceManager::CreateTexture();
+			SetGLId(id);
+			std::cout << "RS::Texture GLId set to: " << id << "\n";
+		}
+
 		return true;
 	}
 
@@ -42,7 +50,9 @@ namespace RS
 		m_ImageDataType = ImageDataType::UNDEFINED;
 		m_UploadState = UploadState::NOT_REQUESTED;
 
-		// TODO: Unload GPU side resources through backend RM
+		if (NGN::Application::Get().GetAPI() == API::OPENGL) {
+			OpenGL::ResourceManager::RemoveTexture(m_OpenGLId);
+		}
 
 		return true;
 	}
