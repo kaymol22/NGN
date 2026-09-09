@@ -6,10 +6,8 @@
 #include "Events/Event.h"
 #include "Timestep.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Renderer/Backend/RendererAPI.h"
 #include "GraphicsContext.h"
 #include "Scene/SceneManager.h"
-#include "AssetManager.h"
 #include "ResourceManagement/CPU/ResourceManager.h"
 
 #include <glm/glm.hpp>

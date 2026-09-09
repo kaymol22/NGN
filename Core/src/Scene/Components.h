@@ -7,10 +7,7 @@
 #include "ResourceManagement/CPU/ResourceManager.h"
 #include "ResourceManagement/CPU/ResourceHandle.h"
 #include "ResourceManagement/CPU/Types/Texture.h"
-
-#include "Renderer/Resources/SubTexture.h"
-#include "Renderer/Resources/Mesh.h"
-#include "Renderer/Resources/Shader.h"
+#include "ResourceManagement/CPU/Types/GenericMesh.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -120,8 +117,7 @@ namespace NGN
 	// TODO: REMOVE SHADER REF NO LONGER NEEDED
 	struct MeshComponent
 	{
-		Ref<NGN::Mesh> MeshRef;
-		Ref<Shader> ShaderRef;
+		RS::ResourceHandle<RS::GenericMesh> GenericMesh;
 		glm::vec4 Color = glm::vec4(1.0f);
 
 		// Bounding box for culling (in world space)
@@ -131,7 +127,7 @@ namespace NGN
 		MeshComponent() = default;
 		MeshComponent(const MeshComponent&) = default;
 
-		MeshComponent(const Ref<NGN::Mesh>& mesh, const Ref<Shader>& shader = nullptr, const glm::vec4& color = glm::vec4(1.0f))
+		/*MeshComponent(const Ref<NGN::Mesh>& mesh, const Ref<Shader>& shader = nullptr, const glm::vec4& color = glm::vec4(1.0f))
 			: MeshRef(mesh), ShaderRef(shader), Color(color)
 		{
 			if (mesh)
@@ -139,22 +135,22 @@ namespace NGN
 				boundsMin = mesh->GetBoundsMin();
 				boundsMax = mesh->GetBoundsMax();
 			}
-		}
+		}*/
 
-		// Update bounding box based on transform
-		void UpdateBounds(const TransformComponent& transform)
-		{
-			if (!MeshRef)
-				return;
+		//// Update bounding box based on transform
+		//void UpdateBounds(const TransformComponent& transform)
+		//{
+		//	if (!MeshRef)
+		//		return;
 
-			glm::vec3 meshMin = MeshRef->GetBoundsMin();
-			glm::vec3 meshMax = MeshRef->GetBoundsMax();
+		//	glm::vec3 meshMin = MeshRef->GetBoundsMin();
+		//	glm::vec3 meshMax = MeshRef->GetBoundsMax();
 
-			glm::vec3 scaledMin = meshMin * transform.Scale;
-			glm::vec3 scaledMax = meshMax * transform.Scale;
+		//	glm::vec3 scaledMin = meshMin * transform.Scale;
+		//	glm::vec3 scaledMax = meshMax * transform.Scale;
 
-			boundsMin = transform.Translation + glm::min(scaledMin, scaledMax);
-			boundsMax = transform.Translation + glm::max(scaledMin, scaledMax);
-		}
+		//	boundsMin = transform.Translation + glm::min(scaledMin, scaledMax);
+		//	boundsMax = transform.Translation + glm::max(scaledMin, scaledMax);
+		//}
 	};
 }

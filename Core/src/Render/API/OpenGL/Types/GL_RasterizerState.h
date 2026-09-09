@@ -1,7 +1,7 @@
 #pragma once
 #include <glad/gl.h>
 
-namespace NGN
+namespace OpenGL
 {
 	struct OpenGLRasterizerState
 	{

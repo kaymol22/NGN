@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Backend/GraphicsContext.h"
 #include "Core/Window.h"
 
 #include <GLFW/glfw3.h>
@@ -31,7 +30,6 @@ namespace NGN
 
 	private:
 		GLFWwindow* m_Window;
-		/*Scope<GraphicsContext> m_Context;*/
 		API m_API = API::UNDEFINED;
 
 		struct WindowData

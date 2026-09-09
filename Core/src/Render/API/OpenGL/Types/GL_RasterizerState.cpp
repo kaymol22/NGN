@@ -1,6 +1,6 @@
 #include "GL_RasterizerState.h"
 
-namespace NGN
+namespace OpenGL
 {
 	void OpenGLRasterizerState::Apply() const
 	{

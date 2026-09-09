@@ -4,6 +4,7 @@
 #include "Create/GL_Create_FrameBuffers.cpp"
 #include "Create/GL_Create_Shaders.cpp"
 #include "Create/GL_Create_SSBOs.cpp"
+#include "GL_Rasterizer_State_Manager.h"
 
 #include "Render/SpriteExtraction.h"
 #include "Core/Application.h"
@@ -18,6 +19,13 @@ namespace OpenGL::Renderer
 		CreateFrameBuffers();
 		CreateShaders();
 		CreateSSBOs();
+
+		OpenGLRasterizerState* geometryPass = OpenGL::RasterizerStateManager::CreateRasterizerState("GeometryPass");
+		geometryPass->depthTestEnable = true;
+		geometryPass->blendEnable = false;
+		geometryPass->cullFaceEnable = true;
+		geometryPass->depthMask = true;
+		geometryPass->depthFunc = GL_GREATER;
 	}
 
 	void RenderScene()

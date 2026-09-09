@@ -1,7 +1,6 @@
 #pragma once
 #include "Types.h"
 #include "Render/RenderBackend.h"
-#include "Renderer/RenderGraph.h"
 
 namespace NGN
 {

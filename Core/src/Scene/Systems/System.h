@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Core/Timestep.h"
-#include "Renderer/Renderer2D.h"
-#include "Renderer/Resources/Camera.h"
-#include "Renderer/Resources/OrthographicCamera.h"
+#include "Render/Camera.h"
+
 #include "Scene/SceneCamera.h"
 
 namespace NGN

@@ -2,12 +2,8 @@
 #include "Scene.h"
 #include "Components.h"
 
-#include "Renderer/Resources/PerspectiveCamera.h"
-#include "Renderer/Resources/OrthographicCamera.h"
-#include "Renderer/Renderer.h"
 #include "SceneCamera.h"
 
-#include "Systems/RenderSystem.h"
 #include "Systems/PlayerControllerSystem.h"
 
 namespace NGN
@@ -16,8 +12,7 @@ namespace NGN
 	{
 		NGN_CORE_INFO("Scene Created");
 
-		/*AddSystem<RenderSystem>();*/
-		/*AddSystem<PlayerControllerSystem>();*/
+		
 	}
 
 	Scene::~Scene()

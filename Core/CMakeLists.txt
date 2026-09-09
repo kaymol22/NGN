@@ -13,8 +13,6 @@ src/Containers/SlotMap.h
 src/Core/Assert.h
 src/Core/Application.h
 src/Core/Application.cpp
-src/Core/AssetManager.h
-src/Core/AssetManager.cpp
 src/Core/Base.h
 src/Core/EntryPoint.h
 src/Core/Enums.h
@@ -71,6 +69,9 @@ src/Render/Camera.h
 src/Render/SpriteExtraction.cpp
 src/Render/Renderer.cpp
 src/Render/SpriteExtraction.h
+src/Render/BVH/Types.h
+src/Render/BVH/BVH.h
+src/Render/BVH/Types/SceneBvh.h
 
 src/Render/API/OpenGL/GL_Backend.cpp
 src/Render/API/OpenGL/GL_Backend.h
@@ -94,65 +95,16 @@ src/Render/API/OpenGL/Types/GL_Texture.h
 src/Render/API/OpenGL/GL_TextureUploader.cpp
 src/Render/API/OpenGL/GL_TextureUploader.h
 src/Render/API/OpenGL/Types/GL_Texture_Array.h
+src/Render/API/OpenGL/Types/GL_RasterizerState.cpp
+src/Render/API/OpenGL/Types/GL_RasterizerState.h
+src/Render/API/OpenGL/GL_Rasterizer_State_Manager.h
+src/Render/API/OpenGL/GL_Rasterizer_State_Manager.cpp
 
 src/Render/API/OpenGL/Create/GL_Create_FrameBuffers.cpp
 src/Render/API/OpenGL/Create/GL_Create_Shaders.cpp
 src/Render/API/OpenGL/Create/GL_Create_SSBOs.cpp
 
-src/Render/BVH/Types.h
-src/Render/BVH/BVH.h
-src/Render/BVH/Types/SceneBvh.h
-
-### =============================== LEGACY =============================== ###
-src/Renderer/Renderer2D.cpp
-src/Renderer/Renderer2D.h
-src/Renderer/Renderer.cpp
-src/Renderer/Renderer.h
-src/Renderer/RenderGraph.cpp
-src/Renderer/RenderGraph.h
-src/Renderer/PassManager.cpp
-src/Renderer/PassManager.h
-src/Renderer/RenderPass.cpp
-src/Renderer/RenderPass.h
-
-src/Renderer/Backend/GraphicsContext.cpp
-src/Renderer/Backend/GraphicsContext.h
-src/Renderer/Backend/RenderCommand.cpp
-src/Renderer/Backend/RenderCommand.h
-src/Renderer/Backend/RendererAPI.cpp
-src/Renderer/Backend/RendererAPI.h
-
-src/Renderer/Passes/GeometryPass.cpp
-src/Renderer/Passes/GeometryPass.h
-
-src/Renderer/Resources/Buffer.cpp
-src/Renderer/Resources/Buffer.h
-src/Renderer/Resources/Font.cpp
-src/Renderer/Resources/Font.h
-src/Renderer/Resources/Framebuffer.cpp
-src/Renderer/Resources/Framebuffer.h
-
-src/Renderer/Resources/Material.h
-src/Renderer/Resources/Mesh.cpp
-src/Renderer/Resources/Mesh.h
-src/Renderer/Resources/OrthographicCamera.cpp
-src/Renderer/Resources/OrthographicCamera.h
-src/Renderer/Resources/OrthographicCameraController.cpp
-src/Renderer/Resources/OrthographicCameraController.h
-src/Renderer/Resources/PerspCameraController.cpp
-src/Renderer/Resources/PerspCameraController.h
-src/Renderer/Resources/PerspectiveCamera.cpp
-src/Renderer/Resources/PerspectiveCamera.h
-src/Renderer/Resources/Shader.h
-src/Renderer/Resources/Shader.cpp
-src/Renderer/Resources/SubTexture.cpp
-src/Renderer/Resources/SubTexture.h
-src/Renderer/Resources/Texture.cpp
-src/Renderer/Resources/Texture.h
-src/Renderer/Resources/VertexArray.cpp
-src/Renderer/Resources/VertexArray.h
-### =============================== LEGACY END =============================== ###
-
+src/ResourceManagement/CPU/Types/GenericMesh.h
 src/ResourceManagement/CPU/Types/Resource.h
 src/ResourceManagement/CPU/Types/Texture.cpp
 src/ResourceManagement/CPU/Types/Texture.h
@@ -173,35 +125,9 @@ src/Scene/SceneCamera.cpp
 src/Scene/SceneCamera.h
 src/Scene/SceneManager.cpp
 src/Scene/SceneManager.h
-
 src/Scene/Systems/System.h
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
-src/Scene/Systems/RenderSystem.cpp
-src/Scene/Systems/RenderSystem.h
-
-### =============================== LEGACY =============================== ###
-src/Platform/OpenGL/Resources/GL_Buffer.cpp
-src/Platform/OpenGL/Resources/GL_Buffer.h
-src/Platform/OpenGL/GL_Context.cpp
-src/Platform/OpenGL/GL_Context.h
-src/Platform/OpenGL/Resources/GL_Framebuffer.h
-src/Platform/OpenGL/Resources/GL_Framebuffer.cpp
-src/Platform/OpenGL/Passes/GL_RasterizerState.cpp
-src/Platform/OpenGL/Passes/GL_RasterizerState.h
-src/Platform/OpenGL/GL_RendererAPI.cpp
-src/Platform/OpenGL/GL_RendererAPI.h
-src/Platform/OpenGL/Resources/GL_Shader.cpp
-src/Platform/OpenGL/Resources/GL_Shader.h
-src/Platform/OpenGL/Resources/GL_Texture.h
-src/Platform/OpenGL/Resources/GL_Texture.cpp
-src/Platform/OpenGL/Resources/GL_VertexArray.cpp
-src/Platform/OpenGL/Resources/GL_VertexArray.h
-src/Platform/OpenGL/GL_Utils.h
-src/Platform/OpenGL/GL_Utils.cpp
-src/Platform/OpenGL/Passes/GL_GeometryPass.cpp
-src/Platform/OpenGL/Passes/GL_GeometryPass.h
-### =============================== LEGACY END =============================== ###
 
 src/Platform/Windows/WindowsInput.cpp
 src/Platform/Windows/WindowsInput.h

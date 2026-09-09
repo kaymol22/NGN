@@ -4,7 +4,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "Renderer/Resources/Camera.h"
+#include "Render/Camera.h"
 
 namespace NGN
 {

@@ -7,7 +7,6 @@
 #include "Core/UUID.h"
 #include "Components.h"
 #include "SceneBVH.h"
-#include "Renderer/Resources/OrthographicCamera.h"
 
 #include <glm/glm.hpp>
 

@@ -1,8 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
 
-#include "Renderer/Resources/Mesh.h"
-
 struct RenderItem
 {
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
@@ -24,7 +22,7 @@ struct RenderItem
 	uint32_t castShadows = 1;
 	uint32_t skinned = 0;
 
-	NGN::Mesh* mesh = nullptr;
+	/*NGN::Mesh* mesh = nullptr;*/
 };
 
 struct RenderItem2D

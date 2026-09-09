@@ -5,10 +5,6 @@
 #include "Events/KeyEvent.h"
 #include "Events/MouseEvent.h"
 
-#include "Renderer/Renderer.h"
-
-#include "Platform/OpenGL/GL_Context.h"
-
 namespace NGN
 {
 	static uint8_t s_GLFWWindowCount = 0;

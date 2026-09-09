@@ -7,7 +7,6 @@
 #include "Input/Input.h"
 
 #include "Application.h"
-#include "Renderer/Renderer.h"
 #include "Utils/PlatformUtils.h"
 
 #include <glm/glm.hpp>
@@ -60,7 +59,6 @@ namespace NGN {
 		m_ResourceManager = nullptr;
 		m_GraphicsContext->Shutdown();
 		// Window::Shutdown() called in window destructor
-		Renderer::Shutdown();
 		Input::Shutdown();
 
 		s_Application = nullptr;
