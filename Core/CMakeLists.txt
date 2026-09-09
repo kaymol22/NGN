@@ -140,7 +140,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "src/Render/API/OpenGL/Types/GL_GenericMesh.h" "src/Render/VertexAttributes.h" "src/Render/API/OpenGL/Types/GL_GenericMesh.cpp" "src/Core/Constants.h" "src/ResourceManagement/CPU/Types/GenericMesh.cpp" "src/Geometry/PrimitiveMesh.h" "src/Geometry/PrimitiveMesh.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

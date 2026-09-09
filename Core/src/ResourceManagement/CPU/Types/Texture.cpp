@@ -36,7 +36,7 @@ namespace RS
 		if (NGN::Application::Get().GetAPI() == API::OPENGL) {
 			uint64_t id = OpenGL::ResourceManager::CreateTexture();
 			SetGLId(id);
-			std::cout << "RS::Texture GLId set to: " << id << "\n";
+			NGN_CORE_INFO("RS::Texture GLId set to: '{}'", id);
 		}
 
 		return true;
