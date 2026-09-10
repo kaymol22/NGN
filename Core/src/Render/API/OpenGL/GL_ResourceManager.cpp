@@ -25,6 +25,7 @@ namespace OpenGL::ResourceManager
 		uint64_t g_NextFrameBufferId = 0;
 		uint64_t g_NextTextureId = 0;
 		uint64_t g_NextSSBOId = 0;
+		uint64_t g_NextGenericMeshId = 0;
 
 		bool g_Initialized = false;
 
@@ -44,7 +45,7 @@ namespace OpenGL::ResourceManager
 			case ResourceType::SSBO:
 				return EncodeId(type, g_NextSSBOId++);
 			case ResourceType::GenericMesh:
-				return EncodeId(type, g_NextSSBOId++);
+				return EncodeId(type, g_NextGenericMeshId++);
 			default: 
 				NGN_CORE_ERROR("Unknown resource type");
 				return 0;

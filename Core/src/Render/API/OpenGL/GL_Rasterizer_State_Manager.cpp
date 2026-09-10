@@ -23,4 +23,10 @@ namespace OpenGL::RasterizerStateManager
 		}
 		return &it->second;
 	}
+
+	void ForceRasterizerState(const OpenGLRasterizerState& state) {
+		state.Apply();
+		g_GlobalState = state;
+		g_StateInitialized = true;
+	}
 }

@@ -3,9 +3,28 @@
 
 namespace OpenGL::Commands
 {
+	namespace {
+		OpenGLShader* g_BoundShader = nullptr;
+	}
 	void Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	void BindShader(const std::string& name) {
+		OpenGLShader* shader = OpenGL::ResourceManager::GetShaderPtr(name);
+		if (!shader) {
+			NGN_CORE_ERROR("Commands::BindShader - Shader '{}' not found", name);
+			return;
+		}
+
+		if (g_BoundShader == shader) {
+			NGN_CORE_INFO("Commands::BindShader - Shader '{}' already bound", name);
+			return;
+		}
+
+		g_BoundShader = shader;
+		glUseProgram(g_BoundShader->GetHandle());
 	}
 	void BindImageTexture(uint32_t bindingIndex, uint32_t textureHandle, uint32_t access, uint32_t format, bool layered)
 	{

@@ -1,5 +1,5 @@
 #pragma once
-//#include "Types/GL_Shader.h"
+#include "GL_ResourceManager.h"
 
 namespace OpenGL::Commands
 {

@@ -15,7 +15,7 @@ namespace NGN
 		
 		// Create backend - GL Context / Vulkan device
 		// Build rendergraph, configure resource limits
-		void Init(void* nativeWindowHandle, int width, int height);
+		void Init(void* nativeWindowHandle);
 		void Shutdown();
 		
 		// TODO: Runtime swap of Graphics API's
@@ -23,7 +23,7 @@ namespace NGN
 		// App needs to call to handle window recreation + callback setting
 		void SwitchAPI(API newAPI);
 
-		void BeginFrame(float lastFrameTime);
+		void BeginFrame();
 		void Flush();
 		void EndFrame();
 		void OnWindowResize(uint32_t width, uint32_t height);

@@ -32,7 +32,7 @@ namespace NGN
 		BuildCtx.Reserve(n);
 
 		// Fill prim data - one prim instance per mesh entity
-		/*uint32_t slot = 0;
+		uint32_t slot = 0;
 		for (auto entity : view)
 		{
 			auto& transform = view.get<TransformComponent>(entity);
@@ -59,7 +59,7 @@ namespace NGN
 
 			m_PrimitiveIndices.push_back(slot);
 			slot++;
-		}*/
+		}
 
 		// Then recursive build
 		m_Data.Nodes.reserve(n * 2); // worst case

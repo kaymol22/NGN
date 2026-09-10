@@ -13,4 +13,13 @@ namespace NGN
 	{
 		Texture = NGN::Application::Get().GetResourceManager().Load<RS::Texture>(id);
 	}
+
+	MeshComponent::MeshComponent(const std::string& id, const glm::vec4& color)
+	{
+		GenericMesh = NGN::Application::Get().GetResourceManager().Load<RS::GenericMesh>(id);
+		Color = color;
+
+		boundsMin = GenericMesh.Get()->GetBoundsMin();
+		boundsMax = GenericMesh.Get()->GetBoundsMax();
+	}
 }

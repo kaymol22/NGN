@@ -17,10 +17,10 @@ void BackendTestLayer::OnAttach()
 	camTransform.Translation = { 0.0f, 0.0f, -5.0f };
 
 
-	auto spriteEntity = scene->CreateEntity("Sprite");
-	spriteEntity.AddComponent<NGN::SpriteComponent>("Checkerboard");
-	auto spriteTransform = spriteEntity.GetComponent<NGN::TransformComponent>();
-	spriteTransform.Translation = { 0.0f, 0.0f, 5.0f };
+	auto entity = scene->CreateEntity("CubeEntity");
+	entity.AddComponent<NGN::MeshComponent>("DefaultCube");
+	auto entityTransform = entity.GetComponent<NGN::TransformComponent>();
+	entityTransform.Translation = { 0.0f, 0.0f, 5.0f };
 }
 
 void BackendTestLayer::OnUpdate(NGN::Timestep ts)
@@ -29,5 +29,4 @@ void BackendTestLayer::OnUpdate(NGN::Timestep ts)
 
 void BackendTestLayer::OnEvent(NGN::Event& e)
 {
-
 }

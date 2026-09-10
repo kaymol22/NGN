@@ -5,8 +5,8 @@
 #include "Create/GL_Create_Shaders.cpp"
 #include "Create/GL_Create_SSBOs.cpp"
 #include "GL_Rasterizer_State_Manager.h"
+#include "GL_Commands.h"
 
-#include "Render/SpriteExtraction.h"
 #include "Core/Application.h"
 #include "Core/GraphicsContext.h"
 #include "Scene/Scene.h"
@@ -14,7 +14,11 @@
 
 namespace OpenGL::Renderer
 {
-	void Init(int width, int height)
+	namespace {
+		std::vector<GLuint> g_TextureHandles;
+		GLuint g_EmptyVAO = 0;
+	}
+	void Init()
 	{
 		CreateFrameBuffers();
 		CreateShaders();
@@ -28,23 +32,40 @@ namespace OpenGL::Renderer
 		geometryPass->depthFunc = GL_GREATER;
 	}
 
-	void RenderScene()
-	{
-		NGN::Scene* scene = NGN::Application::Get().GetSceneManager().GetActiveScene();
-		if (!scene) {
-			NGN_CORE_INFO("No active scene found");
+	void DrawFullScreenTriangle() {
+		BindEmptyVAO();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+
+	void PresentFinalImage(OpenGLFrameBuffer& presentFBO) {
+		OpenGLShader* shader = OpenGL::ResourceManager::GetShaderPtr("Present");
+		if (!shader) {
+			NGN_CORE_ERROR("Present shader not found");
 			return;
 		}
 
-		std::vector<NGN::SpriteRenderItem> sprites = NGN::ExtractVisibleSprites(*scene);
-		if (sprites.empty()) {
-			NGN_CORE_INFO("No sprites found in scene");
-		}
-		else {
-			NGN_CORE_INFO("'{}' Sprites added to RenderScene", sprites.size());
-		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glDrawBuffer(GL_BACK);
+		glViewport(0, 0, NGN::Application::Get().GetWindow().GetWidth(), NGN::Application::Get().GetWindow().GetHeight());
+		glDisable(GL_SCISSOR_TEST);
 
-		// Create GPU side textures, upload, draw etc.
+		OpenGLRasterizerState state;
+		state.depthTestEnable = false;
+		state.depthMask = false;
+		state.cullFaceEnable = false;
+		state.blendEnable = false;
+		state.colorMask = true;
+
+		OpenGL::RasterizerStateManager::ForceRasterizerState(state);
+
+		Commands::BindShader("Present");
+		Commands::BindTextureUnit(0, presentFBO.GetColorAttachmentSlotByName("Color"));
+		DrawFullScreenTriangle();
+	}
+
+	void BindEmptyVAO() {
+		if (g_EmptyVAO == 0) glGenVertexArrays(1, &g_EmptyVAO);
+		glBindVertexArray(g_EmptyVAO);
 	}
 
 	void Shutdown() {}

@@ -8,7 +8,7 @@ namespace NGN
 	{
 		if (Application::Get().GetAPI() == API::OPENGL)
 		{
-			OpenGL::Renderer::RenderScene();
+			
 		}
 		else
 		{

@@ -65,6 +65,6 @@ namespace RS
 		m_BoundsMin = glm::vec3(-0.5f);
 		m_BoundsMax = glm::vec3( 0.5f);
 
-		return !m_Vertices.empty() && m_Indices.empty();
+		return !m_Vertices.empty() && !m_Indices.empty();
 	}
 }

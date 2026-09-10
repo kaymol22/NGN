@@ -4,6 +4,7 @@
 #include "Render/Camera.h"
 
 #include "Scene/SceneCamera.h"
+#include "Scene/Scene.h"
 
 namespace NGN
 {

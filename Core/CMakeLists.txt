@@ -14,6 +14,7 @@ src/Core/Assert.h
 src/Core/Application.h
 src/Core/Application.cpp
 src/Core/Base.h
+src/Core/Constants.h
 src/Core/EntryPoint.h
 src/Core/Enums.h
 src/Core/GraphicsContext.h
@@ -58,6 +59,9 @@ src/File/FileInfo.h
 src/File/File.h
 src/File/File.cpp
 
+src/Geometry/PrimitiveMesh.h
+src/Geometry/PrimitiveMesh.cpp
+
 src/Math/Math.h
 src/Math/Math.cpp
 
@@ -66,9 +70,11 @@ src/Render/TextureTypes.h
 src/Render/Frustum.h
 src/Render/Frustum.cpp
 src/Render/Camera.h
-src/Render/SpriteExtraction.cpp
+src/Render/RenderDataManager.h
+src/Render/RendererTypes.h
 src/Render/Renderer.cpp
-src/Render/SpriteExtraction.h
+src/Render/VertexAttributes.h
+
 src/Render/BVH/Types.h
 src/Render/BVH/BVH.h
 src/Render/BVH/Types/SceneBvh.h
@@ -87,6 +93,8 @@ src/Render/API/OpenGL/Types/GL_Shader.cpp
 src/Render/API/OpenGL/Types/GL_FrameBuffer.cpp
 src/Render/API/OpenGL/Types/GL_FrameBuffer.h
 src/Render/API/OpenGL/Types/GL_Attachments.h
+src/Render/API/OpenGL/Types/GL_GenericMesh.cpp
+src/Render/API/OpenGL/Types/GL_GenericMesh.h
 src/Render/API/OpenGL/GL_Utils.cpp 
 src/Render/API/OpenGL/GL_Utils.h
 src/Render/API/OpenGL/GL_Renderer.cpp
@@ -104,6 +112,7 @@ src/Render/API/OpenGL/Create/GL_Create_FrameBuffers.cpp
 src/Render/API/OpenGL/Create/GL_Create_Shaders.cpp
 src/Render/API/OpenGL/Create/GL_Create_SSBOs.cpp
 
+src/ResourceManagement/CPU/Types/GenericMesh.cpp
 src/ResourceManagement/CPU/Types/GenericMesh.h
 src/ResourceManagement/CPU/Types/Resource.h
 src/ResourceManagement/CPU/Types/Texture.cpp
@@ -126,6 +135,8 @@ src/Scene/SceneCamera.h
 src/Scene/SceneManager.cpp
 src/Scene/SceneManager.h
 src/Scene/Systems/System.h
+
+
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
 
@@ -140,7 +151,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Render/API/OpenGL/Types/GL_GenericMesh.h" "src/Render/VertexAttributes.h" "src/Render/API/OpenGL/Types/GL_GenericMesh.cpp" "src/Core/Constants.h" "src/ResourceManagement/CPU/Types/GenericMesh.cpp" "src/Geometry/PrimitiveMesh.h" "src/Geometry/PrimitiveMesh.cpp")
+target_sources(Core PRIVATE ${SOURCES})
 
 # enable precompile headers
 ngn_enable_pch(Core)

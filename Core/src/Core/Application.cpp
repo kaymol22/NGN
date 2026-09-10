@@ -33,7 +33,7 @@ namespace NGN {
 		m_Window = Window::Create(spec.APIspec, spec.WindowSpec);
 		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
 
-		m_GraphicsContext->Init(m_Window->GetNativeWindow(), m_Window->GetWidth(), m_Window->GetHeight());
+		m_GraphicsContext->Init(m_Window->GetNativeWindow());
 		/*m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());*/
 
 		m_ResourceManager = CreateScope<RS::ResourceManager>();
@@ -80,7 +80,7 @@ namespace NGN {
 			m_LastFrameTime = currentTime;
 
 			m_Window->BeginFrame();
-			m_GraphicsContext->BeginFrame(m_LastFrameTime);
+			m_GraphicsContext->BeginFrame();
 
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(m_Timestep);

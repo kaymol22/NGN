@@ -7,14 +7,14 @@ namespace NGN
 {
 	class Application;
 
-	void GraphicsContext::Init(void* nativeWindowHandle, int width, int height)
+	void GraphicsContext::Init(void* nativeWindowHandle)
 	{
 		if (m_API == API::OPENGL)
 		{
 			m_Backend = CreateScope<OpenGL::OpenGLBackend>();
 			m_Backend->Init(nativeWindowHandle);
 			OpenGL::ResourceManager::Init();
-			OpenGL::Renderer::Init(width, height);
+			OpenGL::Renderer::Init();
 		}
 		else if (m_API == API::VULKAN)
 		{
@@ -28,7 +28,7 @@ namespace NGN
 		}
 	}
 
-	void GraphicsContext::BeginFrame(float lastFrameTime)
+	void GraphicsContext::BeginFrame()
 	{
 		m_Backend->BeginFrame();
 	}
@@ -38,7 +38,6 @@ namespace NGN
 		if (m_API == API::OPENGL)
 		{
 			OpenGL::Commands::Clear();
-			OpenGL::Renderer::RenderScene();
 		}
 		else {
 			NGN_CORE_INFO("GraphicsContext::Flush - unsupported graphics API, cannot render scene");

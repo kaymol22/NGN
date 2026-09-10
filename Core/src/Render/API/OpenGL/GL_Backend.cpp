@@ -35,13 +35,12 @@ namespace OpenGL
 
 	void OpenGLBackend::BeginFrame()
 	{
-		NGN_CORE_INFO("OpenGLBackend BeginFrame");
 		UpdateBindlessTextures();
 	}
 
 	void OpenGLBackend::EndFrame()
 	{
-		NGN_CORE_INFO("OpenGLBackend EndFrame");
+		
 	}
 
 	void OpenGLBackend::Shutdown()
