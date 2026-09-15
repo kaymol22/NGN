@@ -1,4 +1,5 @@
 #include "GraphicsContext.h"
+#include "Render/FrameManager.h"
 #include "Render/API/OpenGL/GL_Backend.h"
 #include "Render/API/OpenGL/GL_ResourceManager.h"
 #include "Render/API/OpenGL/GL_Renderer.h"
@@ -31,6 +32,7 @@ namespace NGN
 	void GraphicsContext::BeginFrame()
 	{
 		m_Backend->BeginFrame();
+		Renderer::FrameManager::BeginFrame();
 	}
 
 	void GraphicsContext::Flush()

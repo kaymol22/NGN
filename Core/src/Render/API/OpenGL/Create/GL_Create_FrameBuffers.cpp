@@ -1,10 +1,11 @@
 #include "Render/API/OpenGL/Types/GL_FrameBuffer.h"
 #include "Render/API/OpenGL/GL_ResourceManager.h"
+#include "Render/API/OpenGL/GL_Renderer.h"
 #include <glm/glm.hpp>
 
 namespace OpenGL::Renderer
 {
-	static void CreateFrameBuffers() {
+	void CreateFrameBuffers() {
 		// TODO: Get some kind of user defined resolutions for buffers fed in here
 
 		OpenGLFrameBuffer& gBuffer = OpenGL::ResourceManager::CreateFrameBuffer("gBuffer");
@@ -13,8 +14,12 @@ namespace OpenGL::Renderer
 		gBuffer.CreateAttachment("Lighting", GL_RGBA16F, GL_LINEAR, GL_LINEAR);
 		gBuffer.CreateDepthAttachment(GL_DEPTH24_STENCIL8);
 
-		OpenGLFrameBuffer& finalImageFBO = OpenGL::ResourceManager::CreateFrameBuffer("Final");
+		OpenGLFrameBuffer& finalImageFBO = OpenGL::ResourceManager::CreateFrameBuffer("FinalImage");
 		finalImageFBO.Create(glm::ivec2(1280, 720));
 		finalImageFBO.CreateAttachment("Color", GL_RGBA16F);
+
+		OpenGLFrameBuffer& presentFBO = OpenGL::ResourceManager::CreateFrameBuffer("Present");
+		presentFBO.Create(glm::ivec2(1280, 720));
+		presentFBO.CreateAttachment("Color", GL_RGBA8, GL_NEAREST, GL_NEAREST);
 	}
 }

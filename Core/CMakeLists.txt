@@ -70,10 +70,12 @@ src/Render/TextureTypes.h
 src/Render/Frustum.h
 src/Render/Frustum.cpp
 src/Render/Camera.h
-src/Render/RenderDataManager.h
+src/Render/FrameManager.cpp
+src/Render/FrameManager.h
 src/Render/RendererTypes.h
 src/Render/Renderer.cpp
 src/Render/VertexAttributes.h
+src/Render/DrawCommands.h
 
 src/Render/BVH/Types.h
 src/Render/BVH/BVH.h
@@ -112,6 +114,9 @@ src/Render/API/OpenGL/Create/GL_Create_FrameBuffers.cpp
 src/Render/API/OpenGL/Create/GL_Create_Shaders.cpp
 src/Render/API/OpenGL/Create/GL_Create_SSBOs.cpp
 
+src/Render/API/OpenGL/Frame/Passes/GL_GeometryPass.cpp
+src/Render/API/OpenGL/Frame/GL_Deferred.cpp
+
 src/ResourceManagement/CPU/Types/GenericMesh.cpp
 src/ResourceManagement/CPU/Types/GenericMesh.h
 src/ResourceManagement/CPU/Types/Resource.h
@@ -139,6 +144,10 @@ src/Scene/Systems/System.h
 
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
+src/Scene/Systems/RenderSystem.h
+src/Scene/Systems/RenderSystem.cpp
+src/Scene/Systems/TransformSystem.h
+src/Scene/Systems/TransformSystem.cpp
 
 src/Platform/Windows/WindowsInput.cpp
 src/Platform/Windows/WindowsInput.h
@@ -151,7 +160,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES})
+target_sources(Core PRIVATE ${SOURCES} "src/Render/API/OpenGL/Frame/GL_Update_SSBOs.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

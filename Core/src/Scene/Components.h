@@ -39,18 +39,31 @@ namespace NGN
 		glm::vec3 Translation{ 0.0f, 0.0f, 0.0f };
 		glm::quat Rotation{ 0.0f, 0.0f, 0.0f, 1.0f };
 		glm::vec3 Scale{ 1.0f, 1.0f, 1.0f };
+		glm::mat4 TransformMatrix{ 1.0f };
+
+		bool IsDirty = true;
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::vec3& translation) : Translation(translation) {}
+		TransformComponent(const glm::vec3& translation) : Translation(translation), IsDirty(true) {}
+		void SetTranslation(const glm::vec3& translation) { Translation = translation; IsDirty = true; }
+		void SetRotation(const glm::quat& rotation) { Rotation = rotation; IsDirty = true; }
+		void SetScale(const glm::vec3& scale) { Scale = scale; IsDirty = true; }
+		void Translate(const glm::vec3& delta) { Translation += delta; IsDirty = true; }
+		void Rotate(const glm::quat& delta) { Rotation = delta * Rotation; IsDirty = true; }
 
-		glm::mat4 GetTransform() const
+		const glm::mat4 GetTransformMatrix() { return TransformMatrix; }
+
+		void UpdateMatrix()
 		{
-			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
+			if (!IsDirty) return;
 
-			return glm::translate(glm::mat4(1.0f), Translation)
-				* rotation
-				* glm::scale(glm::mat4(1.0f), Scale);
+			TransformMatrix = 
+				glm::translate(glm::mat4(1.0f), Translation) *
+				glm::toMat4(Rotation) *
+				glm::scale(glm::mat4(1.0f), Scale);
+
+			IsDirty = false;
 		}
 	};
 

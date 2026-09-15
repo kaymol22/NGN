@@ -46,7 +46,7 @@ namespace NGN
 			prim.worldAabbBoundsMin = mesh.boundsMin;
 			prim.worldAabbBoundsMax = mesh.boundsMax;
 			prim.worldAabbCentre = (mesh.boundsMin + mesh.boundsMax) * 0.5f;
-			prim.worldTransform = transform.GetTransform();
+			prim.worldTransform = transform.GetTransformMatrix();
 			prim.inverseWorldTransform = glm::inverse(prim.worldTransform);
 
 			m_Data.Primitives.push_back(prim);
@@ -274,7 +274,7 @@ namespace NGN
 			prim.worldAabbBoundsMin = mesh->boundsMin;
 			prim.worldAabbBoundsMax = mesh->boundsMax;
 			prim.worldAabbCentre = (mesh->boundsMin + mesh->boundsMax) * 0.5f;
-			prim.worldTransform = transform->GetTransform();
+			prim.worldTransform = transform->GetTransformMatrix();
 			prim.inverseWorldTransform = glm::inverse(prim.worldTransform);
 		}
 

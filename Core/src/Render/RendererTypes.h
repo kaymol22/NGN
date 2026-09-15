@@ -1,5 +1,6 @@
 #pragma once
-
+#include "ResourceManagement/CPU/Types/GenericMesh.h"
+#include "ResourceManagement/CPU/ResourceHandle.h"
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -13,7 +14,9 @@ struct ViewportData
 	glm::mat4 projectionMatrix;
 	glm::mat4 inverseProjectionMatrix;
 	glm::mat4 viewProjectionMatrix;
+	glm::mat4 viewProjectionReverseZ;
 	glm::mat4 inverseViewProjectionMatrix;
+	glm::mat4 inverseViewProjectionReverseZ;
 	glm::mat4 prevViewProjectionMatrix = glm::mat4(1.0f);
 
 	glm::vec4 frustumPlane0;
@@ -58,7 +61,29 @@ struct RenderObject
 	uint64_t objectId;
 	glm::mat4 transform;
 	glm::vec4 color;
-	
 	glm::vec3 boundsMin;
 	glm::vec3 boundsMax;
+	uint32_t firstRenderItem;
+	uint32_t renderItemCount;
+};
+
+struct RenderItem {
+	uint64_t objectIndex;
+
+	uint64_t meshId;
+	uint64_t materialId;
+};
+
+struct BlitRegion {
+	int32_t originX = 0;
+	int32_t originY = 0;
+	int32_t width = 0;
+	int32_t height = 0;
+};
+
+struct BlitRect {
+	int32_t x0 = 0;
+	int32_t y0 = 0;
+	int32_t x1 = 0;
+	int32_t y1 = 0;
 };

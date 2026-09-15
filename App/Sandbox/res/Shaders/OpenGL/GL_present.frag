@@ -1,15 +1,12 @@
 #version 460 core
 
-in vec3 v_FragPos;
-in vec2 v_Normal;
-in vec2 v_TexCoord;
+layout(binding = 0) uniform sampler2D u_Texture;
 
-uniform vec4 u_Color;
-
-layout(location = 0) out vec4 g_Albedo;
+layout(location = 0) in vec2 v_UV;
+layout(location = 0) out vec4 outColor;
 
 void main()
 {
-	// Raw albedo for now
-	g_Albedo = u_Color;
+	outColor = texture(u_Texture, vec2(v_UV.x, 1- v_UV.y));
+	outColor = texture(u_Texture, vec2(v_UV.x, v_UV.y));
 }

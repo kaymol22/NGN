@@ -32,8 +32,6 @@ namespace NGN
 		bool EntityExists(UUID id) const;
 
 		void OnUpdate(Timestep ts);
-		/*void OnRender();*/
-		/*void SubmitData();*/
 
 		// Return all entities with specific components - variadic for multiple 
 		template <typename... Components>
@@ -66,6 +64,11 @@ namespace NGN
 			m_Systems.push_back(std::move(system));
 
 			return ref;
+		}
+
+		template <typename TSystem>
+		TSystem& GetSystem(std::string& name) {
+
 		}
 
 		// ============ Camera ============ //

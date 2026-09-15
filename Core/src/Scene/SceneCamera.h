@@ -47,7 +47,7 @@ namespace NGN
 		float GetOrthographicFar() const { return m_OrthoFar; }
 		void SetOrthographicFar(float farClip) { m_OrthoFar = farClip; RecalculateProjection(); }
 
-		// Cached transform & dir vectors foor faster retrieval by controller system
+		// Cached transform & dir vectors for faster retrieval by controller system
 		glm::vec3 GetPosition() const { return m_Position; }
 		glm::quat GetRotation() const { return m_Rotation; }
 		glm::vec3 GetForward() const { return m_Forward; }

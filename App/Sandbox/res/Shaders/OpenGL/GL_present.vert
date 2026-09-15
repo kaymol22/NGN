@@ -1,22 +1,16 @@
 #version 460 core
 
-layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec3 a_Normal;
-layout(location = 2) in vec2 a_TexCoord;
-
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
-uniform mat3 u_NormalMatrix;
-
-out vec3 v_FragPos;
-out vec3 v_Normal;
-out vec2 v_TexCoord;
+layout(location = 0) out vec2 v_UV;
 
 void main()
 {
-	vec4 worldPos = u_Transform * vec4(a_Position, 1.0);
-	v_FragPos = worldPos.xyz;
-	v_Normal = normalize(u_NormalMatrix * a_Normal);
-	v_TexCoord = a_TexCoord;
-	gl_Position = u_ViewProjection * worldPos;
+	const vec2 positions[3] = vec2[3](
+		vec2(-1.0, -1.0),
+		vec2( 3.0, -1.0),
+		vec2(-1.0,  3.0)
+	);
+
+	vec2 position = positions[gl_VertexID];
+	v_UV = position * 0.5 + 0.5;
+	gl_Position = vec4(position, 0.0, 1.0);
 }

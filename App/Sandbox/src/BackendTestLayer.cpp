@@ -29,4 +29,5 @@ void BackendTestLayer::OnUpdate(NGN::Timestep ts)
 
 void BackendTestLayer::OnEvent(NGN::Event& e)
 {
+	
 }

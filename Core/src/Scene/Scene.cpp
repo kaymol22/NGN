@@ -4,6 +4,8 @@
 
 #include "SceneCamera.h"
 
+#include "Systems/TransformSystem.h"
+#include "Systems/RenderSystem.h"
 #include "Systems/PlayerControllerSystem.h"
 
 namespace NGN
@@ -11,8 +13,8 @@ namespace NGN
 	Scene::Scene()
 	{
 		NGN_CORE_INFO("Scene Created");
-
-		
+		AddSystem<TransformSystem>();
+		AddSystem<RenderSystem>(); // Need to make sure this is always last to update*
 	}
 
 	Scene::~Scene()

@@ -68,5 +68,11 @@ namespace OpenGL::Renderer
 		glBindVertexArray(g_EmptyVAO);
 	}
 
+	void SetViewport(OpenGLFrameBuffer* frameBuffer,const NGN::Camera* camera) {
+		GLuint fbWidth = frameBuffer->GetWidth();
+		GLuint fbHeight = frameBuffer->GetHeight();
+		glm::vec2 pos = camera->GetPosition();
+	}
+
 	void Shutdown() {}
 }
