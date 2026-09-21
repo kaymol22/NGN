@@ -8,6 +8,7 @@ namespace OpenGL::Commands
 {
 	namespace {
 		OpenGLShader* g_BoundShader = nullptr;
+		uint64_t g_BoundShaderId = 0;
 
 		int GetBoundUniformLocation(const std::string& name) {
 			if (!g_BoundShader) {
@@ -31,19 +32,21 @@ namespace OpenGL::Commands
 	}
 
 	void BindShader(const std::string& name) {
-		OpenGLShader* shader = OpenGL::ResourceManager::GetShaderPtr(name);
+		uint64_t id = OpenGL::ResourceManager::CreateShader(name);
+		OpenGLShader* shader = OpenGL::ResourceManager::GetShaderPtrById(id);
+
 		if (!shader) {
 			NGN_CORE_ERROR("Commands::BindShader - Shader '{}' not found", name);
 			return;
 		}
 
-		if (g_BoundShader == shader) {
+		if (g_BoundShaderId == id) {
 			NGN_CORE_INFO("Commands::BindShader - Shader '{}' already bound", name);
 			return;
 		}
 
-		g_BoundShader = shader;
-		glUseProgram(g_BoundShader->GetHandle());
+		g_BoundShaderId = id;
+		glUseProgram(shader->GetHandle());
 	}
 
 	void UnbindShader() {
@@ -264,6 +267,7 @@ namespace OpenGL::Commands
 				mask, filter
 			);
 		}
+		/*NGN_CORE_INFO("Blitting framebuffer from '{}' to '{}'", src->GetName(), dst->GetName());*/
 	}
 
 	void BlitFrameBuffer(OpenGLFrameBuffer* src, OpenGLFrameBuffer* dst, const char* srcName,

@@ -8,6 +8,9 @@ src/ngnpch.h
 src/ngnpch.cpp
 src/NGN.h
 
+src/AssetManagement/AssetManifest.h
+src/AssetManagement/AssetLoader.h
+
 src/Containers/SlotMap.h
 
 src/Core/Assert.h
@@ -76,10 +79,16 @@ src/Render/RendererTypes.h
 src/Render/Renderer.cpp
 src/Render/VertexAttributes.h
 src/Render/DrawCommands.h
+src/Render/RendererEnums.h
+src/Render/MeshBuffer.h
+src/Render/MeshBuffer.cpp
 
 src/Render/BVH/Types.h
 src/Render/BVH/BVH.h
 src/Render/BVH/Types/SceneBvh.h
+
+src/Render/Viewport/Viewport.h
+src/Render/Viewport/Viewport.cpp
 
 src/Render/API/OpenGL/GL_Backend.cpp
 src/Render/API/OpenGL/GL_Backend.h
@@ -97,6 +106,9 @@ src/Render/API/OpenGL/Types/GL_FrameBuffer.h
 src/Render/API/OpenGL/Types/GL_Attachments.h
 src/Render/API/OpenGL/Types/GL_GenericMesh.cpp
 src/Render/API/OpenGL/Types/GL_GenericMesh.h
+src/Render/API/OpenGL/Types/GL_MeshBuffer.h
+src/Render/API/OpenGL/Types/GL_MeshBuffer.cpp
+src/Render/API/OpenGL/Types/GL_IndirectBuffer.h
 src/Render/API/OpenGL/GL_Utils.cpp 
 src/Render/API/OpenGL/GL_Utils.h
 src/Render/API/OpenGL/GL_Renderer.cpp
@@ -116,12 +128,14 @@ src/Render/API/OpenGL/Create/GL_Create_SSBOs.cpp
 
 src/Render/API/OpenGL/Frame/Passes/GL_GeometryPass.cpp
 src/Render/API/OpenGL/Frame/GL_Deferred.cpp
+src/Render/API/OpenGL/Frame/GL_Update_SSBOs.cpp
 
-src/ResourceManagement/CPU/Types/GenericMesh.cpp
-src/ResourceManagement/CPU/Types/GenericMesh.h
+src/ResourceManagement/CPU/Types/Mesh.cpp
+src/ResourceManagement/CPU/Types/Mesh.h
 src/ResourceManagement/CPU/Types/Resource.h
 src/ResourceManagement/CPU/Types/Texture.cpp
 src/ResourceManagement/CPU/Types/Texture.h
+src/ResourceManagement/CPU/Types/SubMesh.h
 src/ResourceManagement/CPU/ResourceHandle.h
 src/ResourceManagement/CPU/ResourceManager.cpp
 src/ResourceManagement/CPU/ResourceManager.h
@@ -141,7 +155,8 @@ src/Scene/SceneManager.cpp
 src/Scene/SceneManager.h
 src/Scene/Systems/System.h
 
-
+src/Scene/Systems/CameraSystem.h
+src/Scene/Systems/CameraSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.cpp
 src/Scene/Systems/PlayerControllerSystem.h
 src/Scene/Systems/RenderSystem.h
@@ -160,7 +175,7 @@ src/Utils/PlatformUtils.h
 
 add_library(Core STATIC)
 
-target_sources(Core PRIVATE ${SOURCES} "src/Render/API/OpenGL/Frame/GL_Update_SSBOs.cpp")
+target_sources(Core PRIVATE ${SOURCES} "src/Render/API/OpenGL/Frame/Passes/GL_TestPass.cpp")
 
 # enable precompile headers
 ngn_enable_pch(Core)

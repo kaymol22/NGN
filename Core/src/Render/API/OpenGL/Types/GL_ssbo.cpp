@@ -69,7 +69,6 @@ namespace OpenGL
 			glDeleteBuffers(1, &m_Handle);
 			m_Handle = 0;
 			m_Size = 0;
-			m_Flags = 0;
 		}
 	}
 	

@@ -16,10 +16,14 @@ namespace NGN
 
 	MeshComponent::MeshComponent(const std::string& id, const glm::vec4& color)
 	{
-		GenericMesh = NGN::Application::Get().GetResourceManager().Load<RS::GenericMesh>(id);
+		Mesh = NGN::Application::Get().GetResourceManager().Load<RS::MeshAsset>(id);
 		Color = color;
+		SubMeshes = Mesh.Get()->GetSubMeshes();
+		boundsMin = Mesh.Get()->GetBoundsMin();
+		boundsMax = Mesh.Get()->GetBoundsMax();
+	}
 
-		boundsMin = GenericMesh.Get()->GetBoundsMin();
-		boundsMax = GenericMesh.Get()->GetBoundsMax();
+	CameraComponent::CameraComponent() : Camera() {
+		Camera.SetViewportSize(NGN::Application::Get().GetWindow().GetWidth(), NGN::Application::Get().GetWindow().GetHeight());
 	}
 }

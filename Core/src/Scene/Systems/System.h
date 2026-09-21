@@ -13,7 +13,7 @@ namespace NGN
 	class System
 	{
 	public:
-		virtual ~System() = default;
+		~System() = default;
 		virtual void OnCreate(Scene& scene) {}
 		virtual void OnUpdate(Scene& scene, Timestep ts) {}
 	};

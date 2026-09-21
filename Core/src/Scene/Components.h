@@ -1,13 +1,15 @@
 #pragma once
 
 #include "SceneCamera.h"
+#include "Render/Frustum.h"
 
 #include "Core/UUID.h"
 
 #include "ResourceManagement/CPU/ResourceManager.h"
 #include "ResourceManagement/CPU/ResourceHandle.h"
 #include "ResourceManagement/CPU/Types/Texture.h"
-#include "ResourceManagement/CPU/Types/GenericMesh.h"
+#include "ResourceManagement/CPU/Types/Mesh.h"
+#include "ResourceManagement/CPU/Types/SubMesh.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -37,7 +39,7 @@ namespace NGN
 
 	struct TransformComponent {
 		glm::vec3 Translation{ 0.0f, 0.0f, 0.0f };
-		glm::quat Rotation{ 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::quat Rotation = glm::identity<glm::quat>();
 		glm::vec3 Scale{ 1.0f, 1.0f, 1.0f };
 		glm::mat4 TransformMatrix{ 1.0f };
 
@@ -51,6 +53,7 @@ namespace NGN
 		void SetScale(const glm::vec3& scale) { Scale = scale; IsDirty = true; }
 		void Translate(const glm::vec3& delta) { Translation += delta; IsDirty = true; }
 		void Rotate(const glm::quat& delta) { Rotation = delta * Rotation; IsDirty = true; }
+		void RotateEuler(const glm::vec3& eulerAngles) { Rotation = glm::quat(eulerAngles) * Rotation; IsDirty = true; }
 
 		const glm::mat4 GetTransformMatrix() { return TransformMatrix; }
 
@@ -100,11 +103,13 @@ namespace NGN
 	struct CameraComponent
 	{
 		SceneCamera Camera;
+		Frustum ViewFrustum;
 
 		bool Primary = true;
 		bool FixedAspectRatio = false;
+		bool ViewDirty = true;
 
-		CameraComponent() : Camera() {}  // Explicitly initialize
+		CameraComponent();
 		CameraComponent(const CameraComponent&) = default;
 	};
 
@@ -129,10 +134,9 @@ namespace NGN
 
 	struct MeshComponent
 	{
-		RS::ResourceHandle<RS::GenericMesh> GenericMesh;
+		RS::ResourceHandle<RS::MeshAsset> Mesh;
 		glm::vec4 Color = glm::vec4(1.0f);
-
-		// Bounding box for culling (in world space)
+		std::vector<SubMesh> SubMeshes;
 		glm::vec3 boundsMin = glm::vec3(-0.5f);
 		glm::vec3 boundsMax = glm::vec3(0.5f);
 
@@ -143,11 +147,11 @@ namespace NGN
 		//// Update bounding box based on transform
 		void UpdateBounds(const TransformComponent& transform)
 		{
-			if (!GenericMesh)
+			if (!Mesh)
 				return;
 
-			glm::vec3 meshMin = GenericMesh->GetBoundsMin();
-			glm::vec3 meshMax = GenericMesh->GetBoundsMax();
+			glm::vec3 meshMin = Mesh->GetBoundsMin();
+			glm::vec3 meshMax = Mesh->GetBoundsMax();
 
 			glm::vec3 scaledMin = meshMin * transform.Scale;
 			glm::vec3 scaledMax = meshMax * transform.Scale;
@@ -155,5 +159,12 @@ namespace NGN
 			boundsMin = transform.Translation + glm::min(scaledMin, scaledMax);
 			boundsMax = transform.Translation + glm::max(scaledMin, scaledMax);
 		}
+	};
+
+	struct RigidBodyComponent
+	{
+		float Mass = 1.0f;
+		glm::vec3 Velocity = glm::vec3(0.0f);
+
 	};
 }

@@ -1,23 +1,41 @@
 #version 460 core
+#include "common/GL_binding_indices.glsl"
+#include "common/types.glsl"
 
 layout(location = 0) in vec3 vPosition;
 layout(location = 1) in vec3 vNormal;
-layout(location = 2) in vec2 vUV;
-layout(location = 3) in vec3 vTangent;
 
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
-uniform mat3 u_NormalMatrix;
+layout(std430, binding = SSBO_IDX_VIEWPORT_DATA) readonly restrict buffer viewportDataBuffer 
+{
+	ViewportData viewportData;
+};
 
-out vec3 v_FragPos;
-out vec3 v_Normal;
-out vec2 v_TexCoord;
+layout(std430, binding = SSBO_IDX_SCENE_RENDER_ITEMS) readonly buffer sceneRenderItemsBuffer
+{
+	RenderItem sceneRenderItems[];
+};
+
+layout(std430, binding = SSBO_IDX_DRAW_RENDER_ITEM_INDICES) readonly buffer drawRenderItemIndicesBuffer
+{
+	uint drawRenderItemIndices[];
+};
+
+out vec3 Normal;
+out vec4 WorldPos;
+out flat vec4 Color;
 
 void main()
 {
-	vec4 worldPos = u_Transform * vec4(vPosition, 1.0);
-	v_FragPos = worldPos.xyz;
-	v_Normal = normalize(u_NormalMatrix * a_Normal);
-	v_TexCoord = a_TexCoord;
-	gl_Position = u_ViewProjection * worldPos;
+	uint slot = uint(gl_BaseInstance) + uint(gl_InstanceID);
+	uint renderItemIndex = drawRenderItemIndices[slot];
+	RenderItem item = sceneRenderItems[renderItemIndex];
+
+	mat4 modelMatrix = item.transform;
+	mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
+
+	Normal = normalize(normalMatrix * vNormal);
+	Color = item.color;
+	WorldPos = modelMatrix * vec4(vPosition, 1.0);
+
+	gl_Position = viewportData.viewProjectionMatrix * WorldPos;
 }

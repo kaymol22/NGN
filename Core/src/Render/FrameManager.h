@@ -8,15 +8,25 @@ namespace NGN::Renderer::FrameManager
 {
 	void BeginFrame();
 
-	const DrawCommandsSet& GetDrawInfoSet();
-	const std::vector<RenderObject>& GetSceneRenderObjects();
-	const ViewportData& GetViewportData();
-	const RendererData& GetRenderData();
-	const std::vector<uint32_t> GetDrawRenderObjectIndices();
+	// Submissions
+	void SubmitRenderItem(const RenderItem& renderItem);
+	void SubmitViewportData(const Camera& camera);
 
-	void SubmitRenderObject(const RenderObject renderItem);
+	uint32_t AddSceneRenderItem(const RenderItem& renderItem);
+	void AddRenderItemToCategory(std::vector<uint32_t>& categoryIndices, uint32_t renderItemIndex);
 
-	void UpdateViewportData(const Camera& camera);
-	void UpdateRendererData();
 	void UpdateDrawCommandsSet();
+	void ClearDrawCommandsSet();
+	void CreateViewportDrawCommands();
+	void CreateDrawCommandsFromIndices(std::vector<DrawIndexedIndirectCommand>& commands, const std::vector<uint32_t>& sortedIndices);
+
+	void SortDrawCommandRenderItems();
+	void SortRenderItemIndices(std::vector<uint32_t>& indices);
+
+	const DrawCommandsSet& GetDrawInfoSet();
+	const std::vector<RenderItem>& GetSceneRenderItems();
+	const ViewportData& GetViewportData();
+	const std::vector<uint32_t>& GetDrawRenderItemIndices();
+	const std::vector<GPUObjectData>& GetSceneGPUData();
+	std::size_t GetRenderItemCount(BlendingMode blendingMode);
 }

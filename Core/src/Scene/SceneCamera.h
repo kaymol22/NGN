@@ -71,7 +71,7 @@ namespace NGN
 
 		// Cache values from transform component
 		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-		glm::quat m_Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f); // Identity quat
+		glm::quat m_Rotation = glm::identity<glm::quat>();
 
 		glm::vec3 m_Forward = { 0.0f, 0.0f, -1.0f }; // neg z axis for opengl
 		glm::vec3 m_Right = { 1.0f, 0.0f, 0.0f };
@@ -82,7 +82,7 @@ namespace NGN
 		float m_AspectRatio = 0.0f;
 
 		float m_PerspFOV = glm::radians(45.0f);
-		float m_PerspNear = 0.01f;
+		float m_PerspNear = 1.0f;
 		float m_PerspFar = 1000.0f;
 
 		float m_OrthoSize = 10.0f;

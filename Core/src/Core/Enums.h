@@ -1,5 +1,11 @@
 #pragma once
 
+enum class ShadingMode {
+	SHADED,
+	WIREFRAME,
+	WIREFRAME_OVERLAY
+};
+
 enum class API
 {
 	OPENGL,

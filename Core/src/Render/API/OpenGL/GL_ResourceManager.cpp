@@ -9,12 +9,14 @@ namespace OpenGL::ResourceManager
 		NGN::SlotMap<OpenGLTexture> g_Textures;
 		NGN::SlotMap<OpenGLSSBO> g_SSBOs;
 		NGN::SlotMap<OpenGLGenericMesh> g_GenericMeshes;
+		NGN::SlotMap<OpenGLMeshBuffer> g_MeshBuffers;
 
 		// Name -> ID lookup tables
 		std::unordered_map<std::string, uint64_t> g_ShaderIdByName;
 		std::unordered_map<std::string, uint64_t> g_FrameBufferIdByName;
 		std::unordered_map<std::string, uint64_t> g_SSBOIdByName;
 		std::unordered_map<std::string, uint64_t> g_GenericMeshIdByName;
+		std::unordered_map<std::string, uint64_t> g_MeshBufferIdByName;
 
 		// Id counter for GPU resources
 		// Layout : [type(16 bits) | local_id(48 bits)]
@@ -26,6 +28,7 @@ namespace OpenGL::ResourceManager
 		uint64_t g_NextTextureId = 0;
 		uint64_t g_NextSSBOId = 0;
 		uint64_t g_NextGenericMeshId = 0;
+		uint64_t g_NextMeshBufferId = 0;
 
 		bool g_Initialized = false;
 
@@ -37,7 +40,7 @@ namespace OpenGL::ResourceManager
 		{
 			switch (type) {
 			case ResourceType::Shader:
-				return EncodeId(type, g_NextShaderId++);
+				return EncodeId(type, ++g_NextShaderId);
 			case ResourceType::FrameBuffer:
 				return EncodeId(type, g_NextFrameBufferId++);
 			case ResourceType::Texture:
@@ -46,6 +49,8 @@ namespace OpenGL::ResourceManager
 				return EncodeId(type, g_NextSSBOId++);
 			case ResourceType::GenericMesh:
 				return EncodeId(type, g_NextGenericMeshId++);
+			case ResourceType::MeshBuffer:
+				return EncodeId(type, g_NextMeshBufferId++);
 			default: 
 				NGN_CORE_ERROR("Unknown resource type");
 				return 0;
@@ -60,6 +65,14 @@ namespace OpenGL::ResourceManager
 			return;
 		}
 		g_Initialized = true;
+
+		g_Shaders.reserve(32);
+		g_FrameBuffers.reserve(8);
+		g_Textures.reserve(64);
+		g_SSBOs.reserve(16);
+		g_GenericMeshes.reserve(64);
+		g_MeshBuffers.reserve(8);
+
 		NGN_CORE_INFO("OpenGL::ResourceManager Initialized");
 	}
 
@@ -67,6 +80,9 @@ namespace OpenGL::ResourceManager
 	{
 		if (!g_Initialized) return;
 
+		for (OpenGLShader& shader : g_Shaders) {
+			shader.CleanUp();
+		}
 		for (OpenGLFrameBuffer& frameBuffer : g_FrameBuffers) {
 			frameBuffer.CleanUp();
 		}
@@ -80,6 +96,9 @@ namespace OpenGL::ResourceManager
 		for (OpenGLGenericMesh mesh : g_GenericMeshes) {
 			mesh.CleanUp();
 		}
+		for (OpenGLMeshBuffer& meshBuffer : g_MeshBuffers) {
+			meshBuffer.Reset();
+		}
 
 		g_Shaders.clear();
 		g_ShaderIdByName.clear();
@@ -90,6 +109,8 @@ namespace OpenGL::ResourceManager
 		g_SSBOIdByName.clear();
 		g_GenericMeshes.clear();
 		g_GenericMeshIdByName.clear();
+		g_MeshBuffers.clear();
+		g_MeshBufferIdByName.clear();
 
 		g_Initialized = false;
 		NGN_CORE_INFO("OpenGL::ResourceManager shutdown");
@@ -143,7 +164,8 @@ namespace OpenGL::ResourceManager
 	OpenGLShader* GetShaderPtr(const std::string& name) {
 		auto it = g_ShaderIdByName.find(name);
 		if (it != g_ShaderIdByName.end()) {
-			return GetShaderPtrById(it->second);
+			OpenGLShader* result = GetShaderPtrById(it->second);
+			return result;
 		}
 		return nullptr;
 	}
@@ -396,6 +418,14 @@ namespace OpenGL::ResourceManager
 		return g_GenericMeshes.get(id);
 	}
 
+	uint32_t GetGenericMeshSlot(uint64_t id) {
+		return g_GenericMeshes.slot_of(id);
+	}
+
+	OpenGLGenericMesh* GetGenericMeshPtrBySlot(uint32_t slot) {
+		return g_GenericMeshes.get_by_slot(slot);
+	}
+
 	void RemoveGenericMesh(uint64_t id) {
 		for (auto it = g_GenericMeshIdByName.begin(); it != g_GenericMeshIdByName.end(); ++it) {
 			if (it->second == id) {
@@ -406,6 +436,71 @@ namespace OpenGL::ResourceManager
 		if (g_GenericMeshes.contains(id)) {
 			g_GenericMeshes.get(id)->CleanUp();
 			g_GenericMeshes.erase(id);
+		}
+	}
+
+	/*##################==================================== MESHBUFFER ======================================##################*/
+	uint64_t CreateMeshBuffer() {
+		uint64_t id = GetNextId(ResourceType::MeshBuffer);
+		g_MeshBuffers.emplace_with_id(id);
+		return id;
+	}
+
+	uint64_t CreateMeshBuffer(const std::string& name) {
+		if (name.empty() || name == UNDEFINED_STRING) {
+			return CreateMeshBuffer();
+		}
+
+		auto it = g_MeshBufferIdByName.find(name);
+		if (it != g_MeshBufferIdByName.end()) {
+			return it->second;
+		}
+
+		uint64_t id = CreateMeshBuffer();
+		g_MeshBufferIdByName[name] = id;
+		return id;
+	}
+
+	OpenGLMeshBuffer& GetMeshBuffer(const std::string& name) {
+		OpenGLMeshBuffer* meshBuffer = GetMeshBufferPtr(name);
+		if (meshBuffer) {
+			return *meshBuffer;
+		}
+		static OpenGLMeshBuffer invalid;
+		return invalid;
+	}
+
+	OpenGLMeshBuffer& GetMeshBuffer(uint64_t id) {
+		OpenGLMeshBuffer* meshBuffer = GetMeshBufferPtrById(id);
+		if (meshBuffer) {
+			return *meshBuffer;
+		}
+		static OpenGLMeshBuffer invalid;
+		return invalid;
+	}
+
+	OpenGLMeshBuffer* GetMeshBufferPtr(const std::string& name) {
+		auto it = g_MeshBufferIdByName.find(name);
+		if (it != g_MeshBufferIdByName.end()) {
+			return GetMeshBufferPtrById(it->second);
+		}
+		return nullptr;
+	}
+
+	OpenGLMeshBuffer* GetMeshBufferPtrById(uint64_t id) {
+		return g_MeshBuffers.get(id);
+	}
+
+	void RemoveMeshBuffer(uint64_t id) {
+		for (auto it = g_MeshBufferIdByName.begin(); it != g_MeshBufferIdByName.end(); ++it) {
+			if (it->second == id) {
+				g_MeshBufferIdByName.erase(it);
+				break;
+			}
+		}
+		if (g_MeshBuffers.contains(id)) {
+			g_MeshBuffers.get(id)->Reset();
+			g_MeshBuffers.erase(id);
 		}
 	}
 }

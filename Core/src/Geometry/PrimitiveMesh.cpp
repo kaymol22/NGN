@@ -23,7 +23,7 @@ namespace NGN::Geometry
 
 		for (int i = 0; i < 6; ++i) {
 			for (int j = 0; j < 4; ++j) {
-				vertices.push_back(Vertex(positions[i * 4 * j], normals[i]));
+				vertices.push_back(Vertex(positions[i * 4 + j], normals[i]));
 			}
 		}
 

@@ -62,6 +62,20 @@ namespace NGN
 
 		const T* get(uint64_t id) const { return const_cast<SlotMap*>(this)->get(id); }
 
+		uint32_t slot_of(uint64_t id) const {
+			auto it = m_idToSlot.find(id);
+			return it != m_idToSlot.end() ? it->second : kInvalid;
+		}
+
+		T* get_by_slot(uint32_t slot) {
+			if (slot >= m_slotToDense.size()) return nullptr;
+			const uint32_t denseIndex = m_slotToDense[slot];
+			if (denseIndex == kInvalid || denseIndex >= m_values.size()) return nullptr;
+			return &m_values[denseIndex];
+		}
+
+		const T* get_by_slot(uint32_t slot) const { return const_cast<SlotMap*>(this)->get_by_slot(slot); }
+
 		bool contains(uint64_t id) const { return get(id) != nullptr; }
 
 		bool erase(uint64_t id) {

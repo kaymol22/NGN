@@ -339,7 +339,7 @@ namespace OpenGL
 			}
 		}
 
-		NGN_CORE_ERROR("OpenGLFrameBuffer::GetColorAttachmentSlotByName() with name '", name, "' failed. Name doesn't exist in FrameBuffer '", this->m_Name, "'");
+		NGN_CORE_ERROR("OpenGLFrameBuffer::GetColorAttachmentSlotByName() with name '{0}' failed. Name doesn't exist in FrameBuffer '{1}'", name, this->m_Name);
 		return GL_INVALID_VALUE;
 	}
 

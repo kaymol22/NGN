@@ -73,8 +73,10 @@ namespace NGN
 
 		// ============ Camera ============ //
 		Entity GetPrimaryCamera();
+		SceneBVH& GetBVH() { return m_BVH; }
 
 	private:
+		SceneBVH m_BVH;
 		entt::registry m_Registry;
 		std::vector<std::unique_ptr<System>> m_Systems;
 		std::unordered_map<UUID, entt::entity> m_EntityMap;

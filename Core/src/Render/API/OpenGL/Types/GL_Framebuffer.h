@@ -49,6 +49,7 @@ namespace OpenGL
 		GLuint GetDepthAttachmentHandle() const { return m_DepthAttachment.handle; }
 		bool IsMultiSampled() { return m_SampleCount > 1; }
 		size_t GetGPUAllocatedByteCount();
+		std::string GetName() const { return m_Name; }
 
 	private:
 		std::string m_Name = "Undefined";

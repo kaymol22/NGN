@@ -53,6 +53,11 @@ namespace NGN
 			}
 		}
 
+		/*for (int i = 0; i < 6; i++) {
+			NGN_CORE_INFO("Plane {}: normal [{},{},{}] offset {}", i,
+				m_Planes[i].Normal.x, m_Planes[i].Normal.y, m_Planes[i].Normal.z, m_Planes[i].Offset);
+		}*/
+
 		// Compute frustum corners by checking plane intersection
 		// 0=Left, 1=Right, 2=Top, 3=Bottom, 4=Near, 5=Far
 
@@ -129,7 +134,7 @@ namespace NGN
 		}
 	}
 
-	const glm::vec4 Frustum::GetPlane(int index)
+	glm::vec4 Frustum::GetPlane(int index)
 	{
 		NGN_CORE_ASSERT(index >= 0 && index < 6, "Plane index out of bounds");
 		return glm::vec4(m_Planes[index].Normal, m_Planes[index].Offset);

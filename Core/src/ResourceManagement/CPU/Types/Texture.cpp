@@ -1,4 +1,4 @@
-#include "Core/Application.h"
+#include "Render/Renderer.h"
 #include "File/File.h"
 #include "Texture.h"
 #include "Resource.h"
@@ -33,7 +33,7 @@ namespace RS
 
 		NGN_CORE_INFO("Texture::doLoad() successful for file: {}", m_FileInfo.path);
 
-		if (NGN::Application::Get().GetAPI() == API::OPENGL) {
+		if (NGN::Renderer::GetActiveAPI() == API::OPENGL) {
 			uint64_t id = OpenGL::ResourceManager::CreateTexture();
 			SetGLId(id);
 			NGN_CORE_INFO("RS::Texture GLId set to: '{}'", id);
@@ -50,7 +50,7 @@ namespace RS
 		m_ImageDataType = ImageDataType::UNDEFINED;
 		m_UploadState = UploadState::NOT_REQUESTED;
 
-		if (NGN::Application::Get().GetAPI() == API::OPENGL) {
+		if (NGN::Renderer::GetActiveAPI() == API::OPENGL) {
 			OpenGL::ResourceManager::RemoveTexture(m_OpenGLId);
 		}
 

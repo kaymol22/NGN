@@ -22,14 +22,10 @@ namespace OpenGL
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 		OpenGL::Utils::InitOpenGLDebugMessageCallback();
 #endif
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_MULTISAMPLE); // Easy when glfw handles FB - otherwise MSAA FBO setup needed
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_LINE_SMOOTH);
-
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		glClipControl(GL_UPPER_LEFT, GL_ZERO_TO_ONE);
+		
 		// TODO: Query support in here later
 	}
 

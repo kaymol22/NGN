@@ -7,6 +7,5 @@ layout(location = 0) out vec4 outColor;
 
 void main()
 {
-	outColor = texture(u_Texture, vec2(v_UV.x, 1- v_UV.y));
 	outColor = texture(u_Texture, vec2(v_UV.x, v_UV.y));
 }

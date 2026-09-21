@@ -1,11 +1,9 @@
 #include "GL_Renderer.h"
-#include "GL_Backend.h"
+//#include "GL_Backend.h"
 
-#include "Create/GL_Create_FrameBuffers.cpp"
-#include "Create/GL_Create_Shaders.cpp"
-#include "Create/GL_Create_SSBOs.cpp"
 #include "GL_Rasterizer_State_Manager.h"
 #include "GL_Commands.h"
+#include "Types/GL_IndirectBuffer.h"
 
 #include "Core/Application.h"
 #include "Core/GraphicsContext.h"
@@ -17,6 +15,7 @@ namespace OpenGL::Renderer
 	namespace {
 		std::vector<GLuint> g_TextureHandles;
 		GLuint g_EmptyVAO = 0;
+		IndirectBuffer g_IndirectBuffer;
 	}
 	void Init()
 	{
@@ -25,9 +24,9 @@ namespace OpenGL::Renderer
 		CreateSSBOs();
 
 		OpenGLRasterizerState* geometryPass = OpenGL::RasterizerStateManager::CreateRasterizerState("GeometryPass");
-		geometryPass->depthTestEnable = true;
+		geometryPass->depthTestEnable = false;
 		geometryPass->blendEnable = false;
-		geometryPass->cullFaceEnable = true;
+		geometryPass->cullFaceEnable = false;
 		geometryPass->depthMask = true;
 		geometryPass->depthFunc = GL_GREATER;
 	}
@@ -49,17 +48,22 @@ namespace OpenGL::Renderer
 		glViewport(0, 0, NGN::Application::Get().GetWindow().GetWidth(), NGN::Application::Get().GetWindow().GetHeight());
 		glDisable(GL_SCISSOR_TEST);
 
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		OpenGLRasterizerState state;
 		state.depthTestEnable = false;
 		state.depthMask = false;
 		state.cullFaceEnable = false;
 		state.blendEnable = false;
 		state.colorMask = true;
-
 		OpenGL::RasterizerStateManager::ForceRasterizerState(state);
 
 		Commands::BindShader("Present");
-		Commands::BindTextureUnit(0, presentFBO.GetColorAttachmentSlotByName("Color"));
+
+		// Hack for now 
+		Commands::BindTextureUnit(0, presentFBO.GetColorAttachmentHandleByName("BaseColorMetallic"));
+		/*Commands::BindTextureUnit(0, presentFBO.GetColorAttachmentSlotByName("Color"));*/
 		DrawFullScreenTriangle();
 	}
 
@@ -75,4 +79,15 @@ namespace OpenGL::Renderer
 	}
 
 	void Shutdown() {}
+
+	void MultiDrawIndirect(const std::vector<DrawIndexedIndirectCommand>& commands) {
+		if (commands.size()) {
+			g_IndirectBuffer.Update(sizeof(DrawIndexedIndirectCommand) * commands.size(), commands.data());
+			g_IndirectBuffer.Bind();
+
+			glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, (GLsizei)commands.size(), 0);
+		}
+	}
+
+	IndirectBuffer& GetIndirectBuffer() { return g_IndirectBuffer; }
 }

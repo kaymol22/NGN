@@ -29,3 +29,10 @@ struct SceneBvh
 	std::vector<BVHNode> Nodes;
 	std::vector<PrimitiveInstance> Primitives;
 };
+
+struct Resolutions {
+	glm::ivec2 gBuffer;
+	glm::ivec2 finalImage;
+	const glm::ivec2 GetGBufferRes() { return gBuffer; }
+	const glm::ivec2 GetFinalRes() { return finalImage; }
+};

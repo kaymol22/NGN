@@ -45,3 +45,14 @@ struct Vertex {
 		return { sizeof(Vertex), attributes };
 	}
 };
+
+struct MeshDescriptor {
+	uint32_t baseVertex = 0;
+	uint32_t baseIndex = 0;
+	uint32_t vertexCount = 0;
+	uint32_t indexCount = 0;
+	glm::vec3 aabbMin = glm::vec3(0);
+	glm::vec3 aabbMax = glm::vec3(0);
+	std::string name = "Undefined";
+	glm::mat4 localTransform = glm::mat4(1.0f);
+};

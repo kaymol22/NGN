@@ -29,3 +29,6 @@
 
 /* Resources */
 #include "ResourceManagement/CPU/Types/Texture.h"
+
+/* Assets */
+#include "AssetManagement/AssetManifest.h"

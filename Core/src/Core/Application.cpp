@@ -27,14 +27,13 @@ namespace NGN {
 		if (spec.WindowSpec.Title.empty())
 			m_Specification.WindowSpec.Title = spec.Name;
 
-		m_GraphicsContext = CreateScope<GraphicsContext>();
-		m_GraphicsContext->SetAPI(spec.APIspec);
+		m_GraphicsContext = CreateScope<GraphicsContext>(spec.APIspec);
 
 		m_Window = Window::Create(spec.APIspec, spec.WindowSpec);
 		m_Window->SetEventCallback([this](Event& e) { this->RaiseEvent(e); });
 
 		m_GraphicsContext->Init(m_Window->GetNativeWindow());
-		/*m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());*/
+		m_GraphicsContext->OnWindowResize(m_Window->GetWidth(), m_Window->GetHeight());
 
 		m_ResourceManager = CreateScope<RS::ResourceManager>();
 		Input::Init();
@@ -111,7 +110,7 @@ namespace NGN {
 
 	void Application::RaiseEvent(Event& event)
 	{
-		NGN_PROFILE_FUNCTION();
+		/*NGN_PROFILE_FUNCTION();*/
 		// Application level events handled first
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowCloseEvent>(NGN_BIND_EVENT_FN(Application::OnWindowClose));

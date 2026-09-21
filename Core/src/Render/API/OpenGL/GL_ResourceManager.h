@@ -4,6 +4,7 @@
 #include "Types/GL_FrameBuffer.h"
 #include "Types/GL_Shader.h"
 #include "Types/GL_GenericMesh.h"
+#include "Types/GL_MeshBuffer.h"
 
 #include "Containers/SlotMap.h"
 
@@ -32,7 +33,8 @@ namespace OpenGL::ResourceManager
 		FrameBuffer = 1,
 		Texture = 2, 
 		SSBO = 3,
-		GenericMesh = 4
+		GenericMesh = 4,
+		MeshBuffer = 5
 	};
 	void Init();
 	void CleanUp();
@@ -73,7 +75,18 @@ namespace OpenGL::ResourceManager
 	OpenGLGenericMesh& GetGenericMesh(uint64_t id);
 	OpenGLGenericMesh* GetGenericMeshPtr(const std::string& name);
 	OpenGLGenericMesh* GetGenericMeshPtrById(uint64_t id);
+	uint32_t GetGenericMeshSlot(uint64_t id);
+	OpenGLGenericMesh* GetGenericMeshPtrBySlot(uint32_t slot);
+
 	void RemoveGenericMesh(uint64_t id);
+
+	uint64_t CreateMeshBuffer();
+	uint64_t CreateMeshBuffer(const std::string& name);
+	OpenGLMeshBuffer& GetMeshBuffer(const std::string& name);
+	OpenGLMeshBuffer& GetMeshBuffer(uint64_t id);
+	OpenGLMeshBuffer* GetMeshBufferPtr(const std::string& name);
+	OpenGLMeshBuffer* GetMeshBufferPtrById(uint64_t id);
+	void RemoveMeshBuffer(uint64_t id);
 
 	/*std::string GetResourceInfo();*/
 }

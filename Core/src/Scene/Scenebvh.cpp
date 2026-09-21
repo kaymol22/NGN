@@ -59,6 +59,10 @@ namespace NGN
 
 			m_PrimitiveIndices.push_back(slot);
 			slot++;
+			/*NGN_CORE_INFO("BVH prim: center [{},{},{}], min [{},{},{}], max [{},{},{}]",
+				prim.worldAabbCentre.x, prim.worldAabbCentre.y, prim.worldAabbCentre.z,
+				prim.worldAabbBoundsMin.x, prim.worldAabbBoundsMin.y, prim.worldAabbBoundsMin.z,
+				prim.worldAabbBoundsMax.x, prim.worldAabbBoundsMax.y, prim.worldAabbBoundsMax.z);*/
 		}
 
 		// Then recursive build
@@ -68,7 +72,7 @@ namespace NGN
 		BuildRecursive(0, m_PrimitiveIndices.data(), n);
 		BuildCtx.Clear();
 
-		NGN_CORE_INFO("SceneBVH built with {} nodes and {} primitives.", m_Data.Nodes.size(), m_Data.Primitives.size());
+		/*NGN_CORE_INFO("SceneBVH built with {} nodes and {} primitives.", m_Data.Nodes.size(), m_Data.Primitives.size());*/
 	}
 
 	void SceneBVH::BuildRecursive(uint32_t nodeIndex, uint32_t* indices, uint32_t count)

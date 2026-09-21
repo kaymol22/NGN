@@ -1,27 +1,30 @@
-#include "Passes/GL_GeometryPass.cpp"
 #include "Render/API/OpenGL/GL_Renderer.h"
 #include "Render/API/OpenGL/GL_Commands.h"
 
 namespace OpenGL::Renderer
 {
-	void ClearRenderTargets();
-
-	void RenderScene()
+	void RenderDeferred()
 	{
+		ClearRenderTargets();
+		UpdateSSBOs();
+
 		GeometryPass();
-
-		OpenGLFrameBuffer& gBuffer = ResourceManager::GetFrameBuffer("GBuffer");
-		OpenGLFrameBuffer& presentFBO = ResourceManager::GetFrameBuffer("Present");
-
-		Commands::BlitFrameBuffer(&gBuffer, &presentFBO, "Color", "Color", GL_COLOR_BUFFER_BIT, GL_NEAREST);
-		PresentFinalImage(presentFBO);
+		/*TestPass();*/
+		OpenGLFrameBuffer& gBuffer = ResourceManager::GetFrameBuffer("gBuffer");
+		PresentFinalImage(gBuffer);
 	}
 
 	void ClearRenderTargets()
 	{
-		OpenGLFrameBuffer* gBuffer = ResourceManager::GetFrameBufferPtr("GBuffer");
+		OpenGLFrameBuffer* gBuffer = ResourceManager::GetFrameBufferPtr("gBuffer");
 		gBuffer->Bind();
-		gBuffer->ClearAttachment("BaseColor+Config", 0.0f, 0.0f, 0.0f, 1.0f);
-		gBuffer->ClearAttachment("Lighting", 0.0f, 0.0f, 0.0f, 1.0f);
+		gBuffer->ClearAttachment("BaseColorMetallic", 0.0f, 0.0f, 0.0f, 0.0f);
+		gBuffer->ClearAttachment("NormalRoughness", 0.0f, 0.0f, 0.0f, 1.0f);
+		gBuffer->ClearDepthAttachment(1.0f);
+		gBuffer->ClearStencilBits(0.0f);
+
+		OpenGLFrameBuffer* presentFBO = ResourceManager::GetFrameBufferPtr("Present");
+		presentFBO->Bind();
+		presentFBO->ClearAttachment("FinalColor", 0.1f, 0.1f, 0.1f, 0.0f);
 	}
 }

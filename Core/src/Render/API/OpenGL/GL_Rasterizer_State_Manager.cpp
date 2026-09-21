@@ -24,6 +24,15 @@ namespace OpenGL::RasterizerStateManager
 		return &it->second;
 	}
 
+	void ForceRasterizerState(const std::string& name) {
+		OpenGLRasterizerState* rasterizerState = GetRasterizerState(name);
+		if (!rasterizerState) {
+			NGN_CORE_ERROR("RasterizerStateManager::ForceRasterizerState() failed - '{}' State doesn't exist", name);
+			return;
+		}
+		ForceRasterizerState(*rasterizerState);
+	}
+
 	void ForceRasterizerState(const OpenGLRasterizerState& state) {
 		state.Apply();
 		g_GlobalState = state;

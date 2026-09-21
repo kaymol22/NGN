@@ -7,7 +7,7 @@ namespace NGN
 	class GraphicsContext
 	{
 	public:
-		GraphicsContext() = default;
+		GraphicsContext(API api);
 		~GraphicsContext() = default;
 
 		void SetAPI(API api);

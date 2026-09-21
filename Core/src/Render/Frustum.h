@@ -21,7 +21,7 @@ namespace NGN
 
 		const glm::vec3& GetBoundsMin() const { return m_Bounds[0]; }
 		const glm::vec3& GetBoundsMax() const { return m_Bounds[1]; }
-		const glm::vec4 GetPlane(int index);
+		glm::vec4 GetPlane(int index);
 
 		const glm::vec3& GetCorner(uint32_t index) const {
 			NGN_CORE_ASSERT(index < 8); 

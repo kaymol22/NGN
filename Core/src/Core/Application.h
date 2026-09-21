@@ -9,6 +9,7 @@
 #include "GraphicsContext.h"
 #include "Scene/SceneManager.h"
 #include "ResourceManagement/CPU/ResourceManager.h"
+#include "AssetManagement/AssetLoader.h"
 
 #include <glm/glm.hpp>
 
@@ -35,6 +36,7 @@ namespace NGN {
 		API APIspec = API::OPENGL;
 		uint32_t maxCompressedTextureResolution = 2048;
 		ApplicationCmdLineArgs CommandLineArgs;
+		Resolutions Resolutions;
 	};
 
 	class Application
@@ -82,6 +84,8 @@ namespace NGN {
 		GraphicsContext& GetGraphicsContext() { return *m_GraphicsContext; }
 		API GetAPI() { return m_GraphicsContext->GetAPI(); }
 		RS::ResourceManager& GetResourceManager() { return *m_ResourceManager; }
+		Resolutions& GetResolutions() { return m_Specification.Resolutions; }
+		AssetLoader& GetAssetLoader() { return m_AssetLoader; }
 
 		Scene* CreateScene(const std::string& name = "Scene", bool setActive = true);
 
@@ -111,6 +115,7 @@ namespace NGN {
 		Ref<ImGuiLayer> m_ImGuiLayer;
 
 		SceneManager m_SceneManager;
+		AssetLoader m_AssetLoader;
 
 		float m_LastFrameTime = 0.0f;
 		Timestep m_Timestep;

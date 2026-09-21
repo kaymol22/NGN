@@ -1,0 +1,24 @@
+#pragma once
+
+enum class BlendingMode
+{
+	ALPHA_DISCARD,
+	BLENDED,
+	DEFAULT,
+	DO_NOT_RENDER,
+	UNDEFINED
+};
+
+enum class RendererOverrideState
+{
+	NONE,
+	BASE_COLOR,
+	NORMALS,
+	ROUGHNESS,
+	METALLIC,
+	AO,
+	DEPTH,
+	VELOCITY,
+	WORLD_POSITION,
+	VISIBILITY
+};

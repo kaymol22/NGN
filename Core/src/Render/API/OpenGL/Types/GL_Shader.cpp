@@ -10,7 +10,7 @@ static void ParseFile(const std::string& filePath, std::string& outputString, st
 	ShaderParseContext& context, const std::string& rootFilePath);
 static std::string LTrimCopy(const std::string& s);
 static bool StartsWith(const std::string& s, const char* prefix);
-static bool TryParseInclude(const std::string& line, std::string outIncludeFile);
+static bool TryParseInclude(const std::string& line, std::string& outIncludeFile);
 void StripUTF8FromLine(std::string& line);
 void InsertDefines(std::string& source, const std::vector<std::string>& defines);
 int GetErrorLineNumber(const std::string& error);
@@ -29,6 +29,17 @@ namespace OpenGL
 		Load(m_ShaderPaths);
 	}
 
+	void OpenGLShader::CleanUp() {
+		if (m_Handle) {
+			glDeleteProgram(m_Handle);
+			m_Handle = 0;
+		}
+		m_UniformLocations.clear();
+		m_Defines.clear();
+		m_ShaderPaths.clear();
+		m_SubDirectory = "";
+	}
+
 	bool OpenGLShader::Load(std::vector<std::string> shaderPaths)
 	{
 		std::vector<OpenGLShaderModule> modules;
@@ -36,6 +47,7 @@ namespace OpenGL
 		{
 			std::string fullPath = m_SubDirectory.empty() ? shaderPath : m_SubDirectory + "/" + shaderPath;
 			modules.push_back(OpenGLShaderModule(fullPath, m_Defines));
+			NGN_CORE_INFO("OpenGLShader::Load: Compiled shader module '{}', handle {}", fullPath, modules.back().GetHandle());
 		}
 
 		bool errorsFound = false;
@@ -270,7 +282,7 @@ static bool StartsWith(const std::string& s, const char* prefix) {
 	return s.compare(0, n, prefix) == 0;
 }
 
-static bool TryParseInclude(const std::string& line, std::string outIncludeFile)
+static bool TryParseInclude(const std::string& line, std::string& outIncludeFile)
 {
 	std::string trimmed = LTrimCopy(line);
 	if (!StartsWith(trimmed, "#include")) {
